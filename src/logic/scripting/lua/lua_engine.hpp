@@ -27,7 +27,7 @@ namespace lua {
     );
     State* get_main_state();
     State* create_state(const EnginePaths& paths, StateType stateType);
-    [[nodiscard]] scriptenv create_environment(State* L);
+    [[nodiscard]] script_env_t create_environment(State* L);
 
     void init_state(State* L, StateType stateType);
 }

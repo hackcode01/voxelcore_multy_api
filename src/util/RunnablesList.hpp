@@ -11,7 +11,7 @@
 namespace util {
     class RunnablesList {
         int nextid = 1;
-        std::unordered_map<int, runnable> runnables;
+        std::unordered_map<int, runnable_t> runnables;
         std::mutex mutex;
     public:
         RunnablesList() = default;
@@ -26,7 +26,7 @@ namespace util {
             nextid = o.nextid;
         }
 
-        ObserverHandler add(runnable callback) {
+        ObserverHandler add(runnable_t callback) {
             std::lock_guard lock(mutex);
             int id = nextid++;
             runnables[id] = std::move(callback);

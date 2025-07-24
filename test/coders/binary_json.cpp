@@ -7,7 +7,7 @@ TEST(BJSON, EncodeDecode) {
     const std::string name = "JSON-encoder";
     const int bytesSize = 5000;
     const int year = 2019;
-    const float score = 3.141592;
+    const float score = 3.141592f;
     dv::objects::Bytes srcBytes(bytesSize);
     for (int i = 0; i < bytesSize; i ++) {
         srcBytes[i] = rand();

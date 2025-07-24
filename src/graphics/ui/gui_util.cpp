@@ -16,7 +16,7 @@
 using namespace gui;
 
 std::shared_ptr<gui::UINode> guiutil::create(
-    GUI& gui, const std::string& source, scriptenv env
+    GUI& gui, const std::string& source, script_env_t env
 ) {
     if (env == nullptr) {
         env = scripting::get_root_environment();
@@ -26,7 +26,7 @@ std::shared_ptr<gui::UINode> guiutil::create(
 }
 
 void guiutil::alert(
-    Engine& engine, const std::wstring& text, const runnable& on_hidden
+    Engine& engine, const std::wstring& text, const runnable_t& on_hidden
 ) {
     GUI& gui = engine.getGUI();
     auto panel = std::make_shared<Panel>(
@@ -45,7 +45,7 @@ void guiutil::alert(
 
     auto menuPtr = gui.getMenu();
     auto& menu = *menuPtr;
-    runnable on_hidden_final = [on_hidden, &menu]() {
+    runnable_t on_hidden_final = [on_hidden, &menu]() {
         menu.removePage("<alert>");
         if (on_hidden) {
             on_hidden();
@@ -83,8 +83,8 @@ void guiutil::alert(
 void guiutil::confirm(
     Engine& engine,
     const std::wstring& text,
-    const runnable& on_confirm,
-    const runnable& on_deny,
+    const runnable_t& on_confirm,
+    const runnable_t& on_deny,
     std::wstring yestext,
     std::wstring notext
 ) {
@@ -111,7 +111,7 @@ void guiutil::confirm(
 
     auto menu = gui.getMenu();
 
-    runnable on_confirm_final = [on_confirm, menu]() {
+    runnable_t on_confirm_final = [on_confirm, menu]() {
         menu->removePage("<confirm>");
         if (on_confirm) {
             on_confirm();
@@ -120,7 +120,7 @@ void guiutil::confirm(
         }
     };
 
-    runnable on_deny_final = [on_deny, menu]() {
+    runnable_t on_deny_final = [on_deny, menu]() {
         menu->removePage("<confirm>");
         if (on_deny) {
             on_deny();
@@ -156,7 +156,7 @@ void guiutil::confirm_with_memo(
     Engine& engine,
     const std::wstring& text,
     const std::wstring& memo,
-    const runnable& on_confirm,
+    const runnable_t& on_confirm,
     std::wstring yestext,
     std::wstring notext
 ) {

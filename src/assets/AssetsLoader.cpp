@@ -88,7 +88,7 @@ void AssetsLoader::loadNext() {
 }
 
 static void add_layouts(
-    const scriptenv& env,
+    const script_env_t& env,
     const std::string& prefix,
     const io::path& folder,
     AssetsLoader& loader
@@ -342,7 +342,7 @@ public:
     }
 };
 
-std::shared_ptr<Task> AssetsLoader::startTask(runnable onDone) {
+std::shared_ptr<Task> AssetsLoader::startTask(runnable_t onDone) {
     auto pool =
         std::make_shared<util::ThreadPool<aloader_entry, assetload::postfunc>>(
             "assets-loader-pool",

@@ -33,7 +33,7 @@ namespace scripting {
     /// @param file script file path
     /// @param fileName script file path using the engine format
     void load_hud_script(
-        const scriptenv& env,
+        const script_env_t& env,
         const std::string& packid,
         const io::path& file,
         const std::string& fileName

@@ -42,9 +42,9 @@ namespace util {
         std::condition_variable jobsMutexCondition;
         std::mutex jobsMutex;
         std::vector<std::unique_lock<std::mutex>> workersBlocked;
-        consumer<R&> resultConsumer;
-        consumer<T&> onJobFailed = nullptr;
-        runnable onComplete = nullptr;
+        consumer_t<R&> resultConsumer;
+        consumer_t<T&> onJobFailed = nullptr;
+        runnable_t onComplete = nullptr;
         std::atomic<int> busyWorkers = 0;
         std::atomic<uint> jobsDone = 0;
         std::atomic<bool> working = true;
@@ -115,8 +115,8 @@ namespace util {
         /// unlimited, -2 is half of auto count, -4 is quarter.
         ThreadPool(
             std::string name,
-            supplier<std::shared_ptr<Worker<T, R>>> workersSupplier,
-            consumer<R&> resultConsumer,
+            supplier_t<std::shared_ptr<Worker<T, R>>> workersSupplier,
+            consumer_t<R&> resultConsumer,
             int maxWorkers=UNLIMITED
         )
             : logger(std::move(name)), resultConsumer(resultConsumer) {
@@ -253,13 +253,13 @@ namespace util {
 
         /// @brief onJobFailed called on exception thrown in worker thread.
         /// Use engine.postRunnable when calling terminate()
-        void setOnJobFailed(consumer<T&> callback) {
+        void setOnJobFailed(consumer_t<T&> callback) {
             this->onJobFailed = callback;
         }
 
         /// @brief onComplete called in ThreadPool.update() when all jobs done
         /// if ThreadPool was not terminated
-        void setOnComplete(runnable callback) {
+        void setOnComplete(runnable_t callback) {
             this->onComplete = callback;
         }
 

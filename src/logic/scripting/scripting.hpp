@@ -56,11 +56,11 @@ namespace scripting {
     );
     int get_values_on_stack();
 
-    scriptenv get_root_environment();
-    scriptenv create_pack_environment(const ContentPack& pack);
-    scriptenv create_environment(const scriptenv& parent);
-    scriptenv create_doc_environment(
-        const scriptenv& parent, const std::string& name
+    script_env_t get_root_environment();
+    script_env_t create_pack_environment(const ContentPack& pack);
+    script_env_t create_environment(const script_env_t& parent);
+    script_env_t create_doc_environment(
+        const script_env_t& parent, const std::string& name
     );
 
     void process_post_runnables();
@@ -116,7 +116,7 @@ namespace scripting {
     );
 
     dv::value get_component_value(
-        const scriptenv& env, const std::string& name
+        const script_env_t& env, const std::string& name
     );
     void on_entity_spawn(
         const EntityDef& def,
@@ -153,7 +153,7 @@ namespace scripting {
     /// @param fileName script file path using the engine format
     /// @param funcsset block callbacks set
     void load_content_script(
-        const scriptenv& env,
+        const script_env_t& env,
         const std::string& prefix,
         const io::path& file,
         const std::string& fileName,
@@ -167,7 +167,7 @@ namespace scripting {
     /// @param fileName script file path using the engine format
     /// @param funcsset item callbacks set
     void load_content_script(
-        const scriptenv& env,
+        const script_env_t& env,
         const std::string& prefix,
         const io::path& file,
         const std::string& fileName,
@@ -196,7 +196,7 @@ namespace scripting {
     /// @param file script file path
     /// @param fileName script file path using the engine format
     void load_world_script(
-        const scriptenv& env,
+        const script_env_t& env,
         const std::string& packid,
         const io::path& file,
         const std::string& fileName,
@@ -210,7 +210,7 @@ namespace scripting {
     /// @param fileName script file path using the engine format
     /// @param script document script info
     void load_layout_script(
-        const scriptenv& env,
+        const script_env_t& env,
         const std::string& prefix,
         const io::path& file,
         const std::string& fileName,

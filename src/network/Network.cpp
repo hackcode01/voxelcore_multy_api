@@ -362,7 +362,7 @@ public:
         thread = std::make_unique<std::thread>([this]() { startListen();});
     }
 
-    void connect(runnable callback) override {
+    void connect(runnable_t callback) override {
         thread = std::make_unique<std::thread>([this, callback]() {
             connectSocket();
             if (state == ConnectionState::CONNECTED) {
@@ -443,7 +443,7 @@ public:
     }
 
     static std::shared_ptr<SocketConnection> connect(
-        const std::string& address, int port, runnable callback
+        const std::string& address, int port, runnable_t callback
     ) {
         addrinfo hints {};
 
@@ -492,7 +492,7 @@ public:
         closeSocket();
     }
 
-    void startListen(consumer<u64id_t> handler) override {
+    void startListen(consumer_t<u64id_t> handler) override {
         thread = std::make_unique<std::thread>([this, handler]() {
             while (open) {
                 logger.info() << "listening for connections";
@@ -558,7 +558,7 @@ public:
     }
 
     static std::shared_ptr<SocketTcpSServer> openServer(
-        Network* network, int port, consumer<u64id_t> handler
+        Network* network, int port, consumer_t<u64id_t> handler
     ) {
         SOCKET descriptor = socket(
             AF_INET, SOCK_STREAM, 0
@@ -634,7 +634,7 @@ TcpServer* Network::getServer(u64id_t id) const {
     return found->second.get();
 }
 
-u64id_t Network::connect(const std::string& address, int port, consumer<u64id_t> callback) {
+u64id_t Network::connect(const std::string& address, int port, consumer_t<u64id_t> callback) {
     std::lock_guard lock(connectionsMutex);
     
     u64id_t id = nextConnection++;
@@ -645,7 +645,7 @@ u64id_t Network::connect(const std::string& address, int port, consumer<u64id_t>
     return id;
 }
 
-u64id_t Network::openServer(int port, consumer<u64id_t> handler) {
+u64id_t Network::openServer(int port, consumer_t<u64id_t> handler) {
     u64id_t id = nextServer++;
     auto server = SocketTcpSServer::openServer(this, port, handler);
     servers[id] = std::move(server);

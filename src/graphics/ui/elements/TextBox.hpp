@@ -28,20 +28,20 @@ namespace gui {
         /// @brief Text will be shown when nothing entered
         std::wstring hint;
         /// @brief Text supplier called every frame when not focused
-        wstringsupplier supplier = nullptr;
+        wstring_supplier_t supplier = nullptr;
         /// @brief Text supplier called on Enter pressed
-        wstringconsumer consumer = nullptr;
+        wstring_consumer_t consumer = nullptr;
         /// @brief Text supplier called while input
-        wstringconsumer subconsumer = nullptr;
+        wstring_consumer_t subconsumer = nullptr;
         /// @brief Text validator returning boolean value
-        wstringchecker validator = nullptr;
-        key_handler controlCombinationsHandler = nullptr;
+        wstring_checker_t validator = nullptr;
+        key_handler_t controlCombinationsHandler = nullptr;
         /// @brief Function called on focus
-        runnable onEditStart = nullptr;
+        runnable_t onEditStart = nullptr;
         /// @brief Function called on up arrow pressed
-        runnable onUpPressed;
+        runnable_t onUpPressed;
         /// @brief Function called on down arrow pressed
-        runnable onDownPressed;
+        runnable_t onDownPressed;
         /// @brief Is current input valid
         bool valid = true;
         /// @brief Text input pointer, value may be greather than text length
@@ -106,22 +106,22 @@ namespace gui {
         void paste(const std::wstring& text, bool history=true);
         void erase(size_t start, size_t length);
             
-        virtual void setTextSupplier(wstringsupplier supplier);
+        virtual void setTextSupplier(wstring_supplier_t supplier);
 
         /// @brief Consumer called on stop editing text (textbox defocus)
         /// @param consumer std::wstring consumer function
-        virtual void setTextConsumer(wstringconsumer consumer);
+        virtual void setTextConsumer(wstring_consumer_t consumer);
 
         /// @brief Sub-consumer called while editing text
         /// @param consumer std::wstring consumer function
-        virtual void setTextSubConsumer(wstringconsumer consumer);
+        virtual void setTextSubConsumer(wstring_consumer_t consumer);
 
         /// @brief Text validator called while text editing and returns true if
         /// text is valid
         /// @param validator std::wstring consumer returning boolean 
-        virtual void setTextValidator(wstringchecker validator);
+        virtual void setTextValidator(wstring_checker_t validator);
 
-        virtual void setOnControlCombination(key_handler handler);
+        virtual void setOnControlCombination(key_handler_t handler);
 
         virtual void setFocusedColor(glm::vec4 color);
         virtual glm::vec4 getFocusedColor() const;
@@ -220,7 +220,7 @@ namespace gui {
         size_t getSelectionEnd() const;
 
         /// @brief Set runnable called on textbox focus
-        virtual void setOnEditStart(runnable oneditstart);
+        virtual void setOnEditStart(runnable_t oneditstart);
 
         virtual void setAutoResize(bool flag);
         virtual bool isAutoResize() const;
@@ -240,8 +240,8 @@ namespace gui {
         virtual void typed(unsigned int codepoint) override; 
         virtual void keyPressed(Keycode key) override;
         virtual std::shared_ptr<UINode> getAt(const glm::vec2& pos) override;
-        virtual void setOnUpPressed(const runnable &callback);
-        virtual void setOnDownPressed(const runnable &callback);
+        virtual void setOnUpPressed(const runnable_t &callback);
+        virtual void setOnDownPressed(const runnable_t &callback);
 
         virtual void setSyntax(std::string_view lang);
         virtual const std::string& getSyntax() const;

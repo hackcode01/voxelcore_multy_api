@@ -31,7 +31,7 @@ static void remove_lib_funcs(
     }
 }
 
-[[nodiscard]] scriptenv lua::create_environment(State* L) {
+[[nodiscard]] script_env_t lua::create_environment(State* L) {
     int id = lua::create_environment(L, 0);
     return std::shared_ptr<int>(new int(id), [=](int* id) { //-V508
         lua::remove_environment(L, *id);

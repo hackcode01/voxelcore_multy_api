@@ -594,7 +594,7 @@ size_t TextBox::getSelectionEnd() const {
     return selectionEnd;
 }
 
-void TextBox::setOnEditStart(runnable oneditstart) {
+void TextBox::setOnEditStart(runnable_t oneditstart) {
     onEditStart = oneditstart;
 }
 
@@ -980,7 +980,7 @@ std::shared_ptr<UINode> TextBox::getAt(const glm::vec2& pos) {
     return UINode::getAt(pos);
 }
 
-void TextBox::setOnUpPressed(const runnable& callback) {
+void TextBox::setOnUpPressed(const runnable_t& callback) {
     if (callback == nullptr) {
         onUpPressed = [this]() {
             if (inputEvents.pressed(Keycode::LEFT_CONTROL)) {
@@ -996,7 +996,7 @@ void TextBox::setOnUpPressed(const runnable& callback) {
     }
 }
 
-void TextBox::setOnDownPressed(const runnable& callback) {
+void TextBox::setOnDownPressed(const runnable_t& callback) {
     if (callback == nullptr) {
         onDownPressed = [this]() {
             if (inputEvents.pressed(Keycode::LEFT_CONTROL)) {
@@ -1012,23 +1012,23 @@ void TextBox::setOnDownPressed(const runnable& callback) {
     }
 }
 
-void TextBox::setTextSupplier(wstringsupplier supplier) {
+void TextBox::setTextSupplier(wstring_supplier_t supplier) {
     this->supplier = std::move(supplier);
 }
 
-void TextBox::setTextConsumer(wstringconsumer consumer) {
+void TextBox::setTextConsumer(wstring_consumer_t consumer) {
     this->consumer = std::move(consumer);
 }
 
-void TextBox::setTextSubConsumer(wstringconsumer consumer) {
+void TextBox::setTextSubConsumer(wstring_consumer_t consumer) {
     this->subconsumer = std::move(consumer);
 }
 
-void TextBox::setTextValidator(wstringchecker validator) {
+void TextBox::setTextValidator(wstring_checker_t validator) {
     this->validator = std::move(validator);
 }
 
-void TextBox::setOnControlCombination(key_handler handler) {
+void TextBox::setOnControlCombination(key_handler_t handler) {
     this->controlCombinationsHandler = std::move(handler);
 }
 

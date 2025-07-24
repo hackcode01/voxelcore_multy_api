@@ -32,7 +32,7 @@ void menus::create_version_label(gui::GUI& gui) {
     ));
 }
 
-void menus::call(Engine& engine, runnable func) {
+void menus::call(Engine& engine, runnable_t func) {
     if (engine.isHeadless()) {
         throw std::runtime_error("menus::call(...) in headless mode");
     }

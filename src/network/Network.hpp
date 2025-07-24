@@ -46,7 +46,7 @@ namespace network {
     public:
         virtual ~Connection() {}
 
-        virtual void connect(runnable callback) = 0;
+        virtual void connect(runnable_t callback) = 0;
         virtual int recv(char* buffer, size_t length) = 0;
         virtual int send(const char* buffer, size_t length) = 0;
         virtual void close(bool discardAll=false) = 0;
@@ -64,7 +64,7 @@ namespace network {
     class TcpServer {
     public:
         virtual ~TcpServer() {}
-        virtual void startListen(consumer<u64id_t> handler) = 0;
+        virtual void startListen(consumer_t<u64id_t> handler) = 0;
         virtual void close() = 0;
         virtual bool isOpen() = 0;
         virtual int getPort() const = 0;
@@ -104,9 +104,9 @@ namespace network {
         [[nodiscard]] Connection* getConnection(u64id_t id);
         [[nodiscard]] TcpServer* getServer(u64id_t id) const;
 
-        u64id_t connect(const std::string& address, int port, consumer<u64id_t> callback);
+        u64id_t connect(const std::string& address, int port, consumer_t<u64id_t> callback);
 
-        u64id_t openServer(int port, consumer<u64id_t> handler);
+        u64id_t openServer(int port, consumer_t<u64id_t> handler);
 
         u64id_t addConnection(const std::shared_ptr<Connection>& connection);
 

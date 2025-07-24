@@ -46,7 +46,7 @@ class WorldConverter : public Task {
     std::shared_ptr<ContentReport> const report;
     const Content* const content;
     std::queue<ConvertTask> tasks;
-    runnable onComplete;
+    runnable_t onComplete;
     uint tasksDone = 0;
     ConvertMode mode;
 
@@ -76,7 +76,7 @@ public:
 
     void convert(const ConvertTask& task) const;
     void convertNext();
-    void setOnComplete(runnable callback);
+    void setOnComplete(runnable_t callback);
     void write();
 
     void update() override;
@@ -90,7 +90,7 @@ public:
         const std::shared_ptr<WorldFiles>& worldFiles,
         const Content* content,
         const std::shared_ptr<ContentReport>& report,
-        const runnable& onDone,
+        const runnable_t& onDone,
         ConvertMode mode,
         bool multithreading
     );

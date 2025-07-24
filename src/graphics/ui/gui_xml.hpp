@@ -20,9 +20,9 @@ namespace gui {
         std::unordered_set<std::string> ignored;
         std::stack<std::string> contextStack;
         std::string filename;
-        scriptenv env;
+        script_env_t env;
     public:
-        UiXmlReader(gui::GUI& gui, scriptenv&& env);
+        UiXmlReader(gui::GUI& gui, script_env_t&& env);
 
         void add(const std::string& tag, uinode_reader reader);
         bool hasReader(const std::string& tag) const;
@@ -53,7 +53,7 @@ namespace gui {
         );
 
         const std::string& getContext() const;
-        const scriptenv& getEnvironment() const;
+        const script_env_t& getEnvironment() const;
         const std::string& getFilename() const;
         gui::GUI& getGUI() const;
     };

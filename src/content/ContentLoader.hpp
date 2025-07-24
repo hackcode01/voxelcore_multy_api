@@ -23,7 +23,7 @@ struct ContentPackStats;
 class ContentLoader {
     const ContentPack* pack;
     ContentPackRuntime* runtime;
-    scriptenv env;
+    script_env_t env;
     ContentBuilder& builder;
     ContentPackStats* stats;
     const ResPaths& paths;

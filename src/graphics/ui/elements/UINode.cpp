@@ -290,19 +290,19 @@ void UINode::moveInto(
     dest->add(node);
 }
 
-vec2supplier UINode::getPositionFunc() const {
+vec2_supplier_t UINode::getPositionFunc() const {
     return positionfunc;
 }
 
-void UINode::setPositionFunc(vec2supplier func) {
+void UINode::setPositionFunc(vec2_supplier_t func) {
     positionfunc = std::move(func);
 }
 
-vec2supplier UINode::getSizeFunc() const {
+vec2_supplier_t UINode::getSizeFunc() const {
     return sizefunc;
 }
 
-void UINode::setSizeFunc(vec2supplier func) {
+void UINode::setSizeFunc(vec2_supplier_t func) {
     sizefunc = std::move(func);
 }
 

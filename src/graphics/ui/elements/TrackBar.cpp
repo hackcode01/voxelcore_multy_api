@@ -43,15 +43,15 @@ void TrackBar::draw(const DrawContext& pctx, const Assets&) {
     batch->rect(pos.x + width * t, pos.y, trackWidth, size.y);
 }
 
-void TrackBar::setSupplier(doublesupplier supplier) {
+void TrackBar::setSupplier(double_supplier_t supplier) {
     this->supplier = std::move(supplier);
 }
 
-void TrackBar::setConsumer(doubleconsumer consumer) {
+void TrackBar::setConsumer(double_consumer_t consumer) {
     this->consumer = std::move(consumer);
 }
 
-void TrackBar::setSubConsumer(doubleconsumer consumer) {
+void TrackBar::setSubConsumer(double_consumer_t consumer) {
     this->subconsumer = std::move(consumer);
 }
 

@@ -10,8 +10,8 @@ using namespace scripting;
 
 static debug::Logger logger("scripting_func");
 
-runnable scripting::create_runnable(
-    const scriptenv& env, const std::string& src, const std::string& file
+runnable_t scripting::create_runnable(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     auto L = lua::get_main_state();
     try {
@@ -24,7 +24,7 @@ runnable scripting::create_runnable(
 }
 
 static lua::State* process_callback(
-    const scriptenv& env, const std::string& src, const std::string& file
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     auto L = lua::get_main_state();
     try {
@@ -37,8 +37,8 @@ static lua::State* process_callback(
     return nullptr;
 }
 
-key_handler scripting::create_key_handler(
-    const scriptenv& env, const std::string& src, const std::string& file
+key_handler_t scripting::create_key_handler(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return [=](int code) {
         if (auto L = process_callback(env, src, file)) {
@@ -61,7 +61,7 @@ key_handler scripting::create_key_handler(
 
 template<typename T, int(pushfunc)(lua::State*, remove_const_ref_if_primitive_t<const T&>)>
 std::function<void(const T&)> create_consumer(
-    const scriptenv& env, const std::string& src, const std::string& file
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return [=](const T& x) {
         if (auto L = process_callback(env, src, file)) {
@@ -71,33 +71,33 @@ std::function<void(const T&)> create_consumer(
     };
 }
 
-wstringconsumer scripting::create_wstring_consumer(
-    const scriptenv& env, const std::string& src, const std::string& file
+wstring_consumer_t scripting::create_wstring_consumer(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return create_consumer<std::wstring, lua::pushwstring>(env, src, file);
 }
 
-stringconsumer scripting::create_string_consumer(
-    const scriptenv& env, const std::string& src, const std::string& file
+string_consumer_t scripting::create_string_consumer(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return create_consumer<std::string, lua::pushstring>(env, src, file);
 }
 
-boolconsumer scripting::create_bool_consumer(
-    const scriptenv& env, const std::string& src, const std::string& file
+bool_consumer_t scripting::create_bool_consumer(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return create_consumer<bool, lua::pushboolean>(env, src, file);
 }
 
-doubleconsumer scripting::create_number_consumer(
-    const scriptenv& env, const std::string& src, const std::string& file
+double_consumer_t scripting::create_number_consumer(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return create_consumer<number_t, lua::pushnumber>(env, src, file);
 }
 
 template <typename T, T(tovalueFunc)(lua::State*, int)>
 std::function<T()> create_supplier(
-    const scriptenv& env, const std::string& src, const std::string& file
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return [=]() {
         if (auto L = process_callback(env, src, file)) {
@@ -112,26 +112,26 @@ std::function<T()> create_supplier(
     };
 }
 
-wstringsupplier scripting::create_wstring_supplier(
-    const scriptenv& env, const std::string& src, const std::string& file
+wstring_supplier_t scripting::create_wstring_supplier(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return create_supplier<std::wstring, lua::require_wstring>(env, src, file);
 }
 
-boolsupplier scripting::create_bool_supplier(
-    const scriptenv& env, const std::string& src, const std::string& file
+bool_supplier_t scripting::create_bool_supplier(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return create_supplier<bool, lua::toboolean>(env, src, file);
 }
 
-doublesupplier scripting::create_number_supplier(
-    const scriptenv& env, const std::string& src, const std::string& file
+double_supplier_t scripting::create_number_supplier(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return create_supplier<number_t, lua::tonumber>(env, src, file);
 }
 
-wstringchecker scripting::create_wstring_validator(
-    const scriptenv& env, const std::string& src, const std::string& file
+wstring_checker_t scripting::create_wstring_validator(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return [=](const std::wstring& x) {
         if (auto L = process_callback(env, src, file)) {
@@ -142,8 +142,8 @@ wstringchecker scripting::create_wstring_validator(
     };
 }
 
-int_array_consumer scripting::create_int_array_consumer(
-    const scriptenv& env, const std::string& src, const std::string& file
+int_array_consumer_t scripting::create_int_array_consumer(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return [=](const int arr[], size_t len) {
         if (auto L = process_callback(env, src, file)) {
@@ -155,8 +155,8 @@ int_array_consumer scripting::create_int_array_consumer(
     };
 }
 
-vec2supplier scripting::create_vec2_supplier(
-    const scriptenv& env, const std::string& src, const std::string& file
+vec2_supplier_t scripting::create_vec2_supplier(
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     return [=]() {
         if (auto L = process_callback(env, src, file)) {
@@ -174,7 +174,7 @@ vec2supplier scripting::create_vec2_supplier(
 }
 
 value_to_string_func scripting::create_tostring(
-    const scriptenv& env, const std::string& src, const std::string& file
+    const script_env_t& env, const std::string& src, const std::string& file
 ) {
     auto L = lua::get_main_state();
     try {

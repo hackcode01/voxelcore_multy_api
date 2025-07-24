@@ -986,12 +986,12 @@ static int l_gui_escape_markup(lua::State* L) {
 
 static int l_gui_confirm(lua::State* L) {
     auto question = lua::require_wstring(L, 1);
-    runnable onconfirm = nullptr;
+    runnable_t onconfirm = nullptr;
     if (lua::gettop(L) >= 2) {
         lua::pushvalue(L, 2);
         onconfirm = lua::create_runnable(L);
     }
-    runnable ondeny = nullptr;
+    runnable_t ondeny = nullptr;
     if (lua::gettop(L) >= 3) {
         lua::pushvalue(L, 3);
         ondeny = lua::create_runnable(L);
@@ -1010,7 +1010,7 @@ static int l_gui_confirm(lua::State* L) {
 
 static int l_gui_alert(lua::State* L) {
     auto message = lua::require_wstring(L, 1);
-    runnable onconfirm = nullptr;
+    runnable_t onconfirm = nullptr;
     if (lua::gettop(L) >= 2) {
         lua::pushvalue(L, 2);
         onconfirm = lua::create_runnable(L);

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SETTINGS_WORLD_HPP__
+#define __SETTINGS_WORLD_HPP__
 
 #include <string>
 #include <unordered_map>
@@ -108,3 +109,5 @@ struct EngineSettings {
     UiSettings ui;
     NetworkSettings network;
 };
+
+#endif

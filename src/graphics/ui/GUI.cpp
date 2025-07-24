@@ -225,7 +225,7 @@ void GUI::act(float delta, const glm::uvec2& vp) {
 
 void GUI::postAct() {
     while (!postRunnables.empty()) {
-        runnable callback = postRunnables.front();
+        runnable_t callback = postRunnables.front();
         postRunnables.pop();
         callback();
     }
@@ -339,7 +339,7 @@ std::shared_ptr<Container> GUI::getContainer() const {
     return container;
 }
 
-void GUI::postRunnable(const runnable& callback) {
+void GUI::postRunnable(const runnable_t& callback) {
     postRunnables.push(callback);
 }
 

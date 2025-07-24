@@ -94,7 +94,7 @@ void scripting::on_frontend_close() {
 }
 
 void scripting::load_hud_script(
-    const scriptenv& senv,
+    const script_env_t& senv,
     const std::string& packid,
     const io::path& file,
     const std::string& fileName

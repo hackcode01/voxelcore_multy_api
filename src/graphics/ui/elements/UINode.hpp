@@ -116,9 +116,9 @@ namespace gui {
         /// @brief parent element
         UINode* parent = nullptr;
         /// @brief position supplier for the element (called on parent element size update)
-        vec2supplier positionfunc = nullptr;
+        vec2_supplier_t positionfunc = nullptr;
         /// @brief size supplier for the element (called on parent element size update)
-        vec2supplier sizefunc = nullptr;
+        vec2_supplier_t sizefunc = nullptr;
         /// @brief 'onclick' callbacks
         ActionsSet actions;
         /// @brief 'ondoubleclick' callbacks
@@ -263,11 +263,11 @@ namespace gui {
             const std::shared_ptr<Container>& dest
         );
 
-        virtual vec2supplier getPositionFunc() const;
-        virtual void setPositionFunc(vec2supplier);
+        virtual vec2_supplier_t getPositionFunc() const;
+        virtual void setPositionFunc(vec2_supplier_t);
 
-        virtual vec2supplier getSizeFunc() const;
-        virtual void setSizeFunc(vec2supplier);
+        virtual vec2_supplier_t getSizeFunc() const;
+        virtual void setSizeFunc(vec2_supplier_t);
 
         void setId(const std::string& id);
         const std::string& getId() const;

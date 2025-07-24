@@ -18,7 +18,7 @@ namespace gui {
         std::unordered_map<std::string, Page> pages;
         std::stack<Page> pageStack;
         Page current;
-        std::unordered_map<std::string, supplier<std::shared_ptr<UINode>>> pageSuppliers;
+        std::unordered_map<std::string, supplier_t<std::shared_ptr<UINode>>> pageSuppliers;
         PageLoaderFunc pagesLoader = nullptr;
     public:
         explicit Menu(GUI& gui);
@@ -45,7 +45,7 @@ namespace gui {
         /// @param pageSupplier page supplier function
         void addSupplier(
             const std::string& name,
-            const supplier<std::shared_ptr<UINode>>& pageSupplier
+            const supplier_t<std::shared_ptr<UINode>>& pageSupplier
         );
 
         /// @brief Page loader is called if accessed page is not found 

@@ -26,13 +26,13 @@ class UiDocument {
     uidocscript script;
     UINodesMap map;
     std::shared_ptr<gui::UINode> root;
-    scriptenv env;
+    script_env_t env;
 public:
     UiDocument(
         std::string id, 
         uidocscript script, 
         const std::shared_ptr<gui::UINode> &root,
-        scriptenv env
+        script_env_t env
     );
 
     void rebuildIndices();
@@ -43,11 +43,11 @@ public:
     std::shared_ptr<gui::UINode> getRoot() const;
     std::shared_ptr<gui::UINode> get(const std::string& id) const;
     const uidocscript& getScript() const;
-    scriptenv getEnvironment() const;
+    script_env_t getEnvironment() const;
 
     static std::unique_ptr<UiDocument> read(
         gui::GUI&,
-        const scriptenv& parent_env,
+        const script_env_t& parent_env,
         const std::string& name,
         const io::path& file,
         const std::string& fileName

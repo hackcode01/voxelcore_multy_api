@@ -17,20 +17,20 @@ namespace guiutil {
     /// @brief Create element from XML
     /// @param source XML
     std::shared_ptr<gui::UINode> create(
-        gui::GUI& gui, const std::string& source, scriptenv env = 0
+        gui::GUI& gui, const std::string& source, script_env_t env = 0
     );
 
     void alert(
         Engine& engine,
         const std::wstring& text,
-        const runnable& on_hidden = nullptr
+        const runnable_t& on_hidden = nullptr
     );
 
     void confirm(
         Engine& engine,
         const std::wstring& text,
-        const runnable& on_confirm = nullptr,
-        const runnable& on_deny = nullptr,
+        const runnable_t& on_confirm = nullptr,
+        const runnable_t& on_deny = nullptr,
         std::wstring yestext = L"",
         std::wstring notext = L""
     );
@@ -39,7 +39,7 @@ namespace guiutil {
         Engine& engine,
         const std::wstring& text,
         const std::wstring& memo,
-        const runnable& on_confirm = nullptr,
+        const runnable_t& on_confirm = nullptr,
         std::wstring yestext = L"",
         std::wstring notext = L""
     );

@@ -188,7 +188,7 @@ io::path ContentPack::findPack(
     return io::path("res:content") / name;
 }
 
-ContentPackRuntime::ContentPackRuntime(ContentPack info, scriptenv env)
+ContentPackRuntime::ContentPackRuntime(ContentPack info, script_env_t env)
     : info(std::move(info)), env(std::move(env)) {
 }
 

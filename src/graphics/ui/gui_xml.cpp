@@ -59,7 +59,7 @@ static Gravity gravity_from_string(const std::string& str) {
     return Gravity::none;
 }
 
-static runnable create_runnable(
+static runnable_t create_runnable(
     const UiXmlReader& reader,
     const xml::xmlelement& element,
     const std::string& name
@@ -855,7 +855,7 @@ static std::shared_ptr<UINode> read_iframe(
     return iframe;
 }
 
-UiXmlReader::UiXmlReader(gui::GUI& gui, scriptenv&& env) : gui(gui), env(std::move(env)) {
+UiXmlReader::UiXmlReader(gui::GUI& gui, script_env_t&& env) : gui(gui), env(std::move(env)) {
     contextStack.emplace("");
     add("image", read_image);
     add("canvas", read_canvas);
@@ -941,7 +941,7 @@ const std::string& UiXmlReader::getFilename() const {
     return filename;
 }
 
-const scriptenv& UiXmlReader::getEnvironment() const {
+const script_env_t& UiXmlReader::getEnvironment() const {
     return env;
 }
 

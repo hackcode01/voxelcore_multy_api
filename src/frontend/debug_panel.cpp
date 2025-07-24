@@ -35,7 +35,7 @@
 
 using namespace gui;
 
-static std::shared_ptr<Label> create_label(GUI& gui, wstringsupplier supplier) {
+static std::shared_ptr<Label> create_label(GUI& gui, wstring_supplier_t supplier) {
     auto label = std::make_shared<Label>(gui, L"-");
     label->textSupplier(std::move(supplier));
     return label;

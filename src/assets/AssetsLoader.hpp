@@ -31,9 +31,9 @@ struct AssetCfg {
 
 struct LayoutCfg : AssetCfg {
     gui::GUI* gui;
-    scriptenv env;
+    script_env_t env;
 
-    LayoutCfg(gui::GUI* gui, scriptenv env) : gui(gui), env(std::move(env)) {
+    LayoutCfg(gui::GUI* gui, script_env_t env) : gui(gui), env(std::move(env)) {
     }
 };
 
@@ -107,7 +107,7 @@ public:
     /// @throws assetload::error
     void loadNext();
 
-    std::shared_ptr<Task> startTask(runnable onDone);
+    std::shared_ptr<Task> startTask(runnable_t onDone);
 
     const ResPaths& getPaths() const;
     aloader_func getLoader(AssetType tag);

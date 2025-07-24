@@ -11,7 +11,7 @@ TEST(TOML, EncodeDecode) {
     const std::string name = "TOML-encoder";
     const int bytesSize = 20;
     const int year = 2019;
-    const float score = 3.141592;
+    const float score = 3.141592f;
     const bool visible = true;
     dv::objects::Bytes srcBytes(bytesSize);
     for (int i = 0; i < bytesSize; i ++) {

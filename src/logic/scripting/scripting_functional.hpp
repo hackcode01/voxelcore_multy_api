@@ -11,80 +11,80 @@ namespace scripting {
     using common_func = std::function<dv::value(const std::vector<dv::value>&)>;
     using value_to_string_func = std::function<std::string(const dv::value&)>;
 
-    runnable create_runnable(
-        const scriptenv& env,
+    runnable_t create_runnable(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    key_handler create_key_handler(
-        const scriptenv& env,
+    key_handler_t create_key_handler(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    stringconsumer create_string_consumer(
-        const scriptenv& env,
+    string_consumer_t create_string_consumer(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    wstringconsumer create_wstring_consumer(
-        const scriptenv& env,
+    wstring_consumer_t create_wstring_consumer(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    wstringsupplier create_wstring_supplier(
-        const scriptenv& env,
+    wstring_supplier_t create_wstring_supplier(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    wstringchecker create_wstring_validator(
-        const scriptenv& env,
+    wstring_checker_t create_wstring_validator(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    boolconsumer create_bool_consumer(
-        const scriptenv& env,
+    bool_consumer_t create_bool_consumer(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    boolsupplier create_bool_supplier(
-        const scriptenv& env,
+    bool_supplier_t create_bool_supplier(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    doubleconsumer create_number_consumer(
-        const scriptenv& env,
+    double_consumer_t create_number_consumer(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    doublesupplier create_number_supplier(
-        const scriptenv& env,
+    double_supplier_t create_number_supplier(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    int_array_consumer create_int_array_consumer(
-        const scriptenv& env,
+    int_array_consumer_t create_int_array_consumer(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
-    vec2supplier create_vec2_supplier(
-        const scriptenv& env,
+    vec2_supplier_t create_vec2_supplier(
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );
 
     value_to_string_func create_tostring(
-        const scriptenv& env,
+        const script_env_t& env,
         const std::string& src,
         const std::string& file = "[string]"
     );

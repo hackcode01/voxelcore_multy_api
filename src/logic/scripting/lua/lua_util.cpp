@@ -239,7 +239,7 @@ static std::shared_ptr<std::string> create_lambda_handler(State* L) {
     );
 }
 
-runnable lua::create_runnable(State* L) {
+runnable_t lua::create_runnable(State* L) {
     auto funcptr = create_lambda_handler(L);
     return [=]() {
         auto L = lua::get_main_state();
@@ -250,7 +250,7 @@ runnable lua::create_runnable(State* L) {
     };
 }
 
-KeyCallback lua::create_simple_handler(State* L) {
+KeyCallback_t lua::create_simple_handler(State* L) {
     auto funcptr = create_lambda_handler(L);
     return [=]() -> bool {
         if (!get_from(L, LAMBDAS_TABLE, *funcptr, false))

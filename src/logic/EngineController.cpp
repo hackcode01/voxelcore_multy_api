@@ -59,7 +59,7 @@ std::shared_ptr<Task> create_converter(
     const std::shared_ptr<WorldFiles>& worldFiles,
     const Content* content,
     const std::shared_ptr<ContentReport>& report,
-    const runnable& postRunnable
+    const runnable_t& postRunnable
 ) {
     ConvertMode mode;
     if (report->isUpgradeRequired()) {
@@ -108,7 +108,7 @@ static ConfirmRequest create_convert_request(
     return request;
 }
 
-static void call(Engine& engine, runnable func) {
+static void call(Engine& engine, runnable_t func) {
     if (engine.isHeadless()) {
         func();
     } else {
@@ -192,7 +192,7 @@ void EngineController::onMissingContent(
 }
 
 static void confirm(
-    Engine& engine, ConfirmRequest request, bool confirmed, runnable callback
+    Engine& engine, ConfirmRequest request, bool confirmed, runnable_t callback
 ) {
     if (confirmed || engine.isHeadless()) {
         callback();
@@ -355,7 +355,7 @@ void EngineController::reconfigPacks(
     auto& contentControl = engine.getContentControl();
     auto content = contentControl.get();
 
-    runnable removeFunc = [this, controller, packsToAdd, packsToRemove, &contentControl]() {
+    runnable_t removeFunc = [this, controller, packsToAdd, packsToRemove, &contentControl]() {
         if (controller == nullptr) {
             try {
                 reconfig_packs_outside(contentControl, packsToAdd, packsToRemove);

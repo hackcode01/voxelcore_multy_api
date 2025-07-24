@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __MARKDOWN_HPP__
+#define __MARKDOWN_HPP__
 
 #include <string>
 #include <memory>
@@ -41,3 +42,5 @@ namespace markdown {
         return ss.str();
     }
 }
+
+#endif

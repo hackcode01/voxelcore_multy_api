@@ -79,10 +79,10 @@ struct Rigidbody {
 struct UserComponent {
     std::string name;
     EntityFuncsSet funcsset;
-    scriptenv env;
+    script_env_t env;
 
     UserComponent(
-        const std::string& name, EntityFuncsSet funcsset, scriptenv env
+        const std::string& name, EntityFuncsSet funcsset, script_env_t env
     )
         : name(name), funcsset(funcsset), env(env) {
     }

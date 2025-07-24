@@ -116,11 +116,11 @@ struct WorldFuncsSet {
 class ContentPackRuntime {
     ContentPack info;
     ContentPackStats stats {};
-    scriptenv env;
+    script_env_t env;
 public:
     WorldFuncsSet worldfuncsset {};
 
-    ContentPackRuntime(ContentPack info, scriptenv env);
+    ContentPackRuntime(ContentPack info, script_env_t env);
     ~ContentPackRuntime();
 
     inline const ContentPackStats& getStats() const {
@@ -139,7 +139,7 @@ public:
         return info;
     }
 
-    inline scriptenv getEnvironment() const {
+    inline script_env_t getEnvironment() const {
         return env;
     }
 };

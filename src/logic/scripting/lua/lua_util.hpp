@@ -593,8 +593,8 @@ namespace lua {
         return call_nothrow(L, 0);
     }
 
-    runnable create_runnable(lua::State*);
-    KeyCallback create_simple_handler(lua::State*);
+    runnable_t create_runnable(lua::State*);
+    KeyCallback_t create_simple_handler(lua::State*);
     scripting::common_func create_lambda(lua::State*);
     scripting::common_func create_lambda_nothrow(lua::State*);
 

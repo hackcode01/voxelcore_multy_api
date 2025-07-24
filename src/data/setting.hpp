@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SETTINGS_DATA_HPP__
+#define __SETTINGS_DATA_HPP__
 
 #include <limits>
 #include <string>
@@ -33,7 +34,7 @@ public:
 template <class T>
 class ObservableSetting : public Setting {
     int nextid = 1;
-    std::unordered_map<int, consumer<T>> observers;
+    std::unordered_map<int, consumer_t<T>> observers;
 protected:
     T initial;
     T value;
@@ -42,7 +43,7 @@ public:
         : Setting(format), initial(value), value(value) {
     }
 
-    ObserverHandler observe(consumer<T> callback, bool callOnStart = false) {
+    ObserverHandler observe(consumer_t<T> callback, bool callOnStart = false) {
         const int id = nextid++;
         observers.emplace(id, callback);
         if (callOnStart) {
@@ -177,3 +178,5 @@ public:
 
     virtual std::string toString() const override;
 };
+
+#endif

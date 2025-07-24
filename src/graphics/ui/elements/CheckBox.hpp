@@ -9,8 +9,8 @@ namespace gui {
     class CheckBox : public UINode {
     protected:
         glm::vec4 checkColor {1.0f, 1.0f, 1.0f, 0.4f};
-        boolsupplier supplier = nullptr;
-        boolconsumer consumer = nullptr;
+        bool_supplier_t supplier = nullptr;
+        bool_consumer_t consumer = nullptr;
         bool checked = false;
     public:
         explicit CheckBox(GUI& gui, bool checked = false);
@@ -20,8 +20,8 @@ namespace gui {
 
         virtual void mouseRelease(int x, int y) override;
 
-        virtual void setSupplier(boolsupplier supplier);
-        virtual void setConsumer(boolconsumer consumer);
+        virtual void setSupplier(bool_supplier_t supplier);
+        virtual void setConsumer(bool_consumer_t consumer);
 
         virtual CheckBox* setChecked(bool flag);
 
@@ -43,11 +43,11 @@ namespace gui {
             bool checked = false
         );
 
-        virtual void setSupplier(boolsupplier supplier) {
+        virtual void setSupplier(bool_supplier_t supplier) {
             checkbox->setSupplier(std::move(supplier));
         }
 
-        virtual void setConsumer(boolconsumer consumer) {
+        virtual void setConsumer(bool_consumer_t consumer) {
             checkbox->setConsumer(std::move(consumer));
         }
 

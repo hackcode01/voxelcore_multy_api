@@ -34,7 +34,7 @@ namespace gui {
     protected:
         std::wstring text;
         std::string fontName;
-        wstringsupplier supplier = nullptr;
+        wstring_supplier_t supplier = nullptr;
         
         /// @brief Lines interval multiplier
         float lineInterval = 1.5f;
@@ -110,7 +110,7 @@ namespace gui {
 
         virtual void draw(const DrawContext& pctx, const Assets& assets) override;
 
-        virtual void textSupplier(wstringsupplier supplier);
+        virtual void textSupplier(wstring_supplier_t supplier);
 
         virtual void setAutoResize(bool flag);
         virtual bool isAutoResize() const;

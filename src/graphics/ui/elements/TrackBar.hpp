@@ -6,9 +6,9 @@ namespace gui {
     class TrackBar : public UINode {
     protected:
         glm::vec4 trackColor {1.0f, 1.0f, 1.0f, 0.4f};
-        doublesupplier supplier = nullptr;
-        doubleconsumer consumer = nullptr;
-        doubleconsumer subconsumer = nullptr;
+        double_supplier_t supplier = nullptr;
+        double_consumer_t consumer = nullptr;
+        double_consumer_t subconsumer = nullptr;
         double min;
         double max;
         double value;
@@ -26,9 +26,9 @@ namespace gui {
         );
         virtual void draw(const DrawContext& pctx, const Assets& assets) override;
 
-        virtual void setSupplier(doublesupplier);
-        virtual void setConsumer(doubleconsumer);
-        virtual void setSubConsumer(doubleconsumer);
+        virtual void setSupplier(double_supplier_t);
+        virtual void setConsumer(double_consumer_t);
+        virtual void setSubConsumer(double_consumer_t);
 
         virtual void mouseMove(int x, int y) override;
         virtual void mouseRelease(int x, int y) override;

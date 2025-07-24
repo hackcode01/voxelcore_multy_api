@@ -133,11 +133,11 @@ std::unique_ptr<Process> scripting::start_coroutine(
     return nullptr;
 }
 
-[[nodiscard]] scriptenv scripting::get_root_environment() {
+[[nodiscard]] script_env_t scripting::get_root_environment() {
     return std::make_shared<int>(0);
 }
 
-[[nodiscard]] scriptenv scripting::create_pack_environment(
+[[nodiscard]] script_env_t scripting::create_pack_environment(
     const ContentPack& pack
 ) {
     auto L = lua::get_main_state();
@@ -154,8 +154,8 @@ std::unique_ptr<Process> scripting::start_coroutine(
     });
 }
 
-[[nodiscard]] scriptenv scripting::create_environment(
-    const scriptenv& parent
+[[nodiscard]] script_env_t scripting::create_environment(
+    const script_env_t& parent
 ) {
     auto L = lua::get_main_state();
     int id = lua::create_environment(L, (parent ? *parent : 0));
@@ -170,8 +170,8 @@ std::unique_ptr<Process> scripting::start_coroutine(
     });
 }
 
-[[nodiscard]] scriptenv scripting::create_doc_environment(
-    const scriptenv& parent, const std::string& name
+[[nodiscard]] script_env_t scripting::create_doc_environment(
+    const script_env_t& parent, const std::string& name
 ) {
     auto L = lua::get_main_state();
     int id = lua::create_environment(L, *parent);
@@ -197,8 +197,8 @@ std::unique_ptr<Process> scripting::start_coroutine(
     });
 }
 
-[[nodiscard]] static scriptenv create_component_environment(
-    const scriptenv& parent, int entityIdx, const std::string& name
+[[nodiscard]] static script_env_t create_component_environment(
+    const script_env_t& parent, int entityIdx, const std::string& name
 ) {
     auto L = lua::get_main_state();
     int id = lua::create_environment(L, *parent);
@@ -555,7 +555,7 @@ bool scripting::on_item_break_block(
 }
 
 dv::value scripting::get_component_value(
-    const scriptenv& env, const std::string& name
+    const script_env_t& env, const std::string& name
 ) {
     auto L = lua::get_main_state();
     lua::pushenv(L, *env);
@@ -637,7 +637,7 @@ void scripting::on_entity_spawn(
 }
 
 static void process_entity_callback(
-    const scriptenv& env,
+    const script_env_t& env,
     const std::string& name,
     std::function<int(lua::State*)> args
 ) {
@@ -853,7 +853,7 @@ int scripting::get_values_on_stack() {
 }
 
 void scripting::load_content_script(
-    const scriptenv& senv,
+    const script_env_t& senv,
     const std::string& prefix,
     const io::path& file,
     const std::string& fileName,
@@ -880,7 +880,7 @@ void scripting::load_content_script(
 }
 
 void scripting::load_content_script(
-    const scriptenv& senv,
+    const script_env_t& senv,
     const std::string& prefix,
     const io::path& file,
     const std::string& fileName,
@@ -909,7 +909,7 @@ void scripting::load_entity_component(
 }
 
 void scripting::load_world_script(
-    const scriptenv& senv,
+    const script_env_t& senv,
     const std::string& prefix,
     const io::path& file,
     const std::string& fileName,
@@ -947,7 +947,7 @@ void scripting::load_world_script(
 }
 
 void scripting::load_layout_script(
-    const scriptenv& senv,
+    const script_env_t& senv,
     const std::string& prefix,
     const io::path& file,
     const std::string& fileName,

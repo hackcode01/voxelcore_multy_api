@@ -147,7 +147,7 @@ std::shared_ptr<Task> WorldConverter::startTask(
     const std::shared_ptr<WorldFiles>& worldFiles,
     const Content* content,
     const std::shared_ptr<ContentReport>& report,
-    const runnable& onDone,
+    const runnable_t& onDone,
     ConvertMode mode,
     bool multithreading
 ) {
@@ -272,7 +272,7 @@ void WorldConverter::convertNext() {
     convert(task);
 }
 
-void WorldConverter::setOnComplete(runnable callback) {
+void WorldConverter::setOnComplete(runnable_t callback) {
     this->onComplete = std::move(callback);
 }
 

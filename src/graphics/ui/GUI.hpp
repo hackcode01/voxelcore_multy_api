@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __GUI_HPP__
+#define __GUI_HPP__
 
 #include "delegates.hpp"
 
@@ -74,7 +75,7 @@ namespace gui {
 
         std::unique_ptr<Camera> uicamera;
         std::shared_ptr<Menu> menu;
-        std::queue<runnable> postRunnables;
+        std::queue<runnable_t> postRunnables;
 
         PageLoaderFunc pagesLoader;
 
@@ -156,7 +157,7 @@ namespace gui {
 
         void onAssetsLoad(Assets* assets);
 
-        void postRunnable(const runnable& callback);
+        void postRunnable(const runnable_t& callback);
 
         void setDoubleClickDelay(float delay);
         float getDoubleClickDelay() const;
@@ -169,3 +170,5 @@ namespace gui {
         Engine& getEngine();
     };
 }
+
+#endif

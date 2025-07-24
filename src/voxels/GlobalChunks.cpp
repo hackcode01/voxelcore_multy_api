@@ -25,7 +25,7 @@ GlobalChunks::GlobalChunks(Level& level)
     chunksMap.max_load_factor(CHUNKS_MAP_MAX_LOAD_FACTOR);
 }
 
-void GlobalChunks::setOnUnload(consumer<Chunk&> onUnload) {
+void GlobalChunks::setOnUnload(consumer_t<Chunk&> onUnload) {
     this->onUnload = std::move(onUnload);
 }
 

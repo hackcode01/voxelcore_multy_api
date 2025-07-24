@@ -24,7 +24,7 @@ static debug::Logger logger("generator-scripting");
 class LuaGeneratorScript : public GeneratorScript {
     State* L;
     const GeneratorDef& def;
-    scriptenv env = nullptr;
+    script_env_t env = nullptr;
 
     io::path file;
     std::string dirPath;

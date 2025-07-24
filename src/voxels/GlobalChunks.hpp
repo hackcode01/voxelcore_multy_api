@@ -32,12 +32,12 @@ class GlobalChunks {
     std::unordered_map<glm::ivec2, std::shared_ptr<Chunk>> pinnedChunks;
     std::unordered_map<ptrdiff_t, int> refCounters;
 
-    consumer<Chunk&> onUnload;
+    consumer_t<Chunk&> onUnload;
 public:
     GlobalChunks(Level& level);
     ~GlobalChunks() = default;
 
-    void setOnUnload(consumer<Chunk&> onUnload);
+    void setOnUnload(consumer_t<Chunk&> onUnload);
 
     std::shared_ptr<Chunk> fetch(int x, int z);
     std::shared_ptr<Chunk> create(int x, int z);

@@ -312,7 +312,7 @@ public:
         return bindings;
     }
 
-    ObserverHandler addKeyCallback(Keycode key, KeyCallback callback) override {
+    ObserverHandler addKeyCallback(Keycode key, KeyCallback_t callback) override {
         return keyCallbacks[key].add(std::move(callback));
     }
 

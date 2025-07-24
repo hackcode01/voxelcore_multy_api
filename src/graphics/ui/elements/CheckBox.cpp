@@ -32,11 +32,11 @@ void CheckBox::mouseRelease(int, int) {
     }
 }
 
-void CheckBox::setSupplier(boolsupplier supplier) {
+void CheckBox::setSupplier(bool_supplier_t supplier) {
     this->supplier = std::move(supplier);
 }
 
-void CheckBox::setConsumer(boolconsumer consumer) {
+void CheckBox::setConsumer(bool_consumer_t consumer) {
     this->consumer = std::move(consumer);
 }
 

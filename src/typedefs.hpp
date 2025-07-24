@@ -1,9 +1,10 @@
-#pragma once
+#ifndef __TYPEDEFS_HPP__
+#define __TYPEDEFS_HPP__
 
 #include <memory>
 #include <cstdint>
 
-using scriptenv = std::shared_ptr<int>;
+using script_env_t = std::shared_ptr<int_fast32_t>;
 
 class ObserverHandler;
 
@@ -26,3 +27,5 @@ using entityid_t = uint64_t;
 using itemcount_t = uint32_t;
 using blockstate_t = uint16_t;
 using light_t = uint16_t;
+
+#endif

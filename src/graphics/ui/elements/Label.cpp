@@ -267,7 +267,7 @@ void Label::draw(const DrawContext& pctx, const Assets& assets) {
     }
 }
 
-void Label::textSupplier(wstringsupplier supplier) {
+void Label::textSupplier(wstring_supplier_t supplier) {
     this->supplier = std::move(supplier);
 }
 
