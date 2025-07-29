@@ -45,8 +45,8 @@ ContentControl* scripting::content_control = nullptr;
 BlocksController* scripting::blocks = nullptr;
 LevelController* scripting::controller = nullptr;
 
-void scripting::load_script(const io::path& name, bool throwable) {
-    io::path file = io::path("res:scripts") / name;
+void scripting::load_script(const io::Path& name, bool throwable) {
+    io::Path file = io::Path("res:scripts") / name;
     std::string src = io::read_string(file);
     auto L = lua::get_main_state();
     lua::loadbuffer(L, 0, src, "core:scripts/"+name.string());
@@ -60,7 +60,7 @@ void scripting::load_script(const io::path& name, bool throwable) {
 int scripting::load_script(
     int env,
     const std::string& type,
-    const io::path& file,
+    const io::Path& file,
     const std::string& fileName
 ) {
     std::string src = io::read_string(file);
@@ -73,8 +73,8 @@ void scripting::initialize(Engine* engine) {
     scripting::content_control = &engine->getContentControl();
     lua::initialize(engine->getPaths(), engine->getCoreParameters());
 
-    load_script(io::path("stdlib.lua"), true);
-    load_script(io::path("classes.lua"), true);
+    load_script(io::Path("stdlib.lua"), true);
+    load_script(io::Path("classes.lua"), true);
 }
 
 class LuaCoroutine : public Process {
@@ -117,7 +117,7 @@ public:
 };
 
 std::unique_ptr<Process> scripting::start_coroutine(
-    const io::path& script
+    const io::Path& script
 ) {
     auto L = lua::get_main_state();
     if (lua::getglobal(L, "__vc_start_coroutine")) {
@@ -855,7 +855,7 @@ int scripting::get_values_on_stack() {
 void scripting::load_content_script(
     const script_env_t& senv,
     const std::string& prefix,
-    const io::path& file,
+    const io::Path& file,
     const std::string& fileName,
     BlockFuncsSet& funcsset
 ) {
@@ -882,7 +882,7 @@ void scripting::load_content_script(
 void scripting::load_content_script(
     const script_env_t& senv,
     const std::string& prefix,
-    const io::path& file,
+    const io::Path& file,
     const std::string& fileName,
     ItemFuncsSet& funcsset
 ) {
@@ -899,7 +899,7 @@ void scripting::load_content_script(
 }
 
 void scripting::load_entity_component(
-    const std::string& name, const io::path& file, const std::string& fileName
+    const std::string& name, const io::Path& file, const std::string& fileName
 ) {
     auto L = lua::get_main_state();
     std::string src = io::read_string(file);
@@ -911,7 +911,7 @@ void scripting::load_entity_component(
 void scripting::load_world_script(
     const script_env_t& senv,
     const std::string& prefix,
-    const io::path& file,
+    const io::Path& file,
     const std::string& fileName,
     WorldFuncsSet& funcsset
 ) {
@@ -949,7 +949,7 @@ void scripting::load_world_script(
 void scripting::load_layout_script(
     const script_env_t& senv,
     const std::string& prefix,
-    const io::path& file,
+    const io::Path& file,
     const std::string& fileName,
     uidocscript& script
 ) {

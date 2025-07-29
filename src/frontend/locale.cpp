@@ -64,7 +64,7 @@ namespace {
 }
 
 static void load_locales_info(std::string& fallback) {
-    auto file = io::path("res:") / langs::TEXTS_FOLDER / "langs.json";
+    auto file = io::Path("res:") / langs::TEXTS_FOLDER / "langs.json";
     auto root = io::read_json(file);
 
     ::locales_info.clear();
@@ -90,11 +90,11 @@ static void load_locales_info(std::string& fallback) {
 
 static void load(
     const std::string& locale,
-    const std::vector<io::path>& roots,
+    const std::vector<io::Path>& roots,
     Lang& lang
 ) {
-    io::path filename = io::path(TEXTS_FOLDER) / (locale + LANG_FILE_EXT);
-    io::path core_file = io::path("res:") / filename;
+    io::Path filename = io::Path(TEXTS_FOLDER) / (locale + LANG_FILE_EXT);
+    io::Path core_file = io::Path("res:") / filename;
 
     if (io::is_regular_file(core_file)) {
         std::string text = io::read_string(core_file);
@@ -102,7 +102,7 @@ static void load(
         reader.read(lang, "");
     }
     for (auto root : roots) {
-        io::path file = root / filename;
+        io::Path file = root / filename;
         if (io::is_regular_file(file)) {
             std::string text = io::read_string(file);
             Reader reader(file.string(), text);
@@ -113,7 +113,7 @@ static void load(
 static void load(
     const std::string& locale,
     const std::string& fallback,
-    const std::vector<io::path>& roots
+    const std::vector<io::Path>& roots
 ) {
     auto lang = std::make_unique<Lang>(locale);
     load(fallback, roots, *lang.get());
@@ -157,7 +157,7 @@ std::string langs::locale_by_envlocale(const std::string& envlocale){
 
 void langs::setup(
     std::string locale,
-    const std::vector<io::path>& roots
+    const std::vector<io::Path>& roots
 ) {
     std::string fallback = langs::FALLBACK_DEFAULT;
     load_locales_info(fallback);

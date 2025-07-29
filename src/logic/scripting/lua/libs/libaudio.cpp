@@ -67,7 +67,7 @@ inline audio::speakerid_t play_stream(
     if (channel == -1) {
         return 0;
     }
-    io::path file;
+    io::Path file;
     if (std::strchr(filename, ':')) {
         file = std::string(filename);
     } else {

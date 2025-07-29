@@ -7,7 +7,7 @@
 
 PacksManager::PacksManager() = default;
 
-void PacksManager::setSources(std::vector<io::path> sources) {
+void PacksManager::setSources(std::vector<io::Path> sources) {
     this->sources = std::move(sources);
 }
 
@@ -42,7 +42,7 @@ std::vector<ContentPack> PacksManager::getAll(
     for (auto& name : names) {
         auto found = packs.find(name);
         if (found == packs.end()) {
-            throw contentpack_error(name, io::path(), "pack not found");
+            throw contentpack_error(name, io::Path(), "pack not found");
         }
         packsList.push_back(found->second);
     }
@@ -92,7 +92,7 @@ static bool resolve_dependencies(
         bool exists = found != packs.end();
         if (!exists && dep.level == DependencyLevel::required) {
             throw contentpack_error(
-                dep.id, io::path(), "dependency of '" + pack->id + "'"
+                dep.id, io::Path(), "dependency of '" + pack->id + "'"
             );
         }
         if (!exists) {
@@ -127,7 +127,7 @@ std::vector<std::string> PacksManager::assemble(
     for (auto& name : names) {
         auto found = packs.find(name);
         if (found == packs.end()) {
-            throw contentpack_error(name, io::path(), "pack not found");
+            throw contentpack_error(name, io::Path(), "pack not found");
         }
         queue.push(&found->second);
     }

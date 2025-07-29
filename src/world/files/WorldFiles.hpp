@@ -24,25 +24,25 @@ struct WorldInfo;
 struct DebugSettings;
 
 class WorldFiles {
-    io::path directory;
+    io::Path directory;
     WorldRegions regions;
 
     bool generatorTestMode = false;
     bool doWriteLights = true;
 
-    io::path getWorldFile() const;
-    io::path getPacksFile() const;
+    io::Path getWorldFile() const;
+    io::Path getPacksFile() const;
 
     void writeWorldInfo(const WorldInfo& info);
     void writeIndices(const ContentIndices* indices);
 public:
-    WorldFiles(const io::path& directory);
-    WorldFiles(const io::path& directory, const DebugSettings& settings);
+    WorldFiles(const io::Path& directory);
+    WorldFiles(const io::Path& directory, const DebugSettings& settings);
     ~WorldFiles();
 
-    io::path getPlayerFile() const;
-    io::path getIndicesFile() const;
-    io::path getResourcesFile() const;
+    io::Path getPlayerFile() const;
+    io::Path getIndicesFile() const;
+    io::Path getResourcesFile() const;
     void createDirectories();
 
     std::optional<WorldInfo> readWorldInfo();
@@ -67,7 +67,7 @@ public:
     void removeIndices(const std::vector<std::string>& packs);
 
     /// @return world folder
-    io::path getFolder() const;
+    io::Path getFolder() const;
 
     WorldRegions& getRegions() {
         return regions;

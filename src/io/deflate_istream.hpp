@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __DEFLATE_ISTREAM_HPP__
+#define __DEFLATE_ISTREAM_HPP__
 
 #define ZLIB_CONST
 #include <zlib.h>
@@ -97,3 +98,5 @@ private:
     std::unique_ptr<std::istream> source;
     deflate_istreambuf buffer;
 };
+
+#endif

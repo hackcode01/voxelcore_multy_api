@@ -176,7 +176,7 @@ void Engine::initialize(CoreParameters coreParameters) {
 }
 
 void Engine::loadSettings() {
-    io::path settings_file = EnginePaths::SETTINGS_FILE;
+    io::Path settings_file = EnginePaths::SETTINGS_FILE;
     if (io::is_regular_file(settings_file)) {
         logger.info() << "loading settings";
         std::string text = io::read_string(settings_file);
@@ -190,7 +190,7 @@ void Engine::loadSettings() {
 }
 
 void Engine::loadControls() {
-    io::path controls_file = EnginePaths::CONTROLS_FILE;
+    io::Path controls_file = EnginePaths::CONTROLS_FILE;
     if (io::is_regular_file(controls_file)) {
         logger.info() << "loading controls";
         std::string text = io::read_string(controls_file);
@@ -216,7 +216,7 @@ void Engine::updateHotkeys() {
 void Engine::saveScreenshot() {
     auto image = m_window->takeScreenshot();
     image->flipY();
-    io::path filename = m_paths.getNewScreenshotFile("png");
+    io::Path filename = m_paths.getNewScreenshotFile("png");
     imageio::write(filename.string(), image.get());
     logger.info() << "saved screenshot as " << filename.string();
 }
@@ -341,7 +341,7 @@ void Engine::loadAssets() {
 }
 
 void Engine::loadProject() {
-    io::path projectFile = "project:project.toml";
+    io::Path projectFile = "project:project.toml";
     m_project = std::make_unique<Project>();
     m_project->deserialize(io::read_object(projectFile));
     logger.info() << "loaded project " << util::quote(m_project->name);

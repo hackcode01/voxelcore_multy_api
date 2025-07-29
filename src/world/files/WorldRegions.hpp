@@ -55,7 +55,7 @@ struct regfile {
     int version;
     bool inUse = false;
 
-    regfile(io::path filename);
+    regfile(io::Path filename);
     regfile(const regfile&) = delete;
 
     std::unique_ptr<ubyte[]> read(int index, uint32_t& size, uint32_t& srcSize);
@@ -118,7 +118,7 @@ struct RegionsLayer {
     RegionLayerIndex layer;
     
     /// @brief Regions layer folder
-    io::path folder;
+    io::Path folder;
 
     compression::Method compression = compression::Method::NONE;
 
@@ -143,7 +143,7 @@ struct RegionsLayer {
     WorldRegion* getRegion(int x, int z);
     WorldRegion* getOrCreateRegion(int x, int z);
 
-    io::path getRegionFilePath(int x, int z) const;
+    io::Path getRegionFilePath(int x, int z) const;
 
     /// @brief Get chunk data. Read from file if not loaded yet.
     /// @param x chunk x coord
@@ -175,14 +175,14 @@ struct RegionsLayer {
 
 class WorldRegions {
     /// @brief World directory
-    io::path directory;
+    io::Path directory;
 
     RegionsLayer layers[REGION_LAYERS_COUNT] {};
 public:
     bool generatorTestMode = false;
     bool doWriteLights = true;
 
-    WorldRegions(const io::path& directory);
+    WorldRegions(const io::Path& directory);
     WorldRegions(const WorldRegions&) = delete;
     ~WorldRegions();
 
@@ -238,9 +238,9 @@ public:
     /// @brief Get regions directory by layer index
     /// @param layerid layer index
     /// @return directory path
-    const io::path& getRegionsFolder(RegionLayerIndex layerid) const;
+    const io::Path& getRegionsFolder(RegionLayerIndex layerid) const;
 
-    io::path getRegionFilePath(RegionLayerIndex layerid, int x, int z) const;
+    io::Path getRegionFilePath(RegionLayerIndex layerid, int x, int z) const;
 
     /// @brief Write all region layers
     void writeAll();

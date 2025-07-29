@@ -36,7 +36,7 @@ static int l_create_fragment(lua::State* L) {
 }
 
 static int l_load_fragment(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     if (!io::exists(path)) {
         throw std::runtime_error("file "+path.string()+" does not exist");
     }

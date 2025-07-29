@@ -35,7 +35,7 @@ namespace scripting {
     void load_hud_script(
         const script_env_t& env,
         const std::string& packid,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName
     );
 

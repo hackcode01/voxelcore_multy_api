@@ -26,7 +26,7 @@ void GLSLExtension::loadHeader(const std::string& name) {
     if (paths == nullptr) {
         return;
     }
-    io::path file = paths->find("shaders/lib/" + name + ".glsl");
+    io::Path file = paths->find("shaders/lib/" + name + ".glsl");
     std::string source = io::read_string(file);
     addHeader(name, {});
     addHeader(name, process(file, source, true));
@@ -85,7 +85,7 @@ void GLSLExtension::setDefined(const std::string& name, bool defined) {
 }
 
 inline std::runtime_error parsing_error(
-    const io::path& file, uint linenum, const std::string& message
+    const io::Path& file, uint linenum, const std::string& message
 ) {
     return std::runtime_error(
         "file " + file.string() + ": " + message + " at line " +
@@ -290,7 +290,7 @@ private:
 };
 
 GLSLExtension::ProcessingResult GLSLExtension::process(
-    const io::path& file, const std::string& source, bool header
+    const io::Path& file, const std::string& source, bool header
 ) {
     std::string filename = file.string();
     GLSLParser parser(*this, filename, source, header);

@@ -14,7 +14,7 @@ class Input;
 struct Project;
 
 namespace io {
-    class path;
+    class Path;
 }
 
 class ContentControl {

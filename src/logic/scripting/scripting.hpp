@@ -66,7 +66,7 @@ namespace scripting {
     void process_post_runnables();
 
     std::unique_ptr<Process> start_coroutine(
-        const io::path& script
+        const io::Path& script
     );
 
     void on_world_load(LevelController* controller);
@@ -155,7 +155,7 @@ namespace scripting {
     void load_content_script(
         const script_env_t& env,
         const std::string& prefix,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName,
         BlockFuncsSet& funcsset
     );
@@ -169,7 +169,7 @@ namespace scripting {
     void load_content_script(
         const script_env_t& env,
         const std::string& prefix,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName,
         ItemFuncsSet& funcsset
     );
@@ -180,13 +180,13 @@ namespace scripting {
     /// @param fileName script file path using the engine format
     void load_entity_component(
         const std::string& name,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName
     );
 
     std::unique_ptr<GeneratorScript> load_generator(
         const GeneratorDef& def,
-        const io::path& file,
+        const io::Path& file,
         const std::string& dirPath
     );
 
@@ -198,7 +198,7 @@ namespace scripting {
     void load_world_script(
         const script_env_t& env,
         const std::string& packid,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName,
         WorldFuncsSet& funcsset
     );
@@ -212,7 +212,7 @@ namespace scripting {
     void load_layout_script(
         const script_env_t& env,
         const std::string& prefix,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName,
         uidocscript& script
     );

@@ -22,7 +22,7 @@ WorldRenderer* scripting::renderer = nullptr;
 PostProcessing* scripting::post_processing = nullptr;
 
 static void load_script(const std::string& name) {
-    auto file = io::path("res:scripts") / name;
+    auto file = io::Path("res:scripts") / name;
     std::string src = io::read_string(file);
     logger.info() << "loading script " << file.string();
 
@@ -96,7 +96,7 @@ void scripting::on_frontend_close() {
 void scripting::load_hud_script(
     const script_env_t& senv,
     const std::string& packid,
-    const io::path& file,
+    const io::Path& file,
     const std::string& fileName
 ) {
     int env = *senv;

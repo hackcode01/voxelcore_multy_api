@@ -119,7 +119,7 @@ public:
     }
 };
 
-std::unique_ptr<audio::PCMStream> wav::create_stream(const io::path& file) {
+std::unique_ptr<audio::PCMStream> wav::create_stream(const io::Path& file) {
     std::ifstream in(io::resolve(file), std::ios::binary);
     if (!in.is_open()) {
         throw std::runtime_error(
@@ -235,7 +235,7 @@ std::unique_ptr<audio::PCMStream> wav::create_stream(const io::path& file) {
 }
 
 std::unique_ptr<audio::PCM> wav::load_pcm(
-    const io::path& file, bool headerOnly
+    const io::Path& file, bool headerOnly
 ) {
     auto stream = wav::create_stream(file);
 

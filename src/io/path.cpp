@@ -4,61 +4,67 @@
 
 using namespace io;
 
-void path::checkValid() const {
-    if (colonPos == std::string::npos) {
-        throw std::runtime_error("path entry point is not specified: " + str);
+void Path::checkValid() const {
+    if (m_colonPosition == std::string::npos) {
+        throw std::runtime_error("path entry point is not specified: " + m_str);
     }
 }
 
-path path::parent() const {
-    size_t length = str.length();
-    while (length && str[length-1] == '/') {
-        length--;
+Path Path::parent() const {
+    size_t length = m_str.length();
+    while (length && m_str[length - 1] == '/') {
+        --length;
     }
-    size_t slashpos = length;
-    slashpos = str.rfind('/', slashpos-1);
-    if (length >= 2 && str.rfind("..") == length - 2) {
+    size_t slashPosition = length;
+    slashPosition = m_str.rfind('/', slashPosition - 1);
+    if (length >= 2 && m_str.rfind("..") == length - 2) {
         return normalized().parent();
     }
-    if (slashpos == std::string::npos) {
-        return colonPos == std::string::npos ? "" : str.substr(0, colonPos+1);
+    if (slashPosition == std::string::npos) {
+        return m_colonPosition == std::string::npos
+                   ? ""
+                   : m_str.substr(0, m_colonPosition + 1);
     }
-    while (slashpos && str[slashpos-1] == '/') {
-        slashpos--;
+    while (slashPosition && m_str[slashPosition - 1] == '/') {
+        slashPosition--;
     }
-    return str.substr(0, slashpos);
+    return m_str.substr(0, slashPosition);
 }
 
-path path::normalized() const {
-    io::path path = pathPart();
+Path Path::normalized() const {
+    io::Path path = pathPart();
 
-    std::stack<io::path> parts;
-    int64_t pos = 0;
-    int64_t prev = pos-1;
-    while (pos < path.str.length()) {
-        pos = path.str.find('/', pos);
-        if (pos == std::string::npos) {
-            parts.push(path.str.substr(prev + 1));
+    std::stack<io::Path> parts;
+    int64_t position = 0;
+    int64_t prevPosition = position - 1;
+    while (position < path.m_str.length()) {
+        position = path.m_str.find('/', position);
+
+        if (position == std::string::npos) {
+            parts.push(path.m_str.substr(prevPosition + 1));
             break;
         }
-        if (pos - prev == 0) {
-            prev = pos;
-            pos = prev + 1;
+
+        if (position - prevPosition == 0) {
+            prevPosition = position;
+            position = prevPosition + 1;
             continue;
         }
-        auto token = path.str.substr(prev + 1, pos - (prev + 1));
-        prev = pos;
+        auto token = path.m_str.substr(prevPosition + 1, position - (prevPosition + 1));
+        prevPosition = position;
+
         if (token == ".") {
             continue;
         } else if (token == "..") {
             if (parts.empty()) {
-                throw access_error("entry-point reached");
+                throw AccessError("entry-point reached");
             }
             parts.pop();
             continue;
         }
         parts.push(std::move(token));
     }
+
     path = "";
     while (!parts.empty()) {
         const auto& token = parts.top();
@@ -69,8 +75,10 @@ path path::normalized() const {
         }
         parts.pop();
     }
-    if (colonPos != std::string::npos) {
-        path = str.substr(0, colonPos+1) + path.string();
+
+    if (m_colonPosition != std::string::npos) {
+        path = m_str.substr(0, m_colonPosition + 1) + path.string();
     }
+
     return path;
 }

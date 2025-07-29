@@ -35,7 +35,7 @@
 
 static debug::Logger logger("level-screen");
 
-inline const io::path CLIENT_FILE = "world:client/environment.json";
+inline const io::Path CLIENT_FILE = "world:client/environment.json";
 
 LevelScreen::LevelScreen(
     Engine& engine, std::unique_ptr<Level> levelPtr, int64_t localPlayer
@@ -125,7 +125,7 @@ void LevelScreen::initializeContent() {
 
 void LevelScreen::initializePack(ContentPackRuntime* pack) {
     const ContentPack& info = pack->getInfo();
-    io::path scriptFile = info.folder / "scripts/hud.lua";
+    io::Path scriptFile = info.folder / "scripts/hud.lua";
     if (io::is_regular_file(scriptFile)) {
         scripting::load_hud_script(
             pack->getEnvironment(),

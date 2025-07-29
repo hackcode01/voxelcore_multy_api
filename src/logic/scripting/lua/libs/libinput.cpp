@@ -124,7 +124,7 @@ static int l_is_pressed(lua::State* L) {
     }
 }
 
-static void reset_pack_bindings(const io::path& packFolder) {
+static void reset_pack_bindings(const io::Path& packFolder) {
     auto configFolder = packFolder / "config";
     auto bindsFile = configFolder / "bindings.toml";
     if (io::is_regular_file(bindsFile)) {

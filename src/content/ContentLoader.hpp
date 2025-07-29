@@ -31,7 +31,7 @@ class ContentLoader {
     void loadGenerator(
         GeneratorDef& def, const std::string& full, const std::string& name
     );
-    static void loadBlockMaterial(BlockMaterial& def, const io::path& file);
+    static void loadBlockMaterial(BlockMaterial& def, const io::Path& file);
     void loadResources(ResourceType type, const dv::value& list);
     void loadResourceAliases(ResourceType type, const dv::value& aliases);
 
@@ -45,7 +45,7 @@ public:
 
     // Refresh pack content.json
     static bool fixPackIndices(
-        const io::path& folder,
+        const io::Path& folder,
         dv::value& indicesRoot,
         const std::string& contentSection
     );

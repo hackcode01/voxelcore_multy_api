@@ -180,7 +180,7 @@ std::shared_ptr<Task> WorldConverter::startTask(
 }
 
 void WorldConverter::upgradeRegion(
-    const io::path& file, int x, int z, RegionLayerIndex layer
+    const io::Path& file, int x, int z, RegionLayerIndex layer
 ) const {
     auto path = wfile->getRegions().getRegionFilePath(layer, x, z);
     auto bytes = io::read_bytes_buffer(path);
@@ -188,7 +188,7 @@ void WorldConverter::upgradeRegion(
     io::write_bytes(path, buffer.data(), buffer.size());
 }
 
-void WorldConverter::convertVoxels(const io::path& file, int x, int z) const {
+void WorldConverter::convertVoxels(const io::Path& file, int x, int z) const {
     logger.info() << "converting voxels region " << x << "_" << z;
     wfile->getRegions().processRegion(x, z, REGION_LAYER_VOXELS,
     [=](std::unique_ptr<ubyte[]> data, uint32_t*) {
@@ -197,14 +197,14 @@ void WorldConverter::convertVoxels(const io::path& file, int x, int z) const {
     });
 }
 
-void WorldConverter::convertInventories(const io::path& file, int x, int z) const {
+void WorldConverter::convertInventories(const io::Path& file, int x, int z) const {
     logger.info() << "converting inventories region " << x << "_" << z;
     wfile->getRegions().processInventories(x, z, [=](Inventory* inventory) {
         inventory->convert(report.get());
     });
 }
 
-void WorldConverter::convertPlayer(const io::path& file) const {
+void WorldConverter::convertPlayer(const io::Path& file) const {
     logger.info() << "converting player " << file.string();
     auto map = io::read_json(file);
     Player::convert(map, report.get());

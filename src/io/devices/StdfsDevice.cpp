@@ -23,7 +23,7 @@ StdfsDevice::StdfsDevice(fs::path root, bool createDirectory)
 }
 
 fs::path StdfsDevice::resolve(std::string_view path) {
-    return root / fs::u8path(io::path(std::string(path)).normalized().string());
+    return root / fs::u8path(io::Path(std::string(path)).normalized().string());
 }
 
 std::unique_ptr<std::ostream> StdfsDevice::write(std::string_view path) {
@@ -48,7 +48,7 @@ size_t StdfsDevice::size(std::string_view path) {
     return fs::file_size(resolve(path));
 }
 
-file_time_type StdfsDevice::lastWriteTime(std::string_view path) {
+file_time_type_t StdfsDevice::lastWriteTime(std::string_view path) {
     return fs::last_write_time(resolve(path));
 }
 
@@ -109,7 +109,7 @@ public:
         it = fs::directory_iterator(this->root);
     }
 
-    bool next(io::path& path) override {
+    bool next(io::Path& path) override {
         if (it == fs::directory_iterator()) {
             return false;
         }

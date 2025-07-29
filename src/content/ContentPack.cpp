@@ -28,7 +28,7 @@ const std::vector<std::string> ContentPack::RESERVED_NAMES = {
 };
 
 contentpack_error::contentpack_error(
-    std::string packId, io::path folder, const std::string& message
+    std::string packId, io::Path folder, const std::string& message
 )
     : std::runtime_error(message),
       packId(std::move(packId)),
@@ -38,15 +38,15 @@ contentpack_error::contentpack_error(
 std::string contentpack_error::getPackId() const {
     return packId;
 }
-io::path contentpack_error::getFolder() const {
+io::Path contentpack_error::getFolder() const {
     return folder;
 }
 
-io::path ContentPack::getContentFile() const {
+io::Path ContentPack::getContentFile() const {
     return folder / CONTENT_FILENAME;
 }
 
-bool ContentPack::is_pack(const io::path& folder) {
+bool ContentPack::is_pack(const io::Path& folder) {
     return io::is_regular_file(folder / PACKAGE_FILENAME);
 }
 
@@ -68,7 +68,7 @@ std::optional<ContentPackStats> ContentPack::loadStats() const {
     return stats;
 }
 
-static void checkContentPackId(const std::string& id, const io::path& folder) {
+static void checkContentPackId(const std::string& id, const io::Path& folder) {
     if (id.length() < 2 || id.length() > 24)
         throw contentpack_error(
             id, folder, "content-pack id length is out of range [2, 24]"
@@ -93,7 +93,7 @@ static void checkContentPackId(const std::string& id, const io::path& folder) {
     }
 }
 
-ContentPack ContentPack::read(const io::path& folder) {
+ContentPack ContentPack::read(const io::Path& folder) {
     auto root = io::read_json(folder / PACKAGE_FILENAME);
     ContentPack pack;
     root.at("id").get(pack.id);
@@ -147,7 +147,7 @@ ContentPack ContentPack::read(const io::path& folder) {
 }
 
 void ContentPack::scanFolder(
-    const io::path& folder, std::vector<ContentPack>& packs
+    const io::Path& folder, std::vector<ContentPack>& packs
 ) {
     if (!io::is_directory(folder)) {
         return;
@@ -166,26 +166,26 @@ void ContentPack::scanFolder(
     }
 }
 
-std::vector<std::string> ContentPack::worldPacksList(const io::path& folder) {
-    io::path listfile = folder / "packs.list";
+std::vector<std::string> ContentPack::worldPacksList(const io::Path& folder) {
+    io::Path listfile = folder / "packs.list";
     if (!io::is_regular_file(listfile)) {
         throw std::runtime_error("missing file 'packs.list'");
     }
     return io::read_list(listfile);
 }
 
-io::path ContentPack::findPack(
-    const EnginePaths* paths, const io::path& worldDir, const std::string& name
+io::Path ContentPack::findPack(
+    const EnginePaths* paths, const io::Path& worldDir, const std::string& name
 ) {
-    io::path folder = worldDir / "content" / name;
+    io::Path folder = worldDir / "content" / name;
     if (io::is_directory(folder)) {
         return folder;
     }
-    folder = io::path("user:content") / name;
+    folder = io::Path("user:content") / name;
     if (io::is_directory(folder)) {
         return folder;
     }
-    return io::path("res:content") / name;
+    return io::Path("res:content") / name;
 }
 
 ContentPackRuntime::ContentPackRuntime(ContentPack info, script_env_t env)

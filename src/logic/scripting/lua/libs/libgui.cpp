@@ -1020,7 +1020,7 @@ static int l_gui_alert(lua::State* L) {
 }
 
 static int l_gui_load_document(lua::State* L) {
-    io::path filename = lua::require_string(L, 1);
+    io::Path filename = lua::require_string(L, 1);
     auto alias = lua::require_string(L, 2);
     auto args = lua::tovalue(L, 3);
     

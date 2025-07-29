@@ -34,7 +34,7 @@ namespace {
         file->read(reinterpret_cast<char*>(&value), sizeof(value));
         value = dataio::le2h(value);
     }
-    file_time_type msdos_to_file_time(uint16_t date, uint16_t time) {
+    file_time_type_t msdos_to_file_time(uint16_t date, uint16_t time) {
         uint16_t year = ((date >> 9) & 0x7F) + 1980;
         uint16_t month = (date >> 5) & 0x0F;
         uint16_t day = date & 0x1F;
@@ -54,12 +54,12 @@ namespace {
 
         std::time_t time_t_value = std::mktime(&time_struct);
         auto time_point = system_clock::from_time_t(time_t_value);
-        return file_time_type::clock::now() + (time_point - system_clock::now());
+        return file_time_type_t::clock::now() + (time_point - system_clock::now());
     }
 
-    uint32_t to_ms_dos_timestamp(const file_time_type& fileTime) {
+    uint32_t to_ms_dos_timestamp(const file_time_type_t& fileTime) {
         auto timePoint = time_point_cast<system_clock::duration>(
-            fileTime - file_time_type::clock::now() + system_clock::now()
+            fileTime - file_time_type_t::clock::now() + system_clock::now()
         );
         std::time_t timeT = system_clock::to_time_t(timePoint);
         std::tm tm = *std::localtime(&timeT);
@@ -174,7 +174,7 @@ ZipFileDevice::ZipFileDevice(
     }
 
     for (auto& [name, _] : entries) {
-        io::path path = name;
+        io::Path path = name;
 
         while (!(path = path.parent()).pathPart().empty()) {
             if (entries.find(path.pathPart()) != entries.end()) {
@@ -244,10 +244,10 @@ size_t ZipFileDevice::size(std::string_view path) {
     return found->second.uncompressedSize;
 }
 
-file_time_type ZipFileDevice::lastWriteTime(std::string_view path) {
+file_time_type_t ZipFileDevice::lastWriteTime(std::string_view path) {
     const auto& found = entries.find(std::string(path));
     if (found == entries.end()) {
-        return file_time_type::min();
+        return file_time_type_t::min();
     }
     return msdos_to_file_time(found->second.modDate, found->second.modTime);
 }
@@ -296,7 +296,7 @@ public:
     ListPathsGenerator(std::vector<std::string> names)
         : names(std::move(names)) {};
 
-    bool next(path& dst) override {
+    bool next(Path& dst) override {
         if (current == names.size()) {
             return false;
         }
@@ -345,7 +345,7 @@ static void write_headers(
     size_t compressed_size,
     uint32_t crc,
     int compression_method,
-    const file_time_type& last_write_time,
+    const file_time_type_t& last_write_time,
     ByteBuilder& central_dir
 ) {
     auto timestamp = to_ms_dos_timestamp(last_write_time);
@@ -386,7 +386,7 @@ static void write_headers(
 
 static size_t write_zip(
     const std::string& root,
-    const path& folder,
+    const Path& folder,
     std::ostream& file,
     ByteBuilder& central_dir
 ) {
@@ -438,7 +438,7 @@ static size_t write_zip(
     return entries;
 }
 
-void io::write_zip(const path& folder, const path& file) {
+void io::write_zip(const Path& folder, const Path& file) {
     ByteBuilder central_dir;
     auto out = io::write(file);
     size_t entries = write_zip(folder.pathPart(), folder, *out, central_dir);

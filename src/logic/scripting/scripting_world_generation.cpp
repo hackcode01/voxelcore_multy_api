@@ -26,13 +26,13 @@ class LuaGeneratorScript : public GeneratorScript {
     const GeneratorDef& def;
     script_env_t env = nullptr;
 
-    io::path file;
+    io::Path file;
     std::string dirPath;
 public:
     LuaGeneratorScript(
         State* L,
         const GeneratorDef& def,
-        const io::path& file,
+        const io::Path& file,
         const std::string& dirPath
     )
         : L(L), def(def), file(file), dirPath(dirPath) {
@@ -257,7 +257,7 @@ public:
 
 std::unique_ptr<GeneratorScript> scripting::load_generator(
     const GeneratorDef& def,
-    const io::path& file,
+    const io::Path& file,
     const std::string& dirPath
 ) {
     auto L = create_state(Engine::getInstance().getPaths(), StateType::GENERATOR);

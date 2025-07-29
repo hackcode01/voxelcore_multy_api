@@ -37,11 +37,11 @@
 
 static debug::Logger logger("world-files");
 
-WorldFiles::WorldFiles(const io::path& directory)
+WorldFiles::WorldFiles(const io::Path& directory)
     : directory(directory), regions(directory) {
 }
 
-WorldFiles::WorldFiles(const io::path& directory, const DebugSettings& settings)
+WorldFiles::WorldFiles(const io::Path& directory, const DebugSettings& settings)
     : WorldFiles(directory) {
     generatorTestMode = settings.generatorTestMode.get();
     doWriteLights = settings.doWriteLights.get();
@@ -56,23 +56,23 @@ void WorldFiles::createDirectories() {
     io::create_directories(directory / "content");
 }
 
-io::path WorldFiles::getPlayerFile() const {
+io::Path WorldFiles::getPlayerFile() const {
     return directory / "player.json";
 }
 
-io::path WorldFiles::getResourcesFile() const {
+io::Path WorldFiles::getResourcesFile() const {
     return directory / "resources.json";
 }
 
-io::path WorldFiles::getWorldFile() const {
+io::Path WorldFiles::getWorldFile() const {
     return directory / WORLD_FILE;
 }
 
-io::path WorldFiles::getIndicesFile() const {
+io::Path WorldFiles::getIndicesFile() const {
     return directory / "indices.json";
 }
 
-io::path WorldFiles::getPacksFile() const {
+io::Path WorldFiles::getPacksFile() const {
     return directory / "packs.list";
 }
 
@@ -148,7 +148,7 @@ void WorldFiles::writeWorldInfo(const WorldInfo& info) {
 }
 
 std::optional<WorldInfo> WorldFiles::readWorldInfo() {
-    io::path file = getWorldFile();
+    io::Path file = getWorldFile();
     if (!io::is_regular_file(file)) {
         logger.warning() << "world.json does not exists";
         return std::nullopt;
@@ -176,7 +176,7 @@ static void read_resources_data(
 }
 
 bool WorldFiles::readResourcesData(const Content& content) {
-    io::path file = getResourcesFile();
+    io::Path file = getResourcesFile();
     if (!io::is_regular_file(file)) {
         logger.warning() << "resources.json does not exists";
         return false;
@@ -194,7 +194,7 @@ bool WorldFiles::readResourcesData(const Content& content) {
 }
 
 void WorldFiles::patchIndicesFile(const dv::value& map) {
-    io::path file = getIndicesFile();
+    io::Path file = getIndicesFile();
     if (!io::is_regular_file(file)) {
         logger.error() << file.name() << " does not exists";
         return;
@@ -232,6 +232,6 @@ void WorldFiles::removeIndices(const std::vector<std::string>& packs) {
     io::write_json(getIndicesFile(), root);
 }
 
-io::path WorldFiles::getFolder() const {
+io::Path WorldFiles::getFolder() const {
     return directory;
 }

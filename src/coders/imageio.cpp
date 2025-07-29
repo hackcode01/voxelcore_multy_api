@@ -27,7 +27,7 @@ bool imageio::is_write_supported(const std::string& extension) {
     return writers.find(extension) != writers.end();
 }
 
-std::unique_ptr<ImageData> imageio::read(const io::path& file) {
+std::unique_ptr<ImageData> imageio::read(const io::Path& file) {
     auto found = readers.find(file.extension());
     if (found == readers.end()) {
         throw std::runtime_error(
@@ -44,7 +44,7 @@ std::unique_ptr<ImageData> imageio::read(const io::path& file) {
     }
 }
 
-void imageio::write(const io::path& file, const ImageData* image) {
+void imageio::write(const io::Path& file, const ImageData* image) {
     auto found = writers.find(file.extension());
     if (found == writers.end()) {
         throw std::runtime_error(

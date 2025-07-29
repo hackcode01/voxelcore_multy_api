@@ -57,7 +57,7 @@ std::unique_ptr<UiDocument> UiDocument::read(
     gui::GUI& gui,
     const script_env_t& penv,
     const std::string& name,
-    const io::path& file,
+    const io::Path& file,
     const std::string& fileName
 ) {
     const std::string text = io::read_string(file);
@@ -71,7 +71,7 @@ std::unique_ptr<UiDocument> UiDocument::read(
     auto view = reader.readXML(file.string(), *xmldoc->getRoot());
     view->setId("root");
     uidocscript script {};
-    auto scriptFile = io::path(file.string()+".lua");
+    auto scriptFile = io::Path(file.string()+".lua");
     if (io::is_regular_file(scriptFile)) {
         scripting::load_layout_script(
             env, name, scriptFile, fileName + ".lua", script
@@ -81,7 +81,7 @@ std::unique_ptr<UiDocument> UiDocument::read(
 }
 
 std::shared_ptr<gui::UINode> UiDocument::readElement(
-    gui::GUI& gui, const io::path& file, const std::string& fileName
+    gui::GUI& gui, const io::Path& file, const std::string& fileName
 ) {
     return read(gui, nullptr, file.name(), file, fileName)->getRoot();
 }

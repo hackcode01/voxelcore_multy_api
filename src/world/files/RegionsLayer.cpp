@@ -6,7 +6,7 @@
 
 #define REGION_FORMAT_MAGIC ".VOXREG"
 
-static io::path get_region_filename(int x, int z) {
+static io::Path get_region_filename(int x, int z) {
     return std::to_string(x) + "_" + std::to_string(z) + ".bin";
 }
 
@@ -25,7 +25,7 @@ static void fetch_chunks(WorldRegion* region, int x, int z, regfile* file) {
     }
 }
 
-regfile::regfile(io::path filename) : file(std::move(filename)) {
+regfile::regfile(io::Path filename) : file(std::move(filename)) {
     if (file.length() < REGION_HEADER_SIZE)
         throw std::runtime_error("incomplete region file header");
     char header[REGION_HEADER_SIZE];
@@ -138,7 +138,7 @@ WorldRegion* RegionsLayer::getRegion(int x, int z) {
     return found->second.get();
 }
 
-io::path RegionsLayer::getRegionFilePath(int x, int z) const {
+io::Path RegionsLayer::getRegionFilePath(int x, int z) const {
     return folder / get_region_filename(x, z);
 }
 
@@ -179,7 +179,7 @@ ubyte* RegionsLayer::getData(int x, int z, uint32_t& size, uint32_t& srcSize) {
 }
 
 void RegionsLayer::writeRegion(int x, int z, WorldRegion* entry) {
-    io::path filename = folder / get_region_filename(x, z);
+    io::Path filename = folder / get_region_filename(x, z);
 
     glm::ivec2 regcoord(x, z);
     if (auto regfile = getRegFile(regcoord, false)) {

@@ -12,7 +12,7 @@
 #include "logic/scripting/scripting.hpp"
 #include "core_defs.hpp"
 
-static void load_configs(Input& input, const io::path& root) {
+static void load_configs(Input& input, const io::Path& root) {
     auto configFolder = root / "config";
 }
 

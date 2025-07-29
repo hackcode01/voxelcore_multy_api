@@ -1,98 +1,100 @@
-#pragma once
+#ifndef __PATH_HPP__
+#define __PATH_HPP__
 
-#include <string>
-#include <stdexcept>
 #include <filesystem>
+#include <stdexcept>
+#include <string>
 
 namespace io {
-    using file_time_type = std::filesystem::file_time_type;
-    
+    using file_time_type_t = std::filesystem::file_time_type;
+
     /// @brief Access violation error
-    class access_error : public std::runtime_error {
+    class AccessError : public std::runtime_error {
     public:
-        access_error(const std::string& msg) : std::runtime_error(msg) {
+        AccessError(const std::string& message) : std::runtime_error(message) {
         }
     };
 
     /// @brief std::filesystem::path project-specific alternative having
     /// `entry_point:path` scheme and solving std::filesystem::path problems:
     /// - implicit std::string conversions depending on compiler
-    /// - unicode path construction must be done with std::filesystem::u8path
-    class path {
+    /// - unicode Path construction must be done with std::filesystem::u8path
+    class Path {
     public:
-        path() = default;
+        Path() = default;
 
-        path(std::string str) : str(std::move(str)) {
-            colonPos = this->str.find(':');
-            
-            size_t len = this->str.length();
-            for (size_t i = 0; i < len; i++) {
-                if (this->str[i] == '\\') {
-                    this->str[i] = '/';
+        Path(std::string str) : m_str(std::move(str)) {
+            m_colonPosition = this->m_str.find(':');
+
+            size_t length = this->m_str.length();
+            for (size_t i {0}; i < length; ++i) {
+                if (this->m_str[i] == '\\') {
+                    this->m_str[i] = '/';
                 }
             }
         }
 
-        path(const char* str) : path(std::string(str)) {}
+        Path(const char* str) : Path(std::string(str)) {}
 
         bool operator==(const std::string& other) const {
-            return str == other;
+            return m_str == other;
         }
 
-        bool operator<(const path& other) const {
-            return str < other.str;
+        bool operator<(const Path& other) const {
+            return m_str < other.m_str;
         }
 
-        bool operator==(const path& other) const {
-            return str == other.str;
+        bool operator==(const Path& other) const {
+            return m_str == other.m_str;
         }
 
         bool operator==(const char* other) const {
-            return str == other;
+            return m_str == other;
         }
 
-        path operator/(const char* child) const {
-            if (str.empty() || str[str.length()-1] == ':') {
-                return str + std::string(child);
+        Path operator/(const char* child) const {
+            if (m_str.empty() || m_str[m_str.length() - 1] == ':') {
+                return m_str + std::string(child);
             }
-            return str + "/" + std::string(child);
+            return m_str + "/" + std::string(child);
         }
 
-        path operator/(const std::string& child) const {
-            if (str.empty() || str[str.length()-1] == ':') {
-                return str + child;
+        Path operator/(const std::string& child) const {
+            if (m_str.empty() || m_str[m_str.length() - 1] == ':') {
+                return m_str + child;
             }
-            return str + "/" + child;
+            return m_str + "/" + child;
         }
 
-        path operator/(std::string_view child) const {
-            if (str.empty() || str[str.length()-1] == ':') {
-                return str + std::string(child);
+        Path operator/(std::string_view child) const {
+            if (m_str.empty() || m_str[m_str.length() - 1] == ':') {
+                return m_str + std::string(child);
             }
-            return str + "/" + std::string(child);
+            return m_str + "/" + std::string(child);
         }
 
-        path operator/(const path& child) const {
-            if (str.empty() || str[str.length()-1] == ':') {
-                return str + child.pathPart();
+        Path operator/(const Path& child) const {
+            if (m_str.empty() || m_str[m_str.length() - 1] == ':') {
+                return m_str + child.pathPart();
             }
-            return str + "/" + child.pathPart();
+            return m_str + "/" + child.pathPart();
         }
 
         std::string pathPart() const {
-            if (colonPos == std::string::npos) {
-                return str;
+            if (m_colonPosition == std::string::npos) {
+                return m_str;
             }
-            return str.substr(colonPos + 1);
+            return m_str.substr(m_colonPosition + 1);
         }
 
         std::string name() const {
-            size_t slashpos = str.rfind('/');
-            if (slashpos == std::string::npos) {
-                return colonPos == std::string::npos ? str
-                                                     : str.substr(colonPos + 1);
+            size_t slashPosition = m_str.rfind('/');
+            if (slashPosition == std::string::npos) {
+                return m_colonPosition == std::string::npos
+                           ? m_str
+                           : m_str.substr(m_colonPosition + 1);
             }
-            return str.substr(slashpos + 1);
+            return m_str.substr(slashPosition + 1);
         }
 
         std::string stem() const {
@@ -101,43 +103,45 @@ namespace io {
 
         /// @brief Get extension
         std::string extension() const {
-            size_t slashpos = str.rfind('/');
-            size_t dotpos = str.rfind('.');
-            if (dotpos == std::string::npos ||
-                (slashpos != std::string::npos && dotpos < slashpos)) {
+            size_t slashPosition = m_str.rfind('/');
+            size_t dotPosition = m_str.rfind('.');
+            if (dotPosition == std::string::npos ||
+                (slashPosition != std::string::npos &&
+                 dotPosition < slashPosition)) {
                 return "";
             }
-            return str.substr(dotpos);
+
+            return m_str.substr(dotPosition);
         }
 
         /// @brief Get entry point
         std::string entryPoint() const {
             checkValid();
-            return str.substr(0, colonPos);
+            return m_str.substr(0, m_colonPosition);
         }
 
         /// @brief Get parent path
-        path parent() const;
+        Path parent() const;
 
-        path normalized() const;
+        Path normalized() const;
 
         std::string string() const {
-            return str;
+            return m_str;
         }
 
         /// @brief Check if path is not initialized with 'entry_point:path'
         bool empty() const {
-            return str.empty();
+            return m_str.empty();
         }
 
         bool emptyOrInvalid() const {
-            return str.empty() || colonPos == std::string::npos;
+            return m_str.empty() || m_colonPosition == std::string::npos;
         }
     private:
         /// @brief UTF-8 string contains entry_point:path or empty string
-        std::string str;
+        std::string m_str {};
         /// @brief Precalculated position of colon character
-        size_t colonPos = std::string::npos;
+        size_t m_colonPosition {std::string::npos};
 
         void checkValid() const;
     };
@@ -145,6 +149,8 @@ namespace io {
     class PathsGenerator {
     public:
         virtual ~PathsGenerator() = default;
-        virtual bool next(path& dst) = 0;
+        virtual bool next(Path& dst) = 0;
     };
 }
+
+#endif

@@ -32,7 +32,7 @@ static debug::Logger logger("engine-control");
 EngineController::EngineController(Engine& engine) : engine(engine) {}
 
 void EngineController::deleteWorld(const std::string& name) {
-    io::path folder = engine.getPaths().getWorldFolderByName(name);
+    io::Path folder = engine.getPaths().getWorldFolderByName(name);
 
     auto deletion = [this, folder]() {
         logger.info() << "deleting " << folder.string();
@@ -124,14 +124,14 @@ static void start(Engine& engine, std::shared_ptr<Task> task, const std::wstring
     }
 }
 
-static void check_world(const EnginePaths& paths, const io::path& folder) {
+static void check_world(const EnginePaths& paths, const io::Path& folder) {
     auto worldFile = folder / "world.json";
     if (!io::exists(worldFile)) {
         throw std::runtime_error(worldFile.string() + " does not exists");
     }
 }
 
-static const Content* load_world_content(Engine& engine, const io::path& folder) {
+static const Content* load_world_content(Engine& engine, const io::Path& folder) {
     auto& paths = engine.getPaths();
     auto& contentControl = engine.getContentControl();
     paths.setCurrentWorldFolder(folder);

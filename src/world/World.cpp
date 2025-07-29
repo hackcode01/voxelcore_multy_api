@@ -79,7 +79,7 @@ void World::write(Level* level) {
 std::unique_ptr<Level> World::create(
     const std::string& name,
     const std::string& generator,
-    const io::path& directory,
+    const io::Path& directory,
     uint64_t seed,
     EngineSettings& settings,
     const Content& content,
@@ -130,7 +130,7 @@ std::unique_ptr<Level> World::load(
 
     auto level = std::make_unique<Level>(std::move(world), content, settings);
 
-    io::path file = wfile->getPlayerFile();
+    io::Path file = wfile->getPlayerFile();
     if (!io::is_regular_file(file)) {
         logger.warning() << "player.json does not exists";
         level->players->create();
@@ -150,7 +150,7 @@ std::unique_ptr<Level> World::load(
 std::shared_ptr<ContentReport> World::checkIndices(
     const std::shared_ptr<WorldFiles>& worldFiles, const Content* content
 ) {
-    io::path indicesFile = worldFiles->getIndicesFile();
+    io::Path indicesFile = worldFiles->getIndicesFile();
     if (io::is_regular_file(indicesFile)) {
         return ContentReport::create(worldFiles, indicesFile, content);
     }

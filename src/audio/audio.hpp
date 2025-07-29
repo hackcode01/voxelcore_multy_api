@@ -363,7 +363,7 @@ namespace audio {
     /// @param headerOnly read header only
     /// @throws std::runtime_error if I/O error ocurred or format is unknown
     /// @return PCM audio data
-    std::unique_ptr<PCM> load_PCM(const io::path& file, bool headerOnly);
+    std::unique_ptr<PCM> load_PCM(const io::Path& file, bool headerOnly);
 
     /// @brief Load sound from file
     /// @param file audio file path
@@ -371,7 +371,7 @@ namespace audio {
     /// Sound::getPCM
     /// @throws std::runtime_error if I/O error ocurred or format is unknown
     /// @return new Sound instance
-    std::unique_ptr<Sound> load_sound(const io::path& file, bool keepPCM);
+    std::unique_ptr<Sound> load_sound(const io::Path& file, bool keepPCM);
 
     /// @brief Create new sound from PCM data
     /// @param pcm PCM data
@@ -384,14 +384,14 @@ namespace audio {
     /// @param file audio file path
     /// @throws std::runtime_error if I/O error ocurred or format is unknown
     /// @return new PCMStream instance
-    std::unique_ptr<PCMStream> open_PCM_stream(const io::path& file);
+    std::unique_ptr<PCMStream> open_PCM_stream(const io::Path& file);
 
     /// @brief Open new audio stream from file
     /// @param file audio file path
     /// @param keepSource store PCMStream in stream to make it accessible with
     /// Stream::getSource
     /// @return new Stream instance
-    std::unique_ptr<Stream> open_stream(const io::path& file, bool keepSource);
+    std::unique_ptr<Stream> open_stream(const io::Path& file, bool keepSource);
 
     /// @brief Open new audio stream from source
     /// @param stream PCM data source
@@ -462,7 +462,7 @@ namespace audio {
     /// @param channel channel index
     /// @return speaker id or 0
     speakerid_t play_stream(
-        const io::path& file,
+        const io::Path& file,
         glm::vec3 position,
         bool relative,
         float volume,

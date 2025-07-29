@@ -23,12 +23,12 @@ static int l_find(lua::State* L) {
 }
 
 static int l_resolve(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     return lua::pushstring(L, path.string());
 }
 
 static int l_read(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     if (io::is_regular_file(path)) {
         return lua::pushlstring(L, io::read_string(path));
     }
@@ -54,8 +54,8 @@ static bool is_writeable(const std::string& entryPoint) {
     return false;
 }
 
-static io::path get_writeable_path(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+static io::Path get_writeable_path(lua::State* L) {
+    io::Path path = lua::require_string(L, 1);
     auto entryPoint = path.entryPoint();
     if (!is_writeable(entryPoint)) {
         throw std::runtime_error("access denied");
@@ -64,14 +64,14 @@ static io::path get_writeable_path(lua::State* L) {
 }
 
 static int l_write(lua::State* L) {
-    io::path path = get_writeable_path(L);
+    io::Path path = get_writeable_path(L);
     std::string text = lua::require_string(L, 2);
     io::write_string(path, text);
     return 1;
 }
 
 static int l_remove(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     auto entryPoint = path.entryPoint();
     if (!is_writeable(entryPoint)) {
         throw std::runtime_error("access denied");
@@ -80,7 +80,7 @@ static int l_remove(lua::State* L) {
 }
 
 static int l_remove_tree(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     auto entryPoint = path.entryPoint();
     if (!is_writeable(entryPoint)) {
         throw std::runtime_error("access denied");
@@ -101,7 +101,7 @@ static int l_isdir(lua::State* L) {
 }
 
 static int l_length(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     if (io::exists(path)) {
         return lua::pushinteger(L, io::file_size(path));
     } else {
@@ -110,17 +110,17 @@ static int l_length(lua::State* L) {
 }
 
 static int l_mkdir(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     return lua::pushboolean(L, io::create_directory(path));
 }
 
 static int l_mkdirs(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     return lua::pushboolean(L, io::create_directories(path));
 }
 
 static int l_read_bytes(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     if (io::is_regular_file(path)) {
         size_t length = static_cast<size_t>(io::file_size(path));
 
@@ -145,7 +145,7 @@ static int l_read_bytes(lua::State* L) {
 }
 
 static int l_write_bytes(lua::State* L) {
-    io::path path = get_writeable_path(L);
+    io::Path path = get_writeable_path(L);
 
     auto string = lua::bytearray_as_string(L, 2);
     bool res = io::write_bytes(
@@ -171,7 +171,7 @@ static int l_list(lua::State* L) {
     if (dirname.find(':') == std::string::npos) {
         return l_list_all_res(L);
     }
-    io::path path = dirname;
+    io::Path path = dirname;
     if (!io::is_directory(path)) {
         throw std::runtime_error(
             util::quote(path.string()) + " is not a directory"
@@ -232,7 +232,7 @@ static int l_read_combined_object(lua::State* L) {
 }
 
 static int l_is_writeable(lua::State* L) {
-    io::path path = lua::require_string(L, 1);
+    io::Path path = lua::require_string(L, 1);
     auto entryPoint = path.entryPoint();
     return lua::pushboolean(L, is_writeable(entryPoint));
 }
@@ -249,8 +249,8 @@ static int l_unmount(lua::State* L) {
 }
 
 static int l_create_zip(lua::State* L) {
-    io::path folder = lua::require_string(L, 1);
-    io::path outFile = lua::require_string(L, 2);
+    io::Path folder = lua::require_string(L, 1);
+    io::Path outFile = lua::require_string(L, 2);
     if (!is_writeable(outFile.entryPoint())) {
         throw std::runtime_error("access denied");
     }

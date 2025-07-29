@@ -28,7 +28,7 @@ enum class ConvertTaskType {
 
 struct ConvertTask {
     ConvertTaskType type;
-    io::path file;
+    io::Path file;
 
     /// @brief region coords
     int x, z;
@@ -51,10 +51,10 @@ class WorldConverter : public Task {
     ConvertMode mode;
 
     void upgradeRegion(
-        const io::path& file, int x, int z, RegionLayerIndex layer) const;
-    void convertPlayer(const io::path& file) const;
-    void convertVoxels(const io::path& file, int x, int z) const;
-    void convertInventories(const io::path& file, int x, int z) const;
+        const io::Path& file, int x, int z, RegionLayerIndex layer) const;
+    void convertPlayer(const io::Path& file) const;
+    void convertVoxels(const io::Path& file, int x, int z) const;
+    void convertInventories(const io::Path& file, int x, int z) const;
     void convertBlocksData(int x, int z, const ContentReport& report) const;
 
     void addRegionsTasks(

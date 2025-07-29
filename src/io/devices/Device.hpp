@@ -1,9 +1,10 @@
-#pragma once
+#ifndef __DEVICE_HPP__
+#define __DEVICE_HPP__
 
-#include <string>
-#include <memory>
-#include <iostream>
 #include <filesystem>
+#include <iostream>
+#include <memory>
+#include <string>
 
 #include "../path.hpp"
 
@@ -27,8 +28,8 @@ namespace io {
         /// @brief Get file size in bytes
         virtual size_t size(std::string_view path) = 0;
 
-        /// @brief Get file last write timestamp 
-        virtual file_time_type lastWriteTime(std::string_view path) = 0;
+        /// @brief Get file last write timestamp
+        virtual file_time_type_t lastWriteTime(std::string_view path) = 0;
 
         /// @brief Check if file or directory exists
         virtual bool exists(std::string_view path) = 0;
@@ -59,7 +60,8 @@ namespace io {
         virtual std::unique_ptr<PathsGenerator> list(std::string_view path) = 0;
     };
 
-    /// @brief Subdevice is a wrapper around another device limited to a directory
+    /// @brief Subdevice is a wrapper around another device limited to a
+    /// directory
     class SubDevice : public Device {
     public:
         SubDevice(
@@ -84,7 +86,7 @@ namespace io {
             return parent->size((root / path).pathPart());
         }
 
-        file_time_type lastWriteTime(std::string_view path) override {
+        file_time_type_t lastWriteTime(std::string_view path) override {
             return parent->lastWriteTime((root / path).pathPart());
         }
 
@@ -121,6 +123,8 @@ namespace io {
         }
     private:
         std::shared_ptr<Device> parent;
-        path root;
+        Path root;
     };
 }
+
+#endif

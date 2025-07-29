@@ -57,7 +57,7 @@ glm::u32vec2 WorldRegion::getChunkDataSize(uint x, uint z) {
     return sizes[z * REGION_SIZE + x];
 }
 
-WorldRegions::WorldRegions(const io::path& directory) : directory(directory) {
+WorldRegions::WorldRegions(const io::Path& directory) : directory(directory) {
     for (size_t i = 0; i < REGION_LAYERS_COUNT; i++) {
         layers[i].layer = static_cast<RegionLayerIndex>(i);
     }
@@ -388,11 +388,11 @@ void WorldRegions::processRegion(
     }
 }
 
-const io::path& WorldRegions::getRegionsFolder(RegionLayerIndex layerid) const {
+const io::Path& WorldRegions::getRegionsFolder(RegionLayerIndex layerid) const {
     return layers[layerid].folder;
 }
 
-io::path WorldRegions::getRegionFilePath(RegionLayerIndex layerid, int x, int z) const {
+io::Path WorldRegions::getRegionFilePath(RegionLayerIndex layerid, int x, int z) const {
     return layers[layerid].getRegionFilePath(x, z);
 }
 

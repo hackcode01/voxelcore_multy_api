@@ -84,7 +84,7 @@ static void load_variant(
 }
 
 template<> void ContentUnitLoader<Block>::loadUnit(
-    Block& def, const std::string& name, const io::path& file
+    Block& def, const std::string& name, const io::Path& file
 ) {
     auto root = io::read_json(file);
     if (def.properties == nullptr) {

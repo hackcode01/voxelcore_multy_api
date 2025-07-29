@@ -90,7 +90,7 @@ void AssetsLoader::loadNext() {
 static void add_layouts(
     const script_env_t& env,
     const std::string& prefix,
-    const io::path& folder,
+    const io::Path& folder,
     AssetsLoader& loader
 ) {
     if (!io::is_directory(folder)) {
@@ -195,7 +195,7 @@ void AssetsLoader::processPreloadList(AssetType tag, const dv::value& list) {
     }
 }
 
-void AssetsLoader::processPreloadConfig(const io::path& file) {
+void AssetsLoader::processPreloadConfig(const io::Path& file) {
     auto root = io::read_json(file);
     processPreloadList(AssetType::ATLAS, root["atlases"]);
     processPreloadList(AssetType::FONT, root["fonts"]);
@@ -208,7 +208,7 @@ void AssetsLoader::processPreloadConfig(const io::path& file) {
 }
 
 void AssetsLoader::processPreloadConfigs(const Content* content) {
-    io::path preloadFile = "res:preload.json";
+    io::Path preloadFile = "res:preload.json";
     if (io::exists(preloadFile)) {
         processPreloadConfig(preloadFile);
     }
@@ -252,7 +252,7 @@ void AssetsLoader::addDefaults(AssetsLoader& loader, const Content* content) {
         for (auto& entry : content->getPacks()) {
             auto pack = entry.second.get();
             auto& info = pack->getInfo();
-            io::path folder = info.folder / "layouts";
+            io::Path folder = info.folder / "layouts";
             add_layouts(pack->getEnvironment(), info.id, folder, loader);
         }
 
@@ -295,7 +295,7 @@ void AssetsLoader::addDefaults(AssetsLoader& loader, const Content* content) {
 bool AssetsLoader::loadExternalTexture(
     Assets* assets,
     const std::string& name,
-    const std::vector<io::path>& alternatives
+    const std::vector<io::Path>& alternatives
 ) {
     if (assets->get<Texture>(name) != nullptr) {
         return true;

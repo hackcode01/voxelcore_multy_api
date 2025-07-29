@@ -166,7 +166,7 @@ std::unique_ptr<model::Model> vcm::parse(
     std::string_view file, std::string_view src
 ) {
     try {
-        auto doc = io::path(std::string(file)).extension() == ".xml" 
+        auto doc = io::Path(std::string(file)).extension() == ".xml" 
                     ? xml::parse(file, src) : xml::parse_vcm(file, src, "model");
         const auto& root = *doc->getRoot();
         if (root.getTag() != "model") {

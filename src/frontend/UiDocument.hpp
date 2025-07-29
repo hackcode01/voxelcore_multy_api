@@ -49,10 +49,10 @@ public:
         gui::GUI&,
         const script_env_t& parent_env,
         const std::string& name,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName
     );
     static std::shared_ptr<gui::UINode> readElement(
-        gui::GUI&, const io::path& file, const std::string& fileName
+        gui::GUI&, const io::Path& file, const std::string& fileName
     );
 };

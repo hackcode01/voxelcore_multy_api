@@ -35,7 +35,7 @@ public:
     void loadHeader(const std::string& name);
     
     ProcessingResult process(
-        const io::path& file,
+        const io::Path& file,
         const std::string& source,
         bool header = false
     );

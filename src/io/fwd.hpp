@@ -1,5 +1,8 @@
-#pragma once
+#ifndef __FWD_HPP__
+#define __FWD_HPP__
 
 namespace io {
-    class path;
+    class Path;
 }
+
+#endif

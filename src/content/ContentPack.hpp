@@ -13,16 +13,16 @@ class EnginePaths;
 
 class contentpack_error : public std::runtime_error {
     std::string packId;
-    io::path folder;
+    io::Path folder;
 public:
     contentpack_error(
         std::string packId,
-        io::path folder,
+        io::Path folder,
         const std::string& message
     );
 
     std::string getPackId() const;
-    io::path getFolder() const;
+    io::Path getFolder() const;
 };
 
 enum class DependencyLevel {
@@ -53,42 +53,42 @@ struct ContentPack {
     std::string version = "0.0";
     std::string creator = "";
     std::string description = "no description";
-    io::path folder;
+    io::Path folder;
     std::vector<DependencyPack> dependencies;
     std::string source = "";
 
-    io::path getContentFile() const;
+    io::Path getContentFile() const;
 
     std::optional<ContentPackStats> loadStats() const;
 
     static inline const std::string PACKAGE_FILENAME = "package.json";
     static inline const std::string CONTENT_FILENAME = "content.json";
-    static inline const io::path BLOCKS_FOLDER = "blocks";
-    static inline const io::path ITEMS_FOLDER = "items";
-    static inline const io::path ENTITIES_FOLDER = "entities";
-    static inline const io::path GENERATORS_FOLDER = "generators";
+    static inline const io::Path BLOCKS_FOLDER = "blocks";
+    static inline const io::Path ITEMS_FOLDER = "items";
+    static inline const io::Path ENTITIES_FOLDER = "entities";
+    static inline const io::Path GENERATORS_FOLDER = "generators";
     static const std::vector<std::string> RESERVED_NAMES;
 
-    static bool is_pack(const io::path& folder);
-    static ContentPack read(const io::path& folder);
+    static bool is_pack(const io::Path& folder);
+    static ContentPack read(const io::Path& folder);
 
     static void scanFolder(
-        const io::path& folder, std::vector<ContentPack>& packs
+        const io::Path& folder, std::vector<ContentPack>& packs
     );
 
     static std::vector<std::string> worldPacksList(
-        const io::path& folder
+        const io::Path& folder
     );
 
-    static io::path findPack(
+    static io::Path findPack(
         const EnginePaths* paths,
-        const io::path& worldDir,
+        const io::Path& worldDir,
         const std::string& name
     );
 
     static ContentPack createCore();
 
-    static inline io::path getFolderFor(ContentType type) {
+    static inline io::Path getFolderFor(ContentType type) {
         switch (type) {
             case ContentType::BLOCK: return ContentPack::BLOCKS_FOLDER;
             case ContentType::ITEM: return ContentPack::ITEMS_FOLDER;

@@ -13,7 +13,7 @@
 static debug::Logger logger("entity-content-loader");
 
 template<> void ContentUnitLoader<EntityDef>::loadUnit(
-    EntityDef& def, const std::string& name, const io::path& file
+    EntityDef& def, const std::string& name, const io::Path& file
 ) {
     auto root = io::read_json(file);
 

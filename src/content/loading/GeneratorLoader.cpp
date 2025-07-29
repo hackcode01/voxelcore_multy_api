@@ -134,7 +134,7 @@ static VoxelStructureMeta load_structure_meta(
 }
 
 static std::vector<std::unique_ptr<VoxelStructure>> load_structures(
-    const dv::value& map, const io::path& filesFolder, const ResPaths& paths
+    const dv::value& map, const io::Path& filesFolder, const ResPaths& paths
 ) {
     auto structuresDir = filesFolder / "fragments";
 
@@ -164,7 +164,7 @@ static std::vector<std::unique_ptr<VoxelStructure>> load_structures(
 static void load_structures(
     GeneratorDef& def,
     const dv::value& map,
-    const io::path& filesFolder,
+    const io::Path& filesFolder,
     const ResPaths& paths
 ) {
     auto rawStructures = load_structures(map, filesFolder, paths);
@@ -180,9 +180,9 @@ static void load_structures(
     }
 }
 
-static inline const io::path STRUCTURES_FILE = "structures.toml";
-static inline const io::path BIOMES_FILE = "biomes.toml";
-static inline const io::path GENERATORS_DIR = "generators";
+static inline const io::Path STRUCTURES_FILE = "structures.toml";
+static inline const io::Path BIOMES_FILE = "biomes.toml";
+static inline const io::Path GENERATORS_DIR = "generators";
 
 static void load_biomes(GeneratorDef& def, const dv::value& root) {
     for (const auto& [biomeName, biomeMap] : root.asObject()) {

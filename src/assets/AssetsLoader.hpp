@@ -84,7 +84,7 @@ class AssetsLoader {
         AssetType tag, const std::string& name, const dv::value& map
     );
     void processPreloadList(AssetType tag, const dv::value& list);
-    void processPreloadConfig(const io::path& file);
+    void processPreloadConfig(const io::Path& file);
     void processPreloadConfigs(const Content* content);
 public:
     AssetsLoader(Engine& engine, Assets& assets, const ResPaths& paths);
@@ -120,7 +120,7 @@ public:
     static bool loadExternalTexture(
         Assets* assets,
         const std::string& name,
-        const std::vector<io::path>& alternatives
+        const std::vector<io::Path>& alternatives
     );
 
     Engine& getEngine();

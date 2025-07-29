@@ -51,5 +51,5 @@ namespace langs {
 
     /// @brief Change locale to specified
     /// @param locale isolanguage_ISOCOUNTRY (example: en_US)
-    void setup(std::string locale, const std::vector<io::path>& roots);
+    void setup(std::string locale, const std::vector<io::Path>& roots);
 }

@@ -31,7 +31,7 @@ ContentLoader::ContentLoader(
 }
 
 static void detect_defs(
-    const io::path& folder,
+    const io::Path& folder,
     const std::string& prefix,
     std::vector<std::string>& detected
 ) {
@@ -54,7 +54,7 @@ static void detect_defs(
 }
 
 static void detect_defs_pairs(
-    const io::path& folder,
+    const io::Path& folder,
     const std::string& prefix,
     std::vector<std::tuple<std::string, std::string>>& detected
 ) {
@@ -92,7 +92,7 @@ std::vector<std::tuple<std::string, std::string>> ContentLoader::scanContent(
 }
 
 bool ContentLoader::fixPackIndices(
-    const io::path& folder,
+    const io::Path& folder,
     dv::value& indicesRoot,
     const std::string& contentSection
 ) {
@@ -184,7 +184,7 @@ void ContentUnitLoader<DefT>::loadUnit(
 }
 
 void ContentLoader::loadBlockMaterial(
-    BlockMaterial& def, const io::path& file
+    BlockMaterial& def, const io::Path& file
 ) {
     def.deserialize(io::read_json(file));
     if (def.hitSound.empty()) {
@@ -304,7 +304,7 @@ void ContentLoader::loadContent(const dv::value& root) {
 }
 
 static inline void foreach_file(
-    const io::path& dir, std::function<void(const io::path&)> handler
+    const io::Path& dir, std::function<void(const io::Path&)> handler
 ) {
     if (!io::is_directory(dir)) {
         return;
@@ -341,8 +341,8 @@ void ContentLoader::load() {
     );
 
     // Load world generators
-    io::path generatorsDir = folder / "generators";
-    foreach_file(generatorsDir, [this](const io::path& file) {
+    io::Path generatorsDir = folder / "generators";
+    foreach_file(generatorsDir, [this](const io::Path& file) {
         std::string name = file.stem();
         auto [packid, full, filename] = create_unit_id(pack->id, name);
 
@@ -355,7 +355,7 @@ void ContentLoader::load() {
     });
 
     // Load pack resources.json
-    io::path resourcesFile = folder / "resources.json";
+    io::Path resourcesFile = folder / "resources.json";
     if (io::exists(resourcesFile)) {
         auto resRoot = io::read_json(resourcesFile);
         for (const auto& [key, arr] : resRoot.asObject()) {
@@ -370,7 +370,7 @@ void ContentLoader::load() {
     }
 
     // Load pack resources aliases
-    io::path aliasesFile = folder / "resource-aliases.json";
+    io::Path aliasesFile = folder / "resource-aliases.json";
     if (io::exists(aliasesFile)) {
         auto resRoot = io::read_json(aliasesFile);
         for (const auto& [key, arr] : resRoot.asObject()) {
@@ -385,7 +385,7 @@ void ContentLoader::load() {
     }
 
     // Load block materials
-    io::path materialsDir = folder / "block_materials";    
+    io::Path materialsDir = folder / "block_materials";    
     if (io::is_directory(materialsDir)) {
         for (const auto& file : io::directory_iterator(materialsDir)) {
             auto [packid, full, filename] =
@@ -398,8 +398,8 @@ void ContentLoader::load() {
     }
 
     // Load skeletons
-    io::path skeletonsDir = folder / "skeletons";
-    foreach_file(skeletonsDir, [this](const io::path& file) {
+    io::Path skeletonsDir = folder / "skeletons";
+    foreach_file(skeletonsDir, [this](const io::Path& file) {
         std::string name = pack->id + ":" + file.stem();
         std::string text = io::read_string(file);
         builder.add(
@@ -454,7 +454,7 @@ void ContentLoader::reloadScript(const Content& content, ItemDef& item) {
 void ContentLoader::loadWorldScript(ContentPackRuntime& runtime) {
     const auto& pack = runtime.getInfo();
     const auto& folder = pack.folder;
-    io::path scriptFile = folder / "scripts/world.lua";
+    io::Path scriptFile = folder / "scripts/world.lua";
     if (io::is_regular_file(scriptFile)) {
         scripting::load_world_script(
             runtime.getEnvironment(),
@@ -478,8 +478,8 @@ void ContentLoader::loadScripts(Content& content) {
         loadWorldScript(*runtime);
 
         // Load entity components
-        io::path componentsDir = folder / "scripts/components";
-        foreach_file(componentsDir, [&pack](const io::path& file) {
+        io::Path componentsDir = folder / "scripts/components";
+        foreach_file(componentsDir, [&pack](const io::Path& file) {
             auto name = pack.id + ":" + file.stem();
             scripting::load_entity_component(
                 name,

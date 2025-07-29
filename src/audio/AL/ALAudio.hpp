@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __AL_AUDIO_HPP__
+#define __AL_AUDIO_HPP__
 
 #include <glm/glm.hpp>
 #include <queue>
@@ -177,3 +178,5 @@ namespace audio {
         static std::unique_ptr<ALAudio> create();
     };
 }
+
+#endif

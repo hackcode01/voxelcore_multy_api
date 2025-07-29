@@ -63,8 +63,8 @@ assetload::postfunc assetload::texture(
 }
 
 static auto process_program(const ResPaths& paths, const std::string& filename) {
-    io::path vertexFile = paths.find(filename + ".glslv");
-    io::path fragmentFile = paths.find(filename + ".glslf");
+    io::Path vertexFile = paths.find(filename + ".glslv");
+    io::Path fragmentFile = paths.find(filename + ".glslf");
 
     std::string vertexSource = io::read_string(vertexFile);
     std::string fragmentSource = io::read_string(fragmentFile);
@@ -77,8 +77,8 @@ static auto process_program(const ResPaths& paths, const std::string& filename) 
 }
 
 static auto read_program(const ResPaths& paths, const std::string& filename) {
-    io::path vertexFile = paths.find(filename + ".glslv");
-    io::path fragmentFile = paths.find(filename + ".glslf");
+    io::Path vertexFile = paths.find(filename + ".glslv");
+    io::Path fragmentFile = paths.find(filename + ".glslf");
     return std::make_pair(
         io::read_string(vertexFile), io::read_string(fragmentFile)
     );
@@ -95,8 +95,8 @@ assetload::postfunc assetload::shader(
     auto vertex = result.first;
     auto fragment = result.second;
 
-    io::path vertexFile = paths.find(filename + ".glslv");
-    io::path fragmentFile = paths.find(filename + ".glslf");
+    io::Path vertexFile = paths.find(filename + ".glslv");
+    io::Path fragmentFile = paths.find(filename + ".glslf");
 
     return [=](auto assets) {
         assets->store(
@@ -116,7 +116,7 @@ assetload::postfunc assetload::posteffect(
     const std::string& name,
     const std::shared_ptr<AssetCfg>& settings
 ) {
-    io::path effectFile = paths.find(file + ".glsl");
+    io::Path effectFile = paths.find(file + ".glsl");
     std::string effectSource = io::read_string(effectFile);
 
     auto& preprocessor = *Shader::preprocessor;
@@ -146,7 +146,7 @@ assetload::postfunc assetload::posteffect(
     };
 }
 
-static bool append_atlas(AtlasBuilder& atlas, const io::path& file) {
+static bool append_atlas(AtlasBuilder& atlas, const io::Path& file) {
     std::string name = file.stem();
     // skip duplicates
     if (atlas.has(name)) {

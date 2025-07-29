@@ -5,12 +5,12 @@
 #include "io/fwd.hpp"
 
 namespace scripting {
-    void load_script(const io::path& name, bool throwable);
+    void load_script(const io::Path& name, bool throwable);
 
     [[nodiscard]] int load_script(
         int env,
         const std::string& type,
-        const io::path& file,
+        const io::Path& file,
         const std::string& fileName
     );
 }

@@ -13,7 +13,7 @@
 static debug::Logger logger("item-content-loader");
 
 template<> void ContentUnitLoader<ItemDef>::loadUnit(
-    ItemDef& def, const std::string& name, const io::path& file
+    ItemDef& def, const std::string& name, const io::Path& file
 ) {
     auto root = io::read_json(file);
     def.properties = root;

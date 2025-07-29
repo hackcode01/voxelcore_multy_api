@@ -51,7 +51,7 @@ const float* LuaHeightmap::getValues() const {
 
 static int l_dump(lua::State* L) {
     if (auto heightmap = touserdata<LuaHeightmap>(L, 1)) {
-        io::path file = require_string(L, 2);
+        io::Path file = require_string(L, 2);
         uint w = heightmap->getWidth();
         uint h = heightmap->getHeight();
         ImageData image(ImageFormat::rgb888, w, h);

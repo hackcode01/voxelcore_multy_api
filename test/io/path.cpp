@@ -3,7 +3,7 @@
 #include "io/path.hpp"
 
 TEST(Path, Path) {
-    io::path p("entry_point:path/file.ext");
+    io::Path p("entry_point:path/file.ext");
     EXPECT_EQ(p, "entry_point:path/file.ext");
     EXPECT_EQ(p.pathPart(), "path/file.ext");
     EXPECT_EQ(p.name(), "file.ext");
@@ -14,7 +14,7 @@ TEST(Path, Path) {
 }
 
 TEST(Path, DotElements) {
-    io::path p("entry_point:a/b/c/../../d/e/../");
+    io::Path p("entry_point:a/b/c/../../d/e/../");
     EXPECT_EQ(p.normalized(), "entry_point:a/d");
-    EXPECT_EQ(io::path("test:a///b//////c/").parent(), io::path("test:a///b"));
+    EXPECT_EQ(io::Path("test:a///b//////c/").parent(), io::Path("test:a///b"));
 }

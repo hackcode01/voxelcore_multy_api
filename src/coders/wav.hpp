@@ -11,9 +11,9 @@ namespace audio {
 
 namespace wav {
     std::unique_ptr<audio::PCM> load_pcm(
-        const io::path& file, bool headerOnly
+        const io::Path& file, bool headerOnly
     );
     std::unique_ptr<audio::PCMStream> create_stream(
-        const io::path& file
+        const io::Path& file
     );
 }

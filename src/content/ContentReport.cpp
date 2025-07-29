@@ -67,7 +67,7 @@ static void process_blocks_data(
 
 std::shared_ptr<ContentReport> ContentReport::create(
     const std::shared_ptr<WorldFiles>& worldFiles,
-    const io::path& filename,
+    const io::Path& filename,
     const Content* content
 ) {
     auto worldInfo = worldFiles->readWorldInfo();

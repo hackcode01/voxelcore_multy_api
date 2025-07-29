@@ -31,9 +31,9 @@ namespace fs = std::filesystem;
 
 static debug::Logger logger("engine-paths");
 
-static inline io::path SCREENSHOTS_FOLDER = "user:screenshots";
-static inline io::path CONTENT_FOLDER = "user:content";
-static inline io::path WORLDS_FOLDER = "user:worlds";
+static inline io::Path SCREENSHOTS_FOLDER = "user:screenshots";
+static inline io::Path CONTENT_FOLDER = "user:content";
+static inline io::Path WORLDS_FOLDER = "user:worlds";
 
 void EnginePaths::prepare() {
     io::set_device("res", std::make_shared<io::StdfsDevice>(resourcesFolder, false));
@@ -65,7 +65,7 @@ const std::filesystem::path& EnginePaths::getResourcesFolder() const {
     return resourcesFolder;
 }
 
-io::path EnginePaths::getNewScreenshotFile(const std::string& ext) {
+io::Path EnginePaths::getNewScreenshotFile(const std::string& ext) {
     auto folder = SCREENSHOTS_FOLDER;
     if (!io::is_directory(folder)) {
         io::create_directories(folder);
@@ -89,20 +89,20 @@ io::path EnginePaths::getNewScreenshotFile(const std::string& ext) {
     return file;
 }
 
-io::path EnginePaths::getWorldsFolder() const {
+io::Path EnginePaths::getWorldsFolder() const {
     return WORLDS_FOLDER;
 }
 
-io::path EnginePaths::getCurrentWorldFolder() {
+io::Path EnginePaths::getCurrentWorldFolder() {
     return currentWorldFolder;
 }
 
-io::path EnginePaths::getWorldFolderByName(const std::string& name) {
+io::Path EnginePaths::getWorldFolderByName(const std::string& name) {
     return getWorldsFolder() / name;
 }
 
-std::vector<io::path> EnginePaths::scanForWorlds() const {
-    std::vector<io::path> folders;
+std::vector<io::Path> EnginePaths::scanForWorlds() const {
+    std::vector<io::Path> folders;
 
     auto folder = getWorldsFolder();
     if (!io::is_directory(folder)) return folders;
@@ -120,7 +120,7 @@ std::vector<io::path> EnginePaths::scanForWorlds() const {
     std::sort(
         folders.begin(),
         folders.end(),
-        [](io::path a, io::path b) {
+        [](io::Path a, io::Path b) {
             a = a / WorldFiles::WORLD_FILE;
             b = b / WorldFiles::WORLD_FILE;
             return fs::last_write_time(io::resolve(a)) >
@@ -148,7 +148,7 @@ void EnginePaths::setProjectFolder(std::filesystem::path folder) {
     this->projectFolder = std::move(folder);
 }
 
-void EnginePaths::setCurrentWorldFolder(io::path folder) {
+void EnginePaths::setCurrentWorldFolder(io::Path folder) {
     if (folder.empty()) {
         io::remove_device("world");
     } else {
@@ -157,7 +157,7 @@ void EnginePaths::setCurrentWorldFolder(io::path folder) {
     this->currentWorldFolder = std::move(folder);
 }
 
-std::string EnginePaths::mount(const io::path& file) {
+std::string EnginePaths::mount(const io::Path& file) {
     if (file.extension() == ".zip") {
         auto stream = io::read(file);
         auto device = std::make_unique<io::ZipFileDevice>(
@@ -189,7 +189,7 @@ std::string EnginePaths::createWriteableDevice(const std::string& name) {
     if (found != writeables.end()) {
         return found->second;
     }
-    io::path folder;
+    io::Path folder;
     for (const auto& point : entryPoints) {
         if (point.name == name) {
             folder = point.path;
@@ -248,7 +248,7 @@ ResPaths::ResPaths(std::vector<PathsRoot> roots)
     : roots(std::move(roots)) {
 }
 
-io::path ResPaths::find(const std::string& filename) const {
+io::Path ResPaths::find(const std::string& filename) const {
     for (int i = roots.size() - 1; i >= 0; i--) {
         auto& root = roots[i];
         auto file = root.path / filename;
@@ -256,7 +256,7 @@ io::path ResPaths::find(const std::string& filename) const {
             return file;
         }
     }
-    return io::path("res:") / filename;
+    return io::Path("res:") / filename;
 }
 
 std::string ResPaths::findRaw(const std::string& filename) const {
@@ -282,13 +282,13 @@ std::vector<std::string> ResPaths::listdirRaw(const std::string& folderName) con
     return entries;
 }
 
-std::vector<io::path> ResPaths::listdir(
+std::vector<io::Path> ResPaths::listdir(
     const std::string& folderName
 ) const {
-    std::vector<io::path> entries;
+    std::vector<io::Path> entries;
     for (int i = roots.size() - 1; i >= 0; i--) {
         auto& root = roots[i];
-        io::path folder = root.path / folderName;
+        io::Path folder = root.path / folderName;
         if (!io::is_directory(folder)) continue;
         for (const auto& entry : io::directory_iterator(folder)) {
             entries.push_back(entry);
@@ -345,8 +345,8 @@ dv::value ResPaths::readCombinedObject(const std::string& filename, bool deep) c
     return object;
 }
 
-std::vector<io::path> ResPaths::collectRoots() {
-    std::vector<io::path> collected;
+std::vector<io::Path> ResPaths::collectRoots() {
+    std::vector<io::Path> collected;
     collected.reserve(roots.size());
     for (const auto& root : roots) {
         collected.emplace_back(root.path);

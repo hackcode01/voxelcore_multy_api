@@ -97,7 +97,7 @@ public:
     static std::unique_ptr<Level> create(
         const std::string& name,
         const std::string& generator,
-        const io::path& directory,
+        const io::Path& directory,
         uint64_t seed,
         EngineSettings& settings,
         const Content& content,
