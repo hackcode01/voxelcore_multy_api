@@ -12,11 +12,11 @@
 static debug::Logger logger("settings_io");
 
 struct SectionsBuilder {
-    std::unordered_map<std::string, Setting*>& map;
+    std::unordered_map<std::string, Settings*>& map;
     std::vector<Section>& sections;
 
     SectionsBuilder(
-        std::unordered_map<std::string, Setting*>& map,
+        std::unordered_map<std::string, Settings*>& map,
         std::vector<Section>& sections
     )
         : map(map), sections(sections) {
@@ -26,7 +26,7 @@ struct SectionsBuilder {
         sections.push_back(Section {std::move(name), {}});
     }
 
-    void add(const std::string& name, Setting* setting, bool writeable = true) {
+    void add(const std::string& name, Settings* setting, bool writeable = true) {
         Section& section = sections.at(sections.size() - 1);
         map[section.name + "." + name] = setting;
         section.keys.push_back(name);
@@ -136,7 +136,7 @@ std::string SettingsHandler::toString(const std::string& name) const {
     return setting->toString();
 }
 
-Setting* SettingsHandler::getSetting(const std::string& name) const {
+Settings* SettingsHandler::getSetting(const std::string& name) const {
     auto found = map.find(name);
     if (found == map.end()) {
         throw std::runtime_error("setting '" + name + "' does not exist");

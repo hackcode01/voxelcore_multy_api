@@ -23,14 +23,14 @@ using namespace advanced_pipeline;
 const int STARS_COUNT = 3000;
 const int STARS_SEED = 632;
 
-Skybox::Skybox(uint size, Shader& shader)
+Skybox::Skybox(uint_t size, Shader& shader)
   : size(size),
     shader(shader),
     batch3d(std::make_unique<Batch3D>(4096))
 {
     auto cubemap = std::make_unique<Cubemap>(size, size, ImageFormat::rgb888);
 
-    uint fboid;
+    uint_t fboid;
     glGenFramebuffers(1, &fboid);
     fbo = std::make_unique<Framebuffer>(fboid, 0, std::move(cubemap));
 
@@ -170,7 +170,7 @@ void Skybox::draw(
     drawStars(angle, opacity);
 }
 
-void Skybox::refresh(const DrawContext& pctx, float t, float mie, uint quality) {
+void Skybox::refresh(const DrawContext& pctx, float t, float mie, uint_t quality) {
     frameid++;
     float dayTime = t;
     DrawContext ctx = pctx.sub();
@@ -206,11 +206,11 @@ void Skybox::refresh(const DrawContext& pctx, float t, float mie, uint quality) 
     shader.uniform1f("u_dayTime", dayTime);
 
     if (glm::abs(mie-prevMie) + glm::abs(t-prevT) >= 0.01) {
-        for (uint face = 0; face < 6; face++) {
+        for (uint_t face = 0; face < 6; face++) {
             refreshFace(face, cubemap);
         }
     } else {
-        uint face = frameid % 6;
+        uint_t face = frameid % 6;
         refreshFace(face, cubemap);
     }
     prevMie = mie;
@@ -220,7 +220,7 @@ void Skybox::refresh(const DrawContext& pctx, float t, float mie, uint quality) 
     glActiveTexture(GL_TEXTURE0);
 }
 
-void Skybox::refreshFace(uint face, Cubemap* cubemap) {
+void Skybox::refreshFace(uint_t face, Cubemap* cubemap) {
     const glm::vec3 xaxs[] = {
         {0.0f, 0.0f, -1.0f},
         {0.0f, 0.0f, 1.0f},

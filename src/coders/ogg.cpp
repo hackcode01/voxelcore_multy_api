@@ -54,8 +54,8 @@ std::unique_ptr<audio::PCM> ogg::load_pcm(
     std::vector<char> data;
 
     vorbis_info* info = ov_info(&vf, -1);
-    uint channels = info->channels;
-    uint sampleRate = info->rate;
+    uint_t channels = info->channels;
+    uint_t sampleRate = info->rate;
     bool seekable = ov_seekable(&vf);
     size_t totalSamples = seekable ? ov_pcm_total(&vf, -1) : 0;
 
@@ -89,8 +89,8 @@ std::unique_ptr<audio::PCM> ogg::load_pcm(
 class OggStream : public PCMStream {
     OggVorbis_File vf;
     bool closed = false;
-    uint channels;
-    uint sampleRate;
+    uint_t channels;
+    uint_t sampleRate;
     size_t totalSamples = 0;
     bool seekable;
 public:
@@ -144,15 +144,15 @@ public:
                static_cast<duration_t>(sampleRate);
     }
 
-    uint getChannels() const override {
+    uint_t getChannels() const override {
         return channels;
     }
 
-    uint getSampleRate() const override {
+    uint_t getSampleRate() const override {
         return sampleRate;
     }
 
-    uint getBitsPerSample() const override {
+    uint_t getBitsPerSample() const override {
         return 16;
     }
 

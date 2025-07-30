@@ -45,11 +45,11 @@ public:
         Player* player, const Block& def, blockstate state, int x, int y, int z
     );
 
-    void update(float delta, uint padding);
+    void update(float delta, uint_t padding);
     void randomTick(
         const Chunk& chunk, int segments, const ContentIndices* indices
     );
-    void randomTick(int tickid, int parts, uint padding);
+    void randomTick(int tickid, int parts, uint_t padding);
     void onBlocksTick(int tickid, int parts);
     int64_t createBlockInventory(int x, int y, int z);
     void bindInventory(int64_t invid, int x, int y, int z);

@@ -14,9 +14,9 @@ class BasicParser {
 protected:
     std::string_view filename;
     StringViewT source;
-    uint pos = 0;
-    uint line = 1;
-    uint linestart = 0;
+    uint_t pos = 0;
+    uint_t line = 1;
+    uint_t linestart = 0;
     bool hashComment = false;
     bool clikeComment = false;
 

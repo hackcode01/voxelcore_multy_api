@@ -85,7 +85,7 @@ void GLSLExtension::setDefined(const std::string& name, bool defined) {
 }
 
 inline std::runtime_error parsing_error(
-    const io::Path& file, uint linenum, const std::string& message
+    const io::Path& file, uint_t linenum, const std::string& message
 ) {
     return std::runtime_error(
         "file " + file.string() + ": " + message + " at line " +
@@ -94,13 +94,13 @@ inline std::runtime_error parsing_error(
 }
 
 inline void parsing_warning(
-    std::string_view file, uint linenum, const std::string& message
+    std::string_view file, uint_t linenum, const std::string& message
 ) {
     logger.warning() << "file " + std::string(file) + ": warning: " + message +
                      " at line " + std::to_string(linenum);
 }
 
-inline void source_line(std::stringstream& ss, uint linenum) {
+inline void source_line(std::stringstream& ss, uint_t linenum) {
     ss << "#line " << linenum << "\n";
 }
 
@@ -131,7 +131,7 @@ public:
         for (auto& entry : glsl.getDefines()) {
             ss << "#define " << entry.first << " " << entry.second << '\n';
         }
-        uint linenum = 1;
+        uint_t linenum = 1;
         source_line(ss, linenum);
 
         clikeComment = true;

@@ -6,7 +6,7 @@
 
 static debug::Logger logger("gl-framebuffer");
 
-Framebuffer::Framebuffer(uint fbo, uint depth, std::unique_ptr<Texture> texture)
+Framebuffer::Framebuffer(uint_t fbo, uint_t depth, std::unique_ptr<Texture> texture)
   : fbo(fbo), depth(depth), texture(std::move(texture)) 
 {
     if (this->texture) {
@@ -31,7 +31,7 @@ static std::unique_ptr<Texture> create_texture(int width, int height, int format
     return std::make_unique<Texture>(tex, width, height);
 }
 
-Framebuffer::Framebuffer(uint width, uint height, bool alpha) 
+Framebuffer::Framebuffer(uint_t width, uint_t height, bool alpha) 
   : width(width), height(height)
 {
     glGenFramebuffers(1, &fbo);
@@ -68,7 +68,7 @@ void Framebuffer::unbind() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Framebuffer::resize(uint width, uint height) {
+void Framebuffer::resize(uint_t width, uint_t height) {
     if (this->width == width && this->height == height) {
         return;
     }
@@ -89,14 +89,14 @@ Texture* Framebuffer::getTexture() const {
     return texture.get();
 }
 
-uint Framebuffer::getWidth() const {
+uint_t Framebuffer::getWidth() const {
     return width;
 }
 
-uint Framebuffer::getHeight() const {
+uint_t Framebuffer::getHeight() const {
     return height;
 }
 
-uint Framebuffer::getFBO() const {
+uint_t Framebuffer::getFBO() const {
     return fbo;   
 }

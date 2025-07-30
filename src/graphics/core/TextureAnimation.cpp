@@ -22,7 +22,7 @@ void TextureAnimator::addAnimations(const std::vector<TextureAnimation>& animati
 }
 
 void TextureAnimator::update(float delta) {
-    std::unordered_set<uint> changedTextures;
+    std::unordered_set<uint_t> changedTextures;
 
     for (auto& elem : animations) {
         elem.timer += delta;
@@ -35,8 +35,8 @@ void TextureAnimator::update(float delta) {
             frame = elem.frames[elem.currentFrame];
         }
         if (frameNum != elem.currentFrame){
-            uint elemDstId = elem.dstTexture->getId();
-            uint elemSrcId = elem.srcTexture->getId();
+            uint_t elemDstId = elem.dstTexture->getId();
+            uint_t elemSrcId = elem.srcTexture->getId();
 
             changedTextures.insert(elemDstId);
 

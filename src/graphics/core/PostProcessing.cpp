@@ -68,7 +68,7 @@ void PostProcessing::use(DrawContext& context, bool gbufferPipeline) {
     }
 }
 
-void PostProcessing::refreshFbos(uint width, uint height) {
+void PostProcessing::refreshFbos(uint_t width, uint_t height) {
     if (fbo) {
         fbo->resize(width, height);
         fboSecond->resize(width, height);

@@ -169,8 +169,8 @@ void LevelScreen::saveWorldPreview() {
 
         DrawContext ctx(&pctx, engine.getWindow(), batch.get());
         ctx.setViewport(
-            {static_cast<uint>(previewSize * 1.5),
-             static_cast<uint>(previewSize)}
+            {static_cast<uint_t>(previewSize * 1.5),
+             static_cast<uint_t>(previewSize)}
         );
 
         renderer->draw(ctx, camera, false, true, 0.0f, *postProcessing);

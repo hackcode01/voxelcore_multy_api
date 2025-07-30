@@ -32,7 +32,7 @@ static void refresh_variant(
     const GraphicsSettings& settings,
     std::unordered_map<blockid_t, model::Model>& models
 ) {
-    for (uint side = 0; side < 6; side++) {
+    for (uint_t side = 0; side < 6; side++) {
         std::string tex = variant.textureFaces[side];
         if (variant.culling == CullingMode::OPTIONAL &&
             !settings.denseRender.get() && atlas.has(tex + "_opaque")) {

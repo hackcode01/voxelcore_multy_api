@@ -45,7 +45,7 @@ std::unique_ptr<Content> ContentBuilder::build() {
         def.rt.extended = def.size.x > 1 || def.size.y > 1 || def.size.z > 1;
 
         if (def.rotatable) {
-            for (uint i = 0; i < BlockRotProfile::MAX_COUNT; i++) {
+            for (uint_t i = 0; i < BlockRotProfile::MAX_COUNT; i++) {
                 def.rt.hitboxes[i].reserve(def.hitboxes.size());
                 for (AABB aabb : def.hitboxes) {
                     def.rotations.variants[i].transform(aabb);

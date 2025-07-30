@@ -25,13 +25,13 @@ namespace audio {
 
     class ALSound : public Sound {
         ALAudio* al;
-        uint buffer;
+        uint_t buffer;
         std::shared_ptr<PCM> pcm;
         duration_t duration;
     public:
         ALSound(
             ALAudio* al,
-            uint buffer,
+            uint_t buffer,
             const std::shared_ptr<PCM>& pcm,
             bool keepPCM
         );
@@ -54,15 +54,15 @@ namespace audio {
 
         ALAudio* al;
         std::shared_ptr<PCMStream> source;
-        std::queue<uint> unusedBuffers;
+        std::queue<uint_t> unusedBuffers;
         speakerid_t speaker = 0;
         bool keepSource;
         char buffer[BUFFER_SIZE];
         bool loop = false;
 
-        bool preloadBuffer(uint buffer, bool loop);
-        void unqueueBuffers(uint alsource);
-        uint enqueueBuffers(uint alsource);
+        bool preloadBuffer(uint_t buffer, bool loop);
+        void unqueueBuffers(uint_t alsource);
+        uint_t enqueueBuffers(uint_t alsource);
     public:
         size_t totalPlayedSamples = 0;
 
@@ -80,7 +80,7 @@ namespace audio {
         duration_t getTime() const override;
         void setTime(duration_t time) override;
 
-        static inline constexpr uint STREAM_BUFFERS = 3;
+        static inline constexpr uint_t STREAM_BUFFERS = 3;
     };
 
     /// @brief AL source adapter
@@ -93,7 +93,7 @@ namespace audio {
         ALStream* stream = nullptr;
         bool stopped = true;
         bool paused = false;
-        uint source;
+        uint_t source;
         duration_t duration = 0.0f;
 
         ALSpeaker(ALAudio* al, uint source, int priority, int channel);
@@ -137,21 +137,21 @@ namespace audio {
         ALCdevice* device;
         ALCcontext* context;
 
-        std::vector<uint> allsources;
-        std::vector<uint> freesources;
+        std::vector<uint_t> allsources;
+        std::vector<uint_t> freesources;
 
-        std::vector<uint> allbuffers;
-        std::vector<uint> freebuffers;
+        std::vector<uint_t> allbuffers;
+        std::vector<uint_t> freebuffers;
 
-        uint maxSources = 256;
+        uint_t maxSources = 256;
     public:
         ALAudio(ALCdevice* device, ALCcontext* context);
         ~ALAudio();
 
-        uint getFreeSource();
-        uint getFreeBuffer();
-        void freeSource(uint source);
-        void freeBuffer(uint buffer);
+        uint_t getFreeSource();
+        uint_t getFreeBuffer();
+        void freeSource(uint_t source);
+        void freeBuffer(uint_t buffer);
 
         std::vector<std::string> getAvailableDevices() const;
 

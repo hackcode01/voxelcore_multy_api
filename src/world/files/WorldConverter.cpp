@@ -316,10 +316,10 @@ void WorldConverter::waitForEnd() {
     }
 }
 
-uint WorldConverter::getWorkTotal() const {
+uint_t WorldConverter::getWorkTotal() const {
     return tasks.size() + tasksDone;
 }
 
-uint WorldConverter::getWorkDone() const {
+uint_t WorldConverter::getWorkDone() const {
     return tasksDone;
 }

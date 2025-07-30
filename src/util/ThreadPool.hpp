@@ -46,7 +46,7 @@ namespace util {
         consumer_t<T&> onJobFailed = nullptr;
         runnable_t onComplete = nullptr;
         std::atomic<int> busyWorkers = 0;
-        std::atomic<uint> jobsDone = 0;
+        std::atomic<uint_t> jobsDone = 0;
         std::atomic<bool> working = true;
         bool failed = false;
         bool standaloneResults = true;
@@ -120,7 +120,7 @@ namespace util {
             int maxWorkers=UNLIMITED
         )
             : logger(std::move(name)), resultConsumer(resultConsumer) {
-            uint numThreads = std::thread::hardware_concurrency();
+            uint_t numThreads = std::thread::hardware_concurrency();
             switch (maxWorkers) {
                 case UNLIMITED:
                     break;
@@ -132,11 +132,11 @@ namespace util {
                     break;
                 default:
                     numThreads = std::max(
-                        1U, std::min(numThreads, static_cast<uint>(maxWorkers))
+                        1U, std::min(numThreads, static_cast<uint_t>(maxWorkers))
                     );
                     break;
             }
-            for (uint i = 0; i < numThreads; i++) {
+            for (uint_t i = 0; i < numThreads; i++) {
                 threads.emplace_back(
                     &ThreadPool<T, R>::threadLoop, this, i, workersSupplier()
                 );
@@ -263,11 +263,11 @@ namespace util {
             this->onComplete = callback;
         }
 
-        uint getWorkTotal() const override {
+        uint_t getWorkTotal() const override {
             return jobs.size() + jobsDone + busyWorkers;
         }
 
-        uint getWorkDone() const override {
+        uint_t getWorkDone() const override {
             return jobsDone;
         }
 
@@ -279,7 +279,7 @@ namespace util {
             }
         }
 
-        uint getWorkersCount() const {
+        uint_t getWorkersCount() const {
             return threads.size();
         }
     };

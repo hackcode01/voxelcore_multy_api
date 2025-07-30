@@ -42,18 +42,18 @@ glm::u32vec2* WorldRegion::getSizes() const {
 }
 
 void WorldRegion::put(
-    uint x, uint z, std::unique_ptr<ubyte[]> data, uint32_t size, uint32_t srcSize
+    uint_t x, uint_t z, std::unique_ptr<ubyte[]> data, uint32_t size, uint32_t srcSize
 ) {
     size_t chunk_index = z * REGION_SIZE + x;
     chunksData[chunk_index] = std::move(data);
     sizes[chunk_index] = glm::u32vec2(size, srcSize);
 }
 
-ubyte* WorldRegion::getChunkData(uint x, uint z) {
+ubyte* WorldRegion::getChunkData(uint_t x, uint_t z) {
     return chunksData[z * REGION_SIZE + x].get();
 }
 
-glm::u32vec2 WorldRegion::getChunkDataSize(uint x, uint z) {
+glm::u32vec2 WorldRegion::getChunkDataSize(uint_t x, uint_t z) {
     return sizes[z * REGION_SIZE + x];
 }
 
@@ -141,8 +141,8 @@ static ChunkInventoriesMap load_inventories(const ubyte* src, uint32_t size) {
     ByteReader reader(src, size);
     auto count = reader.getInt32();
     for (int i = 0; i < count; i++) {
-        uint index = reader.getInt32();
-        uint size = reader.getInt32();
+        uint_t index = reader.getInt32();
+        uint_t size = reader.getInt32();
         auto map = json::from_binary(reader.pointer(), size);
         reader.skip(size);
         auto inv = std::make_shared<Inventory>(0, 0);
@@ -184,7 +184,7 @@ void WorldRegions::put(Chunk* chunk, std::vector<ubyte> entitiesData) {
     }
     // Writing block inventories
     if (!chunk->inventories.empty()) {
-        uint datasize;
+        uint_t datasize;
         auto data = write_inventories(chunk->inventories, datasize);
         put(chunk->x,
             chunk->z,
@@ -292,8 +292,8 @@ void WorldRegions::processBlocksData(int x, int z, const BlockDataProc& func) {
         deleteRegion(REGION_LAYER_BLOCKS_DATA, x, z);
         return;
     }
-    for (uint cz = 0; cz < REGION_SIZE; cz++) {
-        for (uint cx = 0; cx < REGION_SIZE; cx++) {
+    for (uint_t cz = 0; cz < REGION_SIZE; cz++) {
+        for (uint_t cx = 0; cx < REGION_SIZE; cx++) {
             int gx = cx + x * REGION_SIZE;
             int gz = cz + z * REGION_SIZE;
 
@@ -363,8 +363,8 @@ void WorldRegions::processRegion(
     if (regfile == nullptr) {
         throw std::runtime_error("could not open region file");
     }
-    for (uint cz = 0; cz < REGION_SIZE; cz++) {
-        for (uint cx = 0; cx < REGION_SIZE; cx++) {
+    for (uint_t cz = 0; cz < REGION_SIZE; cz++) {
+        for (uint_t cx = 0; cx < REGION_SIZE; cx++) {
             int gx = cx + x * REGION_SIZE;
             int gz = cz + z * REGION_SIZE;
             uint32_t length;

@@ -17,18 +17,18 @@ public:
     };
 private:
     static Shader* used;
-    uint id;
-    std::unordered_map<std::string, uint> uniformLocations;
+    uint_t id;
+    std::unordered_map<std::string, uint_t> uniformLocations;
     
     // source code used for re-compiling shaders after updating defines
     Source vertexSource;
     Source fragmentSource;
     
-    uint getUniformLocation(const std::string& name);
+    uint_t getUniformLocation(const std::string& name);
 public:
     static GLSLExtension* preprocessor;
 
-    Shader(uint id, Source&& vertexSource, Source&& fragmentSource);
+    Shader(uint_t id, Source&& vertexSource, Source&& fragmentSource);
     ~Shader();
 
     void use();

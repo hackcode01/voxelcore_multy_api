@@ -10,79 +10,87 @@
 #include "typedefs.hpp"
 #include "util/observer_handler.hpp"
 
-enum class setting_format { simple, percent };
+enum class SettingFormats { Simple, Percent };
 
-class Setting {
-protected:
-    setting_format format;
+class Settings {
+
 public:
-    Setting(setting_format format) : format(format) {
-    }
+    Settings(SettingFormats format) : format(format) {}
 
-    virtual ~Setting() {
-    }
+    virtual ~Settings() {}
 
     virtual void resetToDefault() = 0;
 
-    virtual setting_format getFormat() const {
+    virtual SettingFormats getFormat() const {
         return format;
     }
 
     virtual std::string toString() const = 0;
+
+protected:
+    SettingFormats format;
 };
 
 template <class T>
-class ObservableSetting : public Setting {
-    int nextid = 1;
-    std::unordered_map<int, consumer_t<T>> observers;
-protected:
-    T initial;
-    T value;
+class ObservableSetting : public Settings {
+    
 public:
-    ObservableSetting(T value, setting_format format)
-        : Setting(format), initial(value), value(value) {
+    ObservableSetting(T value, SettingFormats format)
+    : Settings(format), initial(value), value(value) {
     }
-
+    
     ObserverHandler observe(consumer_t<T> callback, bool callOnStart = false) {
-        const int id = nextid++;
-        observers.emplace(id, callback);
+        const int_fast32_t id = ++m_nextid;
+        
+        m_observers.emplace(id, callback);
+        
         if (callOnStart) {
             callback(value);
         }
+        
         return ObserverHandler([this, id]() {
-            observers.erase(id);
+            m_observers.erase(id);
         });
     }
-
+    
     const T& get() const {
         return value;
     }
-
+    
     const T& getDefault() const {
         return initial;
     }
-
+    
     T& operator*() {
         return value;
     }
-
+    
     void notify(T value) {
-        for (auto& entry : observers) {
+        for (auto& entry : m_observers) {
             entry.second(value);
         }
     }
-
+    
     void set(T value) {
         if (value == this->value) {
             return;
         }
+
         this->value = value;
         notify(value);
     }
-
+    
     virtual void resetToDefault() override {
         set(initial);
     }
+
+protected:
+    T initial;
+    T value;
+
+private:
+    int_fast32_t m_nextid = 1;
+    std::unordered_map<int_fast32_t, consumer_t<T>> m_observers{};
 };
 
 class NumberSetting : public ObservableSetting<number_t> {
@@ -94,7 +102,7 @@ public:
         number_t value,
         number_t min = std::numeric_limits<number_t>::min(),
         number_t max = std::numeric_limits<number_t>::max(),
-        setting_format format = setting_format::simple
+        SettingFormats format = SettingFormats::Simple
     )
         : ObservableSetting(value, format), min(min), max(max) {
     }
@@ -122,7 +130,7 @@ public:
     virtual std::string toString() const override;
 
     static inline NumberSetting createPercent(number_t def) {
-        return NumberSetting(def, 0.0, 1.0, setting_format::percent);
+        return NumberSetting(def, 0.0, 1.0, SettingFormats::Percent);
     }
 };
 
@@ -135,7 +143,7 @@ public:
         integer_t value,
         integer_t min = std::numeric_limits<integer_t>::min(),
         integer_t max = std::numeric_limits<integer_t>::max(),
-        setting_format format = setting_format::simple
+        SettingFormats format = SettingFormats::Simple
     )
         : ObservableSetting(value, format), min(min), max(max) {
     }
@@ -157,7 +165,7 @@ public:
 
 class FlagSetting : public ObservableSetting<bool> {
 public:
-    FlagSetting(bool value, setting_format format = setting_format::simple)
+    FlagSetting(bool value, SettingFormats format = SettingFormats::Simple)
         : ObservableSetting(value, format) {
     }
 
@@ -171,7 +179,7 @@ public:
 class StringSetting : public ObservableSetting<std::string> {
 public:
     StringSetting(
-        std::string value, setting_format format = setting_format::simple
+        std::string value, SettingFormats format = SettingFormats::Simple
     )
         : ObservableSetting(value, format) {
     }

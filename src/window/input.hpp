@@ -286,7 +286,7 @@ public:
     virtual ObserverHandler addKeyCallback(Keycode key, KeyCallback_t callback) = 0;
 
     virtual const std::vector<Keycode>& getPressedKeys() const = 0;
-    virtual const std::vector<uint>& getCodepoints() const = 0;
+    virtual const std::vector<uint_t>& getCodepoints() const = 0;
 
     ObserverHandler addCallback(const std::string& name, KeyCallback_t callback) {
         return getBindings().require(name).onactived.add(callback);

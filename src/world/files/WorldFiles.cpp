@@ -210,14 +210,14 @@ void WorldFiles::patchIndicesFile(const dv::value& map) {
 static void erase_pack_indices(dv::value& root, const std::string& id) {
     auto prefix = id + ":";
     auto& blocks = root["blocks"];
-    for (uint i = 0; i < blocks.size(); i++) {
+    for (uint_t i = 0; i < blocks.size(); i++) {
         auto name = blocks[i].asString();
         if (name.find(prefix) != 0) continue;
         blocks[i] = CORE_AIR;
     }
 
     auto& items = root["items"];
-    for (uint i = 0; i < items.size(); i++) {
+    for (uint_t i = 0; i < items.size(); i++) {
         auto& name = items[i].asString();
         if (name.find(prefix) != 0) continue;
         items[i] = CORE_EMPTY;

@@ -80,7 +80,7 @@ io::Path EnginePaths::getNewScreenshotFile(const std::string& ext) {
     std::string datetimestr = ss.str();
 
     auto file = folder / ("screenshot-" + datetimestr + "." + ext);
-    uint index = 0;
+    uint_t index = 0;
     while (io::exists(file)) {
         file = folder / ("screenshot-" + datetimestr + "-" +
                          std::to_string(index) + "." + ext);

@@ -67,7 +67,7 @@ public:
 
     /// @brief Check if character is visible (non-whitespace)
     /// @param codepoint character unicode codepoint
-    bool isPrintableChar(uint codepoint) const;
+    bool isPrintableChar(uint_t codepoint) const;
 
     void draw(
         Batch2D& batch,

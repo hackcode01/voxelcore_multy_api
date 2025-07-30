@@ -79,10 +79,10 @@ size_t rle::encode16(const ubyte* src, size_t srclen, ubyte* dst) {
 size_t extrle::decode(const ubyte* src, size_t srclen, ubyte* dst) {
     size_t offset = 0;
     for (size_t i = 0; i < srclen;) {
-        uint len = src[i++];
+        uint_t len = src[i++];
         if (len & 0x80) {
             len &= 0x7F;
-            len |= (static_cast<uint>(src[i++])) << 7;
+            len |= (static_cast<uint_t>(src[i++])) << 7;
         }
         ubyte c = src[i++];
         for (size_t j = 0; j <= len; j++) {
@@ -97,7 +97,7 @@ size_t extrle::encode(const ubyte* src, size_t srclen, ubyte* dst) {
         return 0;
     }
     size_t offset = 0;
-    uint counter = 0;
+    uint_t counter = 0;
     ubyte c = src[0];
     for (size_t i = 1; i < srclen; i++) {
         ubyte cnext = src[i];
@@ -129,17 +129,17 @@ size_t extrle::decode16(const ubyte* src, size_t srclen, ubyte* dst8) {
     auto dst = reinterpret_cast<uint16_t*>(dst8);
     size_t offset = 0;
     for (size_t i = 0; i < srclen;) {
-        uint len = src[i++];
+        uint_t len = src[i++];
         bool widechar = len & 0x40;
         if (len & 0x80) {
             len &= 0x3F;
-            len |= (static_cast<uint>(src[i++])) << 6;
+            len |= (static_cast<uint_t>(src[i++])) << 6;
         } else {
             len &= 0x3F;
         }
         uint16_t c = src[i++];
         if (widechar) {
-            c |= ((static_cast<uint>(src[i++])) << 8);
+            c |= ((static_cast<uint_t>(src[i++])) << 8);
         }
         for (size_t j = 0; j <= len; j++) {
             dst[offset++] = c;
@@ -154,7 +154,7 @@ size_t extrle::encode16(const ubyte* src8, size_t srclen, ubyte* dst) {
     }
     auto src = reinterpret_cast<const uint16_t*>(src8);
     size_t offset = 0;
-    uint counter = 0;
+    uint_t counter = 0;
     uint16_t c = src[0];
     for (size_t i = 1; i < srclen/2; i++) {
         uint16_t cnext = src[i];

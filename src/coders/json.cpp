@@ -25,11 +25,11 @@ namespace {
 }
 
 inline void newline(
-    std::stringstream& ss, bool nice, uint indent, const std::string& indentstr
+    std::stringstream& ss, bool nice, uint_t indent, const std::string& indentstr
 ) {
     if (nice) {
         ss << "\n";
-        for (uint i = 0; i < indent; i++) {
+        for (uint_t i = 0; i < indent; i++) {
             ss << indentstr;
         }
     } else {

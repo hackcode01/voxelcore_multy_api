@@ -21,38 +21,38 @@ VC_ENUM_METADATA(InterpolationType)
 VC_ENUM_END
 
 class Heightmap {
-    uint width, height;
+    uint_t width, height;
     std::vector<float> buffer;
 public:
-    Heightmap(uint width, uint height)
+    Heightmap(uint_t width, uint_t height)
         : width(width), height(height) {
         buffer.resize(width*height);
     }
 
-    Heightmap(uint width, uint height, std::vector<float> buffer) 
+    Heightmap(uint_t width, uint_t height, std::vector<float> buffer) 
     : width(width), height(height), buffer(std::move(buffer)) {}
 
     ~Heightmap() = default;
 
-    void resize(uint width, uint height, InterpolationType interpolation);
+    void resize(uint_t width, uint_t height, InterpolationType interpolation);
 
-    void crop(uint srcX, uint srcY, uint dstWidth, uint dstHeight);
+    void crop(uint_t srcX, uint_t srcY, uint_t dstWidth, uint_t dstHeight);
 
     void clamp();
 
-    uint getWidth() const {
+    uint_t getWidth() const {
         return width;
     }
 
-    uint getHeight() const {
+    uint_t getHeight() const {
         return height;
     }
 
-    float get(uint x, uint y) {
+    float get(uint_t x, uint_t y) {
         return buffer.at(y * width + x);
     }
 
-    float getUnchecked(uint x, uint y) {
+    float getUnchecked(uint_t x, uint_t y) {
         return buffer[y * width + x];
     }
 

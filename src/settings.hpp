@@ -12,11 +12,11 @@ struct AudioSettings {
     /// @brief try to initialize AL backend
     FlagSetting enabled {true};
     
-    NumberSetting volumeMaster {1.0f, 0.0f, 1.0f, setting_format::percent};
-    NumberSetting volumeRegular {1.0f, 0.0f, 1.0f, setting_format::percent};
-    NumberSetting volumeUI {1.0f, 0.0f, 1.0f, setting_format::percent};
-    NumberSetting volumeAmbient {1.0f, 0.0f, 1.0f, setting_format::percent};
-    NumberSetting volumeMusic {1.0f, 0.0f, 1.0f, setting_format::percent};
+    NumberSetting volumeMaster {1.0f, 0.0f, 1.0f, SettingFormats::Percent};
+    NumberSetting volumeRegular {1.0f, 0.0f, 1.0f, SettingFormats::Percent};
+    NumberSetting volumeUI {1.0f, 0.0f, 1.0f, SettingFormats::Percent};
+    NumberSetting volumeAmbient {1.0f, 0.0f, 1.0f, SettingFormats::Percent};
+    NumberSetting volumeMusic {1.0f, 0.0f, 1.0f, SettingFormats::Percent};
 };
 
 struct DisplaySettings {

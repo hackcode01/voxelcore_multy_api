@@ -18,10 +18,10 @@
 static debug::Logger logger("world-generator");
 
 /// @brief Max number of biome parameters
-static inline constexpr uint MAX_PARAMETERS = 4;
+static inline constexpr uint_t MAX_PARAMETERS = 4;
 
 /// @brief Initial + wide_structs + biomes + heightmaps + complete
-static inline constexpr uint BASIC_PROTOTYPE_LAYERS = 5;
+static inline constexpr uint_t BASIC_PROTOTYPE_LAYERS = 5;
 
 WorldGenerator::WorldGenerator(
     const GeneratorDef& def, const Content& content, uint64_t seed
@@ -33,7 +33,7 @@ WorldGenerator::WorldGenerator(
 {
     def.script->initialize(seed);
 
-    uint levels = BASIC_PROTOTYPE_LAYERS + def.wideStructsChunksRadius * 2;
+    uint_t levels = BASIC_PROTOTYPE_LAYERS + def.wideStructsChunksRadius * 2;
 
     surroundMap = SurroundMap(0, levels);
     logger.info() << "total number of prototype levels is " << levels;
@@ -91,8 +91,8 @@ static inline void generate_pole(
     voxel* voxels,
     int x, int z
 ) {
-    uint y = top;
-    uint layerExtension = 0;
+    uint_t y = top;
+    uint_t layerExtension = 0;
     for (const auto& layer : layers.layers) {
         // skip layer if can't be generated under sea level
         if (y < seaLevel && !layer.belowSeaLevel) {
@@ -106,9 +106,9 @@ static inline void generate_pole(
         } else {
             layerHeight += layerExtension;
         }
-        layerHeight = std::min(static_cast<uint>(layerHeight), y+1);
+        layerHeight = std::min(static_cast<uint_t>(layerHeight), y+1);
 
-        for (uint i = 0; i < layerHeight; i++, y--) {
+        for (uint_t i = 0; i < layerHeight; i++, y--) {
             voxels[vox_index(x, y, z)].id = layer.rt.id;
         }
         layerExtension = 0;
@@ -118,18 +118,18 @@ static inline void generate_pole(
 static inline const Biome* choose_biome(
     const std::vector<Biome>& biomes,
     const std::vector<std::shared_ptr<Heightmap>>& maps,
-    uint x, uint z
+    uint_t x, uint_t z
 ) {
-    uint paramsCount = maps.size();
+    uint_t paramsCount = maps.size();
     float params[MAX_PARAMETERS];
-    for (uint i = 0; i < paramsCount; i++) {
+    for (uint_t i = 0; i < paramsCount; i++) {
         params[i] = maps[i]->getUnchecked(x, z);
     }
     const Biome* chosenBiome = nullptr;
     float chosenScore = std::numeric_limits<float>::infinity();
     for (const auto& biome : biomes) {
         float score = 0.0f;
-        for (uint i = 0; i < paramsCount; i++) {
+        for (uint_t i = 0; i < paramsCount; i++) {
             score += glm::abs((params[i] - biome.parameters[i].value) / 
                               biome.parameters[i].weight);
         }
@@ -258,8 +258,8 @@ void WorldGenerator::generateStructures(
 
     // Place structures defined in biome
     auto heights = heightmap->getValues();
-    for (uint z = 0; z < CHUNK_D; z++) {
-        for (uint x = 0; x < CHUNK_W; x++) {
+    for (uint_t z = 0; z < CHUNK_D; z++) {
+        for (uint_t x = 0; x < CHUNK_W; x++) {
             float rand = structsRand.randFloat();
             const Biome* biome = biomes[z * CHUNK_W + x];
             int structureId = biome->structures.choose(rand, -1);
@@ -297,7 +297,7 @@ void WorldGenerator::generateBiomes(
     if (prototype.level >= ChunkPrototypeLevel::BIOMES) {
         return;
     }
-    uint bpd = def.biomesBPD;
+    uint_t bpd = def.biomesBPD;
     auto biomeParams = def.script->generateParameterMaps(
         {floordiv(chunkX * CHUNK_W, bpd), floordiv(chunkZ * CHUNK_D, bpd)},
         {floordiv(CHUNK_W, bpd)+1, floordiv(CHUNK_D, bpd)+1},
@@ -322,8 +322,8 @@ void WorldGenerator::generateBiomes(
     const auto& biomes = def.biomes;
 
     auto chunkBiomes = std::make_unique<const Biome*[]>(CHUNK_W*CHUNK_D);
-    for (uint z = 0; z < CHUNK_D; z++) {
-        for (uint x = 0; x < CHUNK_W; x++) {
+    for (uint_t z = 0; z < CHUNK_D; z++) {
+        for (uint_t x = 0; x < CHUNK_W; x++) {
             chunkBiomes.get()[z * CHUNK_W + x] =
                 choose_biome(biomes, biomeParams, x, z);
         }
@@ -338,7 +338,7 @@ void WorldGenerator::generateHeightmap(
     if (prototype.level >= ChunkPrototypeLevel::HEIGHTMAP) {
         return;
     }
-    uint bpd = def.heightsBPD;
+    uint_t bpd = def.heightsBPD;
     prototype.heightmap = def.script->generateHeightmap(
         {floordiv(chunkX * CHUNK_W, bpd), floordiv(chunkZ * CHUNK_D, bpd)},
         {floordiv(CHUNK_W, bpd)+1, floordiv(CHUNK_D, bpd)+1},
@@ -371,8 +371,8 @@ void WorldGenerator::generatePlants(
     util::PseudoRandom plantsRand;
     plantsRand.setSeed(chunkX, chunkZ);
 
-    for (uint z = 0; z < CHUNK_D; z++) {
-        for (uint x = 0; x < CHUNK_W; x++) {
+    for (uint_t z = 0; z < CHUNK_D; z++) {
+        for (uint_t x = 0; x < CHUNK_W; x++) {
             const Biome* biome = biomes[z * CHUNK_W + x];
 
             int height = heights[z * CHUNK_W + x] * CHUNK_H;
@@ -409,9 +409,9 @@ void WorldGenerator::generateLand(
     int chunkZ,
     const Biome** biomes
 ) {
-    uint seaLevel = def.seaLevel;
-    for (uint z = 0; z < CHUNK_D; z++) {
-        for (uint x = 0; x < CHUNK_W; x++) {
+    uint_t seaLevel = def.seaLevel;
+    for (uint_t z = 0; z < CHUNK_D; z++) {
+        for (uint_t x = 0; x < CHUNK_W; x++) {
             const Biome* biome = biomes[z * CHUNK_W + x];
 
             int height = values[z * CHUNK_W + x] * CHUNK_H;
@@ -432,13 +432,13 @@ void WorldGenerator::generate(voxel* voxels, int chunkX, int chunkZ) {
     const auto& prototype = requirePrototype(chunkX, chunkZ);
     const auto values = prototype.heightmap->getValues();
 
-    uint seaLevel = def.seaLevel;
+    uint_t seaLevel = def.seaLevel;
 
     std::memset(voxels, 0, sizeof(voxel) * CHUNK_VOL);
 
     const auto& biomes = prototype.biomes.get();
-    for (uint z = 0; z < CHUNK_D; z++) {
-        for (uint x = 0; x < CHUNK_W; x++) {
+    for (uint_t z = 0; z < CHUNK_D; z++) {
+        for (uint_t x = 0; x < CHUNK_W; x++) {
             const Biome* biome = biomes[z * CHUNK_W + x];
 
             int height = values[z * CHUNK_W + x] * CHUNK_H;
@@ -455,7 +455,7 @@ void WorldGenerator::generate(voxel* voxels, int chunkX, int chunkZ) {
     generatePlants(prototype, values, voxels, chunkX, chunkZ, biomes);
 
     [[maybe_unused]] const auto& indices = content.getIndices()->blocks;
-    for (uint i = 0; i < CHUNK_VOL; i++) {
+    for (uint_t i = 0; i < CHUNK_VOL; i++) {
         blockid_t& id = voxels[i].id;
         if (id == BLOCK_STRUCT_AIR) {
             id = BLOCK_AIR;
@@ -596,15 +596,15 @@ WorldGenDebugInfo WorldGenerator::createDebugInfo() const {
     const auto& levels = area.getBuffer();
     auto values = std::make_unique<ubyte[]>(area.getWidth()*area.getHeight());
 
-    for (uint i = 0; i < levels.size(); i++) {
+    for (uint_t i = 0; i < levels.size(); i++) {
         values[i] = levels[i];
     }
 
     return WorldGenDebugInfo {
         area.getOffsetX(),
         area.getOffsetY(),
-        static_cast<uint>(area.getWidth()),
-        static_cast<uint>(area.getHeight()),
+        static_cast<uint_t>(area.getWidth()),
+        static_cast<uint_t>(area.getHeight()),
         std::move(values)
     };
 }

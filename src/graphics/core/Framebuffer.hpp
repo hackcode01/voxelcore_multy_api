@@ -8,15 +8,15 @@
 class Texture;
 
 class Framebuffer : public Bindable {
-    uint fbo;
-    uint depth;
-    uint width;
-    uint height;
-    uint format;
+    uint_t fbo;
+    uint_t depth;
+    uint_t width;
+    uint_t height;
+    uint_t format;
     std::unique_ptr<Texture> texture;
 public:
-    Framebuffer(uint fbo, uint depth, std::unique_ptr<Texture> texture);
-    Framebuffer(uint width, uint height, bool alpha=false);
+    Framebuffer(uint_t fbo, uint_t depth, std::unique_ptr<Texture> texture);
+    Framebuffer(uint_t width, uint_t height, bool alpha=false);
     ~Framebuffer();
 
     /// @brief Use framebuffer
@@ -28,15 +28,15 @@ public:
     /// @brief Update framebuffer texture size
     /// @param width new width
     /// @param height new height
-    void resize(uint width, uint height);
+    void resize(uint_t width, uint_t height);
 
     /// @brief Get framebuffer color attachment
     Texture* getTexture() const;
 
     /// @brief Get framebuffer width
-    uint getWidth() const;
+    uint_t getWidth() const;
     /// @brief Get framebuffer height
-    uint getHeight() const;
+    uint_t getHeight() const;
 
-    uint getFBO() const;
+    uint_t getFBO() const;
 };

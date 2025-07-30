@@ -95,7 +95,7 @@ UiDocument* menus::show(
 void menus::show_process_panel(
     Engine& engine, const std::shared_ptr<Task>& task, const std::wstring& text
 ) {
-    uint initialWork = task->getWorkTotal();
+    uint_t initialWork = task->getWorkTotal();
 
     auto menu = engine.getGUI().getMenu();
     menu->reset();
@@ -105,7 +105,7 @@ void menus::show_process_panel(
         ->listenInterval(0.01f, [=]() {
             task->update();
 
-            uint tasksDone = task->getWorkDone();
+            uint_t tasksDone = task->getWorkDone();
             scripting::on_ui_progress(doc, tasksDone, initialWork);
         });
 }

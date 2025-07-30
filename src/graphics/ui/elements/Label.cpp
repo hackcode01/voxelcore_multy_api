@@ -27,7 +27,7 @@ size_t LabelCache::getTextLineOffset(size_t line) const {
     return lines.at(line).offset;
 }
 
-uint LabelCache::getLineByTextIndex(size_t index) const {
+uint_t LabelCache::getLineByTextIndex(size_t index) const {
     for (size_t i = 0; i < lines.size(); i++) {
         if (lines[i].offset > index) {
             return i-1;
@@ -106,7 +106,7 @@ Label::~Label() = default;
 
 glm::vec2 Label::calcSize() {
     auto font = cache.font;
-    uint lineHeight = font->getLineHeight();
+    uint_t lineHeight = font->getLineHeight();
     if (cache.lines.size() > 1) {
         lineHeight *= lineInterval;
     }
@@ -181,22 +181,22 @@ bool Label::isFakeLine(size_t line) const {
     return cache.lines.at(line).fake;
 }
 
-int Label::getLineYOffset(uint line) const {
+int Label::getLineYOffset(uint_t line) const {
     return line * totalLineHeight + textYOffset;
 }
 
-uint Label::getLineByYOffset(int offset) const {
+uint_t Label::getLineByYOffset(int offset) const {
     if (offset < textYOffset) {
         return 0;
     }
     return (offset - textYOffset) / totalLineHeight;
 }
 
-uint Label::getLineByTextIndex(size_t index) const {
+uint_t Label::getLineByTextIndex(size_t index) const {
     return cache.getLineByTextIndex(index);
 }
 
-uint Label::getLinesNumber() const {
+uint_t Label::getLinesNumber() const {
     return cache.lines.size();
 }
 
@@ -213,7 +213,7 @@ void Label::draw(const DrawContext& pctx, const Assets& assets) {
     }
     batch->setColor(calcColor());
 
-    uint lineHeight = font->getLineHeight();
+    uint_t lineHeight = font->getLineHeight();
     if (cache.lines.size() > 1) {
         lineHeight *= lineInterval;
     }

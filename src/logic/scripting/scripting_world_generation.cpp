@@ -103,7 +103,7 @@ public:
     ) override {
         std::vector<std::shared_ptr<Heightmap>> maps;
 
-        uint biomeParameters = def.biomeParameters;
+        uint_t biomeParameters = def.biomeParameters;
         pushenv(L, *env);
         if (getfield(L, "generate_biome_parameters")) {
             pushivec_stack(L, offset);
@@ -119,7 +119,7 @@ public:
             }
         }
         pop(L);
-        for (uint i = 0; i < biomeParameters; i++) {
+        for (uint_t i = 0; i < biomeParameters; i++) {
             maps.push_back(std::make_shared<Heightmap>(size.x, size.y));
         }
         return maps;

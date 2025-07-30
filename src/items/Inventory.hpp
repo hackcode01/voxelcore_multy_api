@@ -33,7 +33,7 @@ public:
         size_t end = -1
     );
 
-    void resize(uint newSize);
+    void resize(uint_t newSize);
 
     void deserialize(const dv::value& src) override;
 

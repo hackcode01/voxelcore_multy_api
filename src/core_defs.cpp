@@ -36,7 +36,7 @@ void corecontent::setup(Input& input, ContentBuilder& builder) {
 
     {
         Block& block = builder.blocks.create(CORE_OBSTACLE);
-        for (uint i = 0; i < 6; i++) {
+        for (uint_t i = 0; i < 6; i++) {
             block.defaults.textureFaces[i] = "obstacle";
         }
         block.hitboxes = {AABB()};
@@ -49,7 +49,7 @@ void corecontent::setup(Input& input, ContentBuilder& builder) {
     }
     {
         Block& block = builder.blocks.create(CORE_STRUCT_AIR);
-        for (uint i = 0; i < 6; i++) {
+        for (uint_t i = 0; i < 6; i++) {
             block.defaults.textureFaces[i] = "struct_air";
         }
         block.defaults.drawGroup = -1;

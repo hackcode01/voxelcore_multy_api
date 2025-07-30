@@ -42,8 +42,8 @@ public:
 
     void update(float delta);
 private:
-    uint fboR;
-    uint fboD;
+    uint_t fboR;
+    uint_t fboD;
 
     std::vector<TextureAnimation> animations;
 };

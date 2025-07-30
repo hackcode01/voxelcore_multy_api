@@ -21,16 +21,16 @@ namespace data {
 
 inline std::string BLOCK_ITEM_SUFFIX = ".item";
 
-inline constexpr uint FACE_MX = 0;
-inline constexpr uint FACE_PX = 1;
-inline constexpr uint FACE_MY = 2;
-inline constexpr uint FACE_PY = 3;
-inline constexpr uint FACE_MZ = 4;
-inline constexpr uint FACE_PZ = 5;
+inline constexpr uint_t FACE_MX = 0;
+inline constexpr uint_t FACE_PX = 1;
+inline constexpr uint_t FACE_MY = 2;
+inline constexpr uint_t FACE_PY = 3;
+inline constexpr uint_t FACE_MZ = 4;
+inline constexpr uint_t FACE_PZ = 5;
 
 /// @brief Grid size used for physics solver collision checking with
 /// complex hitboxes
-inline constexpr uint BLOCK_AABB_GRID = 16;
+inline constexpr uint_t BLOCK_AABB_GRID = 16;
 
 inline constexpr size_t MAX_USER_BLOCK_FIELDS_SIZE = 240;
 
@@ -250,10 +250,10 @@ public:
     std::string uiLayout = name;
 
     /// @brief Block inventory size. 0 - no inventory
-    uint inventorySize = 0;
+    uint_t inventorySize = 0;
 
     // @brief Block tick interval (1 - 20tps, 2 - 10tps)
-    uint tickInterval = 1;
+    uint_t tickInterval = 1;
 
     std::unique_ptr<data::StructLayout> dataStruct;
 

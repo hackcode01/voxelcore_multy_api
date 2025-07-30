@@ -20,8 +20,8 @@ namespace gui {
     public:
         Plotter(
             GUI& gui,
-            uint width,
-            uint height,
+            uint_t width,
+            uint_t height,
             float multiplier,
             int labelsInterval
         )

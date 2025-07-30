@@ -47,7 +47,7 @@ class WorldConverter : public Task {
     const Content* const content;
     std::queue<ConvertTask> tasks;
     runnable_t onComplete;
-    uint tasksDone = 0;
+    uint_t tasksDone = 0;
     ConvertMode mode;
 
     void upgradeRegion(
@@ -83,8 +83,8 @@ public:
     void terminate() override;
     bool isActive() const override;
     void waitForEnd() override;
-    uint getWorkTotal() const override;
-    uint getWorkDone() const override;
+    uint_t getWorkTotal() const override;
+    uint_t getWorkDone() const override;
 
     static std::shared_ptr<Task> startTask(
         const std::shared_ptr<WorldFiles>& worldFiles,

@@ -25,7 +25,7 @@ namespace gui {
 }
 
 namespace gui {
-    using slotcallback = std::function<void(uint, ItemStack&)>;
+    using slotcallback = std::function<void(uint_t, ItemStack&)>;
 
     struct SlotLayout {
         int index;

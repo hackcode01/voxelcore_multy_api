@@ -121,7 +121,7 @@ class ContentReport {
 public:
     ContentUnitLUT<blockid_t, Block> blocks;
     ContentUnitLUT<itemid_t, ItemDef> items;
-    uint regionsVersion;
+    uint_t regionsVersion;
 
     std::unordered_map<std::string, data::StructLayout> blocksDataLayouts;
     std::vector<ContentIssue> issues;
@@ -133,7 +133,7 @@ public:
         const ContentIndices* indices, 
         size_t blocks, 
         size_t items,
-        uint regionsVersion
+        uint_t regionsVersion
     );
 
     static std::shared_ptr<ContentReport> create(

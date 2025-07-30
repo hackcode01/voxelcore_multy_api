@@ -17,8 +17,8 @@ class ObjParser : BasicParser<char> {
             if (c == '\n') {
                 break;
             } else {
-                uint indices[3] {};
-                uint i = 0;
+                uint_t indices[3] {};
+                uint_t i = 0;
                 do {
                     char next = peekInLine();
                     if (is_digit(next)) {

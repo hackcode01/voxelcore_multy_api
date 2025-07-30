@@ -58,12 +58,12 @@ bool AtlasBuilder::has(const std::string& name) const {
     return names.find(name) != names.end();
 }
 
-std::unique_ptr<Atlas> AtlasBuilder::build(uint extrusion, bool prepare, uint maxResolution) {
+std::unique_ptr<Atlas> AtlasBuilder::build(uint_t extrusion, bool prepare, uint_t maxResolution) {
     if (maxResolution == 0) {
         maxResolution = Texture::MAX_RESOLUTION;
     }
-    auto sizes = std::make_unique<uint[]>(entries.size() * 2);
-    uint index = 0;
+    auto sizes = std::make_unique<uint_t[]>(entries.size() * 2);
+    uint_t index = 0;
     for (auto& entry : entries) {
         auto image = entry.image;
         sizes[index++] = image->getWidth();
@@ -72,8 +72,8 @@ std::unique_ptr<Atlas> AtlasBuilder::build(uint extrusion, bool prepare, uint ma
     LMPacker packer(sizes.get(), entries.size()*2);
     sizes.reset(nullptr);
 
-    uint width = 32;
-    uint height = 32;
+    uint_t width = 32;
+    uint_t height = 32;
     while (!packer.buildCompact(width, height, extrusion)) {
         if (width > height) {
             height *= 2;
@@ -90,15 +90,15 @@ std::unique_ptr<Atlas> AtlasBuilder::build(uint extrusion, bool prepare, uint ma
     auto canvas = std::make_unique<ImageData>(ImageFormat::rgba8888, width, height);
     std::unordered_map<std::string, UVRegion> regions;
     std::vector<rectangle> rects = packer.getResult();
-    for (uint i = 0; i < entries.size(); i++) {
+    for (uint_t i = 0; i < entries.size(); i++) {
         const rectangle& rect = rects[i];
         const atlasentry& entry = entries[rect.idx];
-        uint x = rect.x;
-        uint y = rect.y;
-        uint w = rect.width;
-        uint h = rect.height;
+        uint_t x = rect.x;
+        uint_t y = rect.y;
+        uint_t w = rect.width;
+        uint_t h = rect.height;
         canvas->blit(*entry.image, rect.x, rect.y);
-        for (uint j = 0; j < extrusion; j++) {
+        for (uint_t j = 0; j < extrusion; j++) {
             canvas->extrude(x - j, y - j, w + j*2, h + j*2);
         }
         float unitX = 1.0f / width;

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CONSTANTS_HPP__
+#define __CONSTANTS_HPP__
 
 #include "typedefs.hpp"
 
@@ -17,10 +18,10 @@ inline constexpr bool ENGINE_DEBUG_BUILD = true;
 inline const std::string ENGINE_VERSION_STRING = "0.28";
 
 /// @brief world regions format version
-inline constexpr uint REGION_FORMAT_VERSION = 3;
+inline constexpr uint_t REGION_FORMAT_VERSION = 3;
 
 /// @brief max simultaneously open world region files
-inline constexpr uint MAX_OPEN_REGION_FILES = 32;
+inline constexpr uint_t MAX_OPEN_REGION_FILES = 32;
 
 inline constexpr blockid_t BLOCK_AIR = 0;
 inline constexpr blockid_t BLOCK_OBSTACLE = 1;
@@ -33,8 +34,8 @@ inline constexpr int CHUNK_W = 16;
 inline constexpr int CHUNK_H = 256;
 inline constexpr int CHUNK_D = 16;
 
-inline constexpr uint VOXEL_USER_BITS = 8;
-inline constexpr uint VOXEL_USER_BITS_OFFSET = sizeof(blockstate_t)*8-VOXEL_USER_BITS;
+inline constexpr uint_t VOXEL_USER_BITS = 8;
+inline constexpr uint_t VOXEL_USER_BITS_OFFSET = sizeof(blockstate_t)*8-VOXEL_USER_BITS;
 
 /// @brief % unordered map max average buckets load factor.
 /// Low value gives significant performance impact by minimizing collisions and
@@ -52,7 +53,7 @@ inline constexpr itemid_t ITEM_VOID = std::numeric_limits<itemid_t>::max();
 inline constexpr blockid_t MAX_BLOCKS = BLOCK_VOID;
 
 /// @brief calculates a 1D array index from 3D array indices
-inline constexpr uint vox_index(uint x, uint y, uint z, uint w=CHUNK_W, uint d=CHUNK_D) {
+inline constexpr uint_t vox_index(uint_t x, uint_t y, uint_t z, uint_t w=CHUNK_W, uint_t d=CHUNK_D) {
     return (y * d + z) * w + x;
 }
 
@@ -71,3 +72,5 @@ inline const std::string SKELETONS_FOLDER = "skeletons";
 inline const std::string POST_EFFECTS_FOLDER = "shaders/effects";
 
 inline const std::string FONT_DEFAULT = "normal";
+
+#endif

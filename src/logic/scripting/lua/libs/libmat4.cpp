@@ -11,7 +11,7 @@
 /// mat4.idt() -> float[16] - creates identity matrix
 /// mat4.idt(dst: float[16]) -> float[16] - sets dst to identity matrix
 static int l_idt(lua::State* L) {
-    uint argc = lua::check_argc(L, 0, 1);
+    uint_t argc = lua::check_argc(L, 0, 1);
     switch (argc) {
         case 0: {
             return lua::pushmat4(L, glm::mat4(1.0f));
@@ -40,9 +40,9 @@ static int l_determinant(lua::State* L) {
 /// or 4], dst: float[3 or 4]) -> float[3 or 4] - updates dst vector with m1 and
 /// v multiplication result
 static int l_mul(lua::State* L) {
-    uint argc = lua::check_argc(L, 2, 3);
+    uint_t argc = lua::check_argc(L, 2, 3);
     auto matrix1 = lua::tomat4(L, 1);
-    uint len2 = lua::objlen(L, 2);
+    uint_t len2 = lua::objlen(L, 2);
     if (len2 < 3) {
         throw std::runtime_error("argument #2: vec3 or vec4 expected");
     }
@@ -78,7 +78,7 @@ static int l_mul(lua::State* L) {
 /// dst: float[16]) -> sets dst to transformed version of matrix
 template <glm::mat4 (*func)(const glm::mat4&, const glm::vec3&)>
 inline int l_binop_func(lua::State* L) {
-    uint argc = lua::gettop(L);
+    uint_t argc = lua::gettop(L);
     switch (argc) {
         case 1: {
             auto vec = lua::tovec3(L, 1);
@@ -110,7 +110,7 @@ inline int l_binop_func(lua::State* L) {
 /// vec: float[3], angle: float, dst: float[16]) -> sets dst to rotated version
 /// of matrix
 inline int l_rotate(lua::State* L) {
-    uint argc = lua::gettop(L);
+    uint_t argc = lua::gettop(L);
     switch (argc) {
         case 2: {
             auto vec = lua::tovec3(L, 1);
@@ -143,7 +143,7 @@ inline int l_rotate(lua::State* L) {
 /// the matrix mat4.inverse(matrix: float[16], dst: float[16]) -> float[16] -
 /// updates dst matrix with inversed version of the matrix
 static int l_inverse(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     auto matrix = lua::tomat4(L, 1);
     switch (argc) {
         case 1: {
@@ -161,7 +161,7 @@ static int l_inverse(lua::State* L) {
 /// of the matrix mat4.transpose(matrix: float[16], dst: float[16]) -> float[16]
 /// - updates dst matrix with transposed version of the matrix
 static int l_transpose(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     auto matrix = lua::tomat4(L, 1);
     switch (argc) {
         case 1: {
@@ -217,7 +217,7 @@ static int l_decompose(lua::State* L) {
 }
 
 static int l_look_at(lua::State* L) {
-    uint argc = lua::check_argc(L, 3, 4);
+    uint_t argc = lua::check_argc(L, 3, 4);
     auto eye = lua::tovec<3>(L, 1);
     auto center = lua::tovec<3>(L, 2);
     auto up = lua::tovec<3>(L, 3);
@@ -230,7 +230,7 @@ static int l_look_at(lua::State* L) {
 }
 
 static int l_from_quat(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     auto quat = lua::toquat(L, 1);
     switch (argc) {
         case 1:
@@ -249,8 +249,8 @@ static int l_tostring(lua::State* L) {
     if (multiline) {
         ss << "\n";
     }
-    for (uint y = 0; y < 4; y++) {
-        for (uint x = 0; x < 4; x++) {
+    for (uint_t y = 0; y < 4; y++) {
+        for (uint_t x = 0; x < 4; x++) {
             if (multiline) {
                 ss << "\t" << matrix[y][x];
             } else if (x > 0) {

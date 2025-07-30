@@ -30,7 +30,7 @@ namespace AL {
     /// @param field enum value
     /// @param def default value will be returned in case of error
     /// @return field value or default
-    inline float getSourcef(uint source, ALenum field, float def = 0.0f) {
+    inline float getSourcef(uint_t source, ALenum field, float def = 0.0f) {
         float value = def;
         if (source == 0) return def;
         AL_CHECK(alGetSourcef(source, field, &value));
@@ -43,7 +43,7 @@ namespace AL {
     /// @param def default value will be returned in case of error
     /// @return field value or default
     inline glm::vec3 getSource3f(
-        uint source, ALenum field, glm::vec3 def = {}
+        uint_t source, ALenum field, glm::vec3 def = {}
     ) {
         glm::vec3 value = def;
         if (source == 0) return def;
@@ -56,7 +56,7 @@ namespace AL {
     /// @param field enum value
     /// @param def default value will be returned in case of error
     /// @return field value or default
-    inline float getSourcei(uint source, ALenum field, int def = 0) {
+    inline float getSourcei(uint_t source, ALenum field, int def = 0) {
         int value = def;
         if (source == 0) return def;
         AL_CHECK(alGetSourcei(source, field, &value));

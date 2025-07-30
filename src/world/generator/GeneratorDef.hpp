@@ -43,7 +43,7 @@ struct BlocksLayers {
     std::vector<BlocksLayer> layers;
 
     /// @brief Total height of all layers after the resizeable one
-    uint lastLayersHeight;
+    uint_t lastLayersHeight;
 };
 
 struct BiomeParameter {
@@ -137,7 +137,7 @@ public:
     virtual std::shared_ptr<Heightmap> generateHeightmap(
         const glm::ivec2& offset,
         const glm::ivec2& size,
-        uint bpd,
+        uint_t bpd,
         const std::vector<std::shared_ptr<Heightmap>>& inputs
     ) = 0;
 
@@ -149,7 +149,7 @@ public:
     virtual std::vector<std::shared_ptr<Heightmap>> generateParameterMaps(
         const glm::ivec2& offset,
         const glm::ivec2& size,
-        uint bpd
+        uint_t bpd
     ) = 0;
 
     /// @brief Generate a list of structures placements. Structures may be
@@ -161,7 +161,7 @@ public:
     virtual std::vector<Placement> placeStructuresWide(
         const glm::ivec2& offset,
         const glm::ivec2& size,
-        uint chunkHeight
+        uint_t chunkHeight
     ) = 0;
 
     /// @brief Generate a list of structures placements. Structures may be
@@ -175,7 +175,7 @@ public:
         const glm::ivec2& offset,
         const glm::ivec2& size,
         const std::shared_ptr<Heightmap>& heightmap,
-        uint chunkHeight
+        uint_t chunkHeight
     ) = 0;
 };
 
@@ -201,16 +201,16 @@ struct GeneratorDef {
     std::unique_ptr<GeneratorScript> script;
 
     /// @brief Sea level (top of seaLayers)
-    uint seaLevel = 0;
+    uint_t seaLevel = 0;
 
     /// @brief Number of biome parameters, that biome choosing depending on
-    uint biomeParameters = 0;
+    uint_t biomeParameters = 0;
 
     /// @brief Biome parameter map blocks per dot
-    uint biomesBPD = 4;
+    uint_t biomesBPD = 4;
 
     /// @brief Heightmap blocks per dot
-    uint heightsBPD = 4;
+    uint_t heightsBPD = 4;
 
     /// @brief Biome parameter maps interpolation method
     InterpolationType biomesInterpolation = InterpolationType::LINEAR;
@@ -220,7 +220,7 @@ struct GeneratorDef {
 
     /// @brief Number of chunks must be generated before and after wide
     /// structures placement triggered
-    uint wideStructsChunksRadius = 3;
+    uint_t wideStructsChunksRadius = 3;
 
     /// @brief Indices of biome parameter maps passed to generate_heightmap
     std::vector<uint8_t> heightmapInputs;

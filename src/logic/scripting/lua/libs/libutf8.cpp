@@ -48,7 +48,7 @@ static int l_codepoint(lua::State* L) {
     if (string.empty()) {
         return lua::pushinteger(L, 0);
     }
-    uint size;
+    uint_t size;
     return lua::pushinteger(L, util::decode_utf8(size, string.data()));
 }
 

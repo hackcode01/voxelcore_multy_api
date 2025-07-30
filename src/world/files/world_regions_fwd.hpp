@@ -2,7 +2,7 @@
 
 #include "typedefs.hpp"
 
-enum RegionLayerIndex : uint {
+enum RegionLayerIndex : uint_t {
     REGION_LAYER_VOXELS = 0,
     REGION_LAYER_LIGHTS,
     REGION_LAYER_INVENTORIES,

@@ -140,9 +140,9 @@ namespace lua {
     }
     inline int pushmat4(lua::State* L, glm::mat4 matrix) {
         createtable(L, 16, 0);
-        for (uint y = 0; y < 4; y++) {
-            for (uint x = 0; x < 4; x++) {
-                uint i = y * 4 + x;
+        for (uint_t y = 0; y < 4; y++) {
+            for (uint_t x = 0; x < 4; x++) {
+                uint_t i = y * 4 + x;
                 pushnumber(L, matrix[y][x]);
                 rawseti(L, i + 1);
             }
@@ -152,9 +152,9 @@ namespace lua {
     /// @brief pushes matrix table to the stack and updates it with glm matrix
     inline int setmat4(lua::State* L, int idx, glm::mat4 matrix) {
         pushvalue(L, idx);
-        for (uint y = 0; y < 4; y++) {
-            for (uint x = 0; x < 4; x++) {
-                uint i = y * 4 + x;
+        for (uint_t y = 0; y < 4; y++) {
+            for (uint_t x = 0; x < 4; x++) {
+                uint_t i = y * 4 + x;
                 pushnumber(L, matrix[y][x]);
                 rawseti(L, i + 1);
             }
@@ -416,9 +416,9 @@ namespace lua {
             throw std::runtime_error("value must be an array of 16 numbers");
         }
         glm::mat4 matrix;
-        for (uint y = 0; y < 4; y++) {
-            for (uint x = 0; x < 4; x++) {
-                uint i = y * 4 + x;
+        for (uint_t y = 0; y < 4; y++) {
+            for (uint_t x = 0; x < 4; x++) {
+                uint_t i = y * 4 + x;
                 rawgeti(L, i + 1);
                 matrix[y][x] = static_cast<float>(tonumber(L, -1));
                 pop(L);

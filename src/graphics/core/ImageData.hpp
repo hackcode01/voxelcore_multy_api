@@ -12,16 +12,16 @@ enum class ImageFormat {
 
 class ImageData {
     ImageFormat format;
-    uint width;
-    uint height;
+    uint_t width;
+    uint_t height;
     std::unique_ptr<ubyte[]> data;
 
     void blitRGB_on_RGBA(const ImageData& image, int x, int y);
     void blitMatchingFormat(const ImageData& image, int x, int y);
 public:
-    ImageData(ImageFormat format, uint width, uint height);
-    ImageData(ImageFormat format, uint width, uint height, std::unique_ptr<ubyte[]> data);
-    ImageData(ImageFormat format, uint width, uint height, const ubyte* data);
+    ImageData(ImageFormat format, uint_t width, uint_t height);
+    ImageData(ImageFormat format, uint_t width, uint_t height, std::unique_ptr<ubyte[]> data);
+    ImageData(ImageFormat format, uint_t width, uint_t height, const ubyte* data);
     ~ImageData();
 
     void flipX();
@@ -40,11 +40,11 @@ public:
         return format;
     }
 
-    uint getWidth() const {
+    uint_t getWidth() const {
         return width;
     }
 
-    uint getHeight() const {
+    uint_t getHeight() const {
         return height;
     }
 

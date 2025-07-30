@@ -6,7 +6,7 @@
 
 class GBuffer : public Bindable {
 public:
-    GBuffer(uint width, uint height);
+    GBuffer(uint_t width, uint_t height);
     ~GBuffer() override;
 
     void bind() override;
@@ -18,24 +18,24 @@ public:
 
     void bindDepthBuffer(int drawFbo);
 
-    void resize(uint width, uint height);
+    void resize(uint_t width, uint_t height);
 
-    uint getWidth() const;
-    uint getHeight() const;
+    uint_t getWidth() const;
+    uint_t getHeight() const;
 
     std::unique_ptr<ImageData> toImage() const;
 private:
-    uint width;
-    uint height;
+    uint_t width;
+    uint_t height;
 
-    uint fbo;
-    uint colorBuffer = 0;
-    uint positionsBuffer = 0;
-    uint normalsBuffer = 0;
-    uint emissionBuffer = 0;
-    uint depthBuffer = 0;
-    uint ssaoFbo = 0;
-    uint ssaoBuffer = 0;
+    uint_t fbo;
+    uint_t colorBuffer = 0;
+    uint_t positionsBuffer = 0;
+    uint_t normalsBuffer = 0;
+    uint_t emissionBuffer = 0;
+    uint_t depthBuffer = 0;
+    uint_t ssaoFbo = 0;
+    uint_t ssaoBuffer = 0;
 
     void createColorBuffer();
     void createPositionsBuffer();

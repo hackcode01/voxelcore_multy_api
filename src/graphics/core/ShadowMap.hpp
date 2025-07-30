@@ -9,10 +9,10 @@ public:
 
     void bind();
     void unbind();
-    uint getDepthMap() const;
+    uint_t getDepthMap() const;
     int getResolution() const;
 private:
-    uint fbo;
-    uint depthMap; 
+    uint_t fbo;
+    uint_t depthMap; 
     int resolution;
 };

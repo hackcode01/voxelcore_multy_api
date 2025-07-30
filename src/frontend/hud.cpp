@@ -115,11 +115,11 @@ std::shared_ptr<InventoryView> Hud::createContentAccess() {
     }
 
     SlotLayout slotLayout(-1, glm::vec2(), false, true, nullptr,
-    [inventory, &indices](uint, ItemStack& item) {
+    [inventory, &indices](uint_t, ItemStack& item) {
         auto copy = ItemStack(item);
         inventory->move(copy, indices);
     }, 
-    [this, inventory](uint, ItemStack& item) {
+    [this, inventory](uint_t, ItemStack& item) {
         inventory->getSlot(player.getChosenSlot()).set(item);
     });
 
@@ -146,7 +146,7 @@ std::shared_ptr<InventoryView> Hud::createHotbar() {
     return view;
 }
 
-static constexpr uint WORLDGEN_IMG_SIZE = 128U;
+static constexpr uint_t WORLDGEN_IMG_SIZE = 128U;
 
 Hud::Hud(Engine& engine, LevelFrontend& frontend, Player& player)
     : engine(engine),
@@ -270,7 +270,7 @@ void Hud::updateHotbarControl() {
 void Hud::updateWorldGenDebug() {
     auto& level = frontend.getLevel();
     const auto& chunks = *player.chunks;
-    uint padding = engine.getSettings().chunks.padding.get();
+    uint_t padding = engine.getSettings().chunks.padding.get();
     auto generator =
         frontend.getController()->getChunksController()->getGenerator();
     auto debugInfo = generator->createDebugInfo();

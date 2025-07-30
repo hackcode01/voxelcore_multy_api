@@ -74,12 +74,12 @@ namespace gui {
         size_t normalizeIndex(int index);
 
         int calcIndexAt(int x, int y) const;
-        void setTextOffset(uint x);
+        void setTextOffset(uint_t x);
         bool eraseSelected();
         void resetSelection();
         void extendSelection(int index);
         void tokenSelectAt(int index);
-        size_t getLineLength(uint line) const;
+        size_t getLineLength(uint_t line) const;
 
         /// @brief Get total length of the selection 
         size_t getSelectionLength() const;
@@ -178,12 +178,12 @@ namespace gui {
         /// @brief Get number of line at specific position in text
         /// @param position target position
         /// @return line number
-        virtual uint getLineAt(size_t position) const;
+        virtual uint_t getLineAt(size_t position) const;
 
         /// @brief Get specific line text position
         /// @param line target line
         /// @return line position in text
-        virtual size_t getLinePos(uint line) const;
+        virtual size_t getLinePos(uint_t line) const;
 
         /// @brief Check text with validator set with setTextValidator
         /// @return true if text is valid

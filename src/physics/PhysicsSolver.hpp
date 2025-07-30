@@ -21,7 +21,7 @@ public:
         const GlobalChunks& chunks,
         Hitbox& hitbox,
         float delta,
-        uint substeps,
+        uint_t substeps,
         entityid_t entity
     );
     void colisionCalc(

@@ -46,12 +46,12 @@ static void load_variant(
     // block texturing
     if (root.has("texture")) {
         const auto& texture = root["texture"].asString();
-        for (uint i = 0; i < 6; i++) {
+        for (uint_t i = 0; i < 6; i++) {
             variant.textureFaces[i] = texture;
         }
     } else if (root.has("texture-faces")) {
         const auto& texarr = root["texture-faces"];
-        for (uint i = 0; i < 6; i++) {
+        for (uint_t i = 0; i < 6; i++) {
             variant.textureFaces[i] = texarr[i].asString();
         }
     }

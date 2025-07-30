@@ -17,7 +17,7 @@ inline T angle(glm::vec<2, T> vec) {
 
 template <int n, template <class> class Op>
 static int l_binop(lua::State* L) {
-    uint argc = lua::check_argc(L, 2, 3);
+    uint_t argc = lua::check_argc(L, 2, 3);
     auto a = lua::tovec<n>(L, 1);
 
     if (lua::isnumber(L, 2)) {  // scalar second operand overload
@@ -25,7 +25,7 @@ static int l_binop(lua::State* L) {
         Op op;
         if (argc == 2) {
             lua::createtable(L, n, 0);
-            for (uint i = 0; i < n; i++) {
+            for (uint_t i = 0; i < n; i++) {
                 lua::pushnumber(L, op(a[i], b));
                 lua::rawseti(L, i + 1);
             }
@@ -38,7 +38,7 @@ static int l_binop(lua::State* L) {
         Op op;
         if (argc == 2) {
             lua::createtable(L, n, 0);
-            for (uint i = 0; i < n; i++) {
+            for (uint_t i = 0; i < n; i++) {
                 lua::pushnumber(L, op(a[i], b[i]));
                 lua::rawseti(L, i + 1);
             }
@@ -51,12 +51,12 @@ static int l_binop(lua::State* L) {
 
 template <int n, glm::vec<n, float> (*func)(const glm::vec<n, float>&)>
 static int l_unaryop(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     auto vec = func(lua::tovec<n>(L, 1));
     switch (argc) {
         case 1:
             lua::createtable(L, n, 0);
-            for (uint i = 0; i < n; i++) {
+            for (uint_t i = 0; i < n; i++) {
                 lua::pushnumber(L, vec[i]);
                 lua::rawseti(L, i + 1);
             }
@@ -76,14 +76,14 @@ static int l_scalar_op(lua::State* L) {
 
 template <int n>
 static int l_pow(lua::State* L) {
-    uint argc = lua::check_argc(L, 2, 3);
+    uint_t argc = lua::check_argc(L, 2, 3);
     auto a = lua::tovec<n>(L, 1);
 
     if (lua::isnumber(L, 2)) {
         auto b = lua::tonumber(L, 2);
         if (argc == 2) {
             lua::createtable(L, n, 0);
-            for (uint i = 0; i < n; i++) {
+            for (uint_t i = 0; i < n; i++) {
                 lua::pushnumber(L, pow(a[i], b));
                 lua::rawseti(L, i + 1);
             }
@@ -95,7 +95,7 @@ static int l_pow(lua::State* L) {
         auto b = lua::tovec<n>(L, 2);
         if (argc == 2) {
             lua::createtable(L, n, 0);
-            for (uint i = 0; i < n; i++) {
+            for (uint_t i = 0; i < n; i++) {
                 lua::pushnumber(L, pow(a[i], b[i]));
                 lua::rawseti(L, i + 1);
             }
@@ -116,12 +116,12 @@ static int l_dot(lua::State* L) {
 
 template <int n>
 static int l_inverse(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     auto vec = lua::tovec<n>(L, 1);
     switch (argc) {
         case 1:
             lua::createtable(L, n, 0);
-            for (uint i = 0; i < n; i++) {
+            for (uint_t i = 0; i < n; i++) {
                 lua::pushnumber(L, (-1) * vec[i]);
                 lua::rawseti(L, i + 1);
             }
@@ -133,7 +133,7 @@ static int l_inverse(lua::State* L) {
 }
 
 static int l_spherical_rand(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     switch (argc) {
         case 1:
             return lua::pushvec3(L, glm::sphericalRand(lua::tonumber(L, 1)));
@@ -148,7 +148,7 @@ static int l_spherical_rand(lua::State* L) {
 }
 
 static int l_vec2_angle(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     if (argc == 1) {
         return lua::pushnumber(L, glm::degrees(angle(lua::tovec2(L, 1))));
     } else {

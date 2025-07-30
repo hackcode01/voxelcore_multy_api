@@ -198,7 +198,7 @@ void BasicParser<CharT>::expect(CharT expected) {
 template<typename CharT>
 void BasicParser<CharT>::expect(const std::basic_string<CharT>& substring) {
     if (substring.empty()) return;
-    for (uint i = 0; i < substring.length(); i++) {
+    for (uint_t i = 0; i < substring.length(); i++) {
         if (source.length() <= pos + i || source[pos + i] != substring[i]) {
             throw error(
                 util::quote(util::str2str_utf8(substring)) + " expected"

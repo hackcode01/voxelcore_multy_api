@@ -18,7 +18,7 @@ class ContentReport;
 class Inventory;
 
 using ChunkInventoriesMap =
-    std::unordered_map<uint, std::shared_ptr<Inventory>>;
+    std::unordered_map<uint_t, std::shared_ptr<Inventory>>;
 
 using BlocksMetadata = util::SmallHeap<uint16_t, uint8_t>;
 
@@ -55,13 +55,13 @@ public:
     /// @brief Creates new block inventory given size
     /// @return inventory id or 0 if block does not exists
     void addBlockInventory(
-        std::shared_ptr<Inventory> inventory, uint x, uint y, uint z
+        std::shared_ptr<Inventory> inventory, uint_t x, uint_t y, uint_t z
     );
-    void removeBlockInventory(uint x, uint y, uint z);
+    void removeBlockInventory(uint_t x, uint_t y, uint_t z);
     void setBlockInventories(ChunkInventoriesMap map);
 
     /// @return inventory bound to the given block or nullptr
-    std::shared_ptr<Inventory> getBlockInventory(uint x, uint y, uint z) const;
+    std::shared_ptr<Inventory> getBlockInventory(uint_t x, uint_t y, uint_t z) const;
 
     inline void setModifiedAndUnsaved() {
         flags.modified = true;

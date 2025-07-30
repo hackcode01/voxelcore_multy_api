@@ -8,12 +8,12 @@
 
 class Texture {
 protected:
-    uint id;
-    uint width;
-    uint height;
+    uint_t id;
+    uint_t width;
+    uint_t height;
 public:
-    Texture(uint id, uint width, uint height);
-    Texture(const ubyte* data, uint width, uint height, ImageFormat format);
+    Texture(uint_t id, uint_t width, uint_t height);
+    Texture(const ubyte* data, uint_t width, uint_t height, ImageFormat format);
     virtual ~Texture();
 
     virtual void bind() const;
@@ -27,20 +27,20 @@ public:
     void setMipMapping(bool flag, bool pixelated);
 
     std::unique_ptr<ImageData> readData();
-    uint getId() const;
+    uint_t getId() const;
 
     UVRegion getUVRegion() const {
         return UVRegion(0.0f, 0.0f, 1.0f, 1.0f);
     }
 
-    uint getWidth() const {
+    uint_t getWidth() const {
         return width;
     }
 
-    uint getHeight() const {
+    uint_t getHeight() const {
         return height;
     }
 
     static std::unique_ptr<Texture> from(const ImageData* image);
-    static uint MAX_RESOLUTION;
+    static uint_t MAX_RESOLUTION;
 };

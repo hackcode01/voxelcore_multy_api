@@ -137,7 +137,7 @@ void GBuffer::createSSAOBuffer() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
-GBuffer::GBuffer(uint width, uint height) : width(width), height(height) {
+GBuffer::GBuffer(uint_t width, uint_t height) : width(width), height(height) {
     glGenFramebuffers(1, &fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
@@ -230,7 +230,7 @@ void GBuffer::bindDepthBuffer(int drawFbo) {
                     GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 }
 
-void GBuffer::resize(uint width, uint height) {
+void GBuffer::resize(uint_t width, uint_t height) {
     if (this->width == width && this->height == height) {
         return;
     }
@@ -264,10 +264,10 @@ std::unique_ptr<ImageData> GBuffer::toImage() const {
     );
 }
 
-uint GBuffer::getWidth() const {
+uint_t GBuffer::getWidth() const {
     return width;
 }
 
-uint GBuffer::getHeight() const {
+uint_t GBuffer::getHeight() const {
     return height;
 }

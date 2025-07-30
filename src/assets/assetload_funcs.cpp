@@ -293,7 +293,7 @@ assetload::postfunc assetload::sound(
     }
 
     // loading sound variants
-    for (uint i = 1;; i++) {
+    for (uint_t i = 1;; i++) {
         auto variantFile =
             paths.find(file + "_" + std::to_string(i) + extension);
         if (!io::exists(variantFile)) {
@@ -428,11 +428,11 @@ static TextureAnimation create_animation(
     TextureAnimation animation(srcTex, dstTex);
     Frame frame;
 
-    uint dstWidth = dstTex->getWidth();
-    uint dstHeight = dstTex->getHeight();
+    uint_t dstWidth = dstTex->getWidth();
+    uint_t dstHeight = dstTex->getHeight();
 
-    uint srcWidth = srcTex->getWidth();
-    uint srcHeight = srcTex->getHeight();
+    uint_t srcWidth = srcTex->getWidth();
+    uint_t srcHeight = srcTex->getHeight();
 
     const int extension = 2;
 

@@ -1,42 +1,49 @@
-#pragma once
+#ifndef __OBSERVER_HANDLER_HPP__
+#define __OBSERVER_HANDLER_HPP__
 
 #include <functional>
 
 class ObserverHandler {
+
 public:
     ObserverHandler() = default;
 
     ObserverHandler(std::function<void()> destructor)
-        : destructor(std::move(destructor)) {
+        : m_destructor(std::move(destructor)) {
     }
 
     ObserverHandler(const ObserverHandler&) = delete;
 
     ObserverHandler(ObserverHandler&& handler) noexcept
-        : destructor(std::move(handler.destructor)) {
-        handler.destructor = nullptr;
+        : m_destructor(std::move(handler.m_destructor)) {
+        handler.m_destructor = nullptr;
     }
 
     ~ObserverHandler() {
-        if (destructor) {
-            destructor();
+        if (m_destructor) {
+            m_destructor();
         }
     }
 
     bool operator==(std::nullptr_t) const {
-        return destructor == nullptr;
+        return m_destructor == nullptr;
     }
 
     ObserverHandler& operator=(const ObserverHandler& handler) = delete;
 
     ObserverHandler& operator=(ObserverHandler&& handler) noexcept {
-        if (destructor) {
-            destructor();
+        if (m_destructor) {
+            m_destructor();
         }
-        destructor = std::move(handler.destructor);
-        handler.destructor = nullptr;
+
+        m_destructor = std::move(handler.m_destructor);
+        handler.m_destructor = nullptr;
+
         return *this;
     }
+
 private:
-    std::function<void()> destructor;
+    std::function<void()> m_destructor{};
 };
+
+#endif

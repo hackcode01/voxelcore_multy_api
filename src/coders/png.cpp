@@ -13,9 +13,9 @@ static debug::Logger logger("png-coder");
 
 // returns 0 if all-right, 1 otherwise
 static int png_write(
-    const char* filename, uint width, uint height, const ubyte* data, bool alpha
+    const char* filename, uint_t width, uint_t height, const ubyte* data, bool alpha
 ) {
-    uint pixsize = alpha ? 4 : 3;
+    uint_t pixsize = alpha ? 4 : 3;
 
     // Open file for writing (binary mode)
     FILE* fp = fopen(filename, "wb");
@@ -72,9 +72,9 @@ static int png_write(
 
     auto row = std::make_unique<png_byte[]>(pixsize * width);
     // Write image data
-    for (uint y = 0; y < height; y++) {
-        for (uint x = 0; x < width; x++) {
-            for (uint i = 0; i < pixsize; i++) {
+    for (uint_t y = 0; y < height; y++) {
+        for (uint_t x = 0; x < width; x++) {
+            for (uint_t i = 0; i < pixsize; i++) {
                 row[x * pixsize + i] =
                     (png_byte)data[(y * width + x) * pixsize + i];
             }

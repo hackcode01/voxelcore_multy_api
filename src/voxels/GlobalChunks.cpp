@@ -73,7 +73,7 @@ static inline auto load_inventories(
     auto invs = regions.fetchInventories(chunk.x, chunk.z);
     auto iterator = invs.begin();
     while (iterator != invs.end()) {
-        uint index = iterator->first;
+        uint_t index = iterator->first;
         const auto& def = defs.require(chunk.voxels[index].id);
         if (def.inventorySize == 0) {
             iterator = invs.erase(iterator);

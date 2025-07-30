@@ -3,9 +3,9 @@
 #include "typedefs.hpp"
 
 class FastRandom {
-    uint seed;
+    uint_t seed;
 public:
-    inline void setSeed(uint seed) {
+    inline void setSeed(uint_t seed) {
         this->seed = seed;
     }
 

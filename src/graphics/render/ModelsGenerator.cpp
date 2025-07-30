@@ -204,7 +204,7 @@ model::Model ModelsGenerator::loadCustomBlockModel(
 
     if (primitives.has("aabbs")) {
         const auto& modelboxes = primitives["aabbs"];
-        for (uint i = 0; i < modelboxes.size(); i++) {
+        for (uint_t i = 0; i < modelboxes.size(); i++) {
             // Parse aabb
             const auto& boxarr = modelboxes[i];
             AABB modelbox;
@@ -218,15 +218,15 @@ model::Model ModelsGenerator::loadCustomBlockModel(
             modelBoxes.push_back(modelbox);
 
             if (boxarr.size() == 7) {
-                for (uint j = 6; j < 12; j++) {
+                for (uint_t j = 6; j < 12; j++) {
                     modelTextures.emplace_back(boxarr[6].asString());
                 }
             } else if (boxarr.size() == 12) {
-                for (uint j = 6; j < 12; j++) {
+                for (uint_t j = 6; j < 12; j++) {
                     modelTextures.emplace_back(boxarr[j].asString());
                 }
             } else {
-                for (uint j = 6; j < 12; j++) {
+                for (uint_t j = 6; j < 12; j++) {
                     modelTextures.emplace_back("notfound");
                 }
             }
@@ -234,7 +234,7 @@ model::Model ModelsGenerator::loadCustomBlockModel(
     }
     if (primitives.has("tetragons")) {
         const auto& modeltetragons = primitives["tetragons"];
-        for (uint i = 0; i < modeltetragons.size(); i++) {
+        for (uint_t i = 0; i < modeltetragons.size(); i++) {
             // Parse tetragon to points
             const auto& tgonobj = modeltetragons[i];
             glm::vec3 p1(

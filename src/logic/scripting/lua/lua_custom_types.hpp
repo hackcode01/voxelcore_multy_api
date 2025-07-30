@@ -23,13 +23,13 @@ namespace lua {
         std::unique_ptr<fnl_state> noise;
     public:
         LuaHeightmap(const std::shared_ptr<Heightmap>& map);
-        LuaHeightmap(uint width, uint height);
+        LuaHeightmap(uint_t width, uint_t height);
 
         virtual ~LuaHeightmap();
 
-        uint getWidth() const;
+        uint_t getWidth() const;
 
-        uint getHeight() const;
+        uint_t getHeight() const;
 
         float* getValues();
 

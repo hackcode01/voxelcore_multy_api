@@ -21,7 +21,7 @@ namespace fs = std::filesystem;
 GLSLExtension* Shader::preprocessor = new GLSLExtension();
 Shader* Shader::used = nullptr;
 
-Shader::Shader(uint id, Source&& vertexSource, Source&& fragmentSource)
+Shader::Shader(uint_t id, Source&& vertexSource, Source&& fragmentSource)
     : id(id),
       vertexSource(std::move(vertexSource)),
       fragmentSource(std::move(fragmentSource)) {}
@@ -35,10 +35,10 @@ void Shader::use() {
     glUseProgram(id);
 }
 
-uint Shader::getUniformLocation(const std::string& name) {
+uint_t Shader::getUniformLocation(const std::string& name) {
     auto found = uniformLocations.find(name);
     if (found == uniformLocations.end()) {
-        uint location = glGetUniformLocation(id, name.c_str());
+        uint_t location = glGetUniformLocation(id, name.c_str());
         uniformLocations.try_emplace(name, location);
         return location;
     }
@@ -114,7 +114,7 @@ static inline auto shader_deleter = [](GLuint* shader) {
     delete shader;
 };
 
-inline const uint GL_LOG_LEN = 512;
+inline const uint_t GL_LOG_LEN = 512;
 
 // shader should be deleted after shader program linking
 using glshader = std::unique_ptr<GLuint, decltype(shader_deleter)>;

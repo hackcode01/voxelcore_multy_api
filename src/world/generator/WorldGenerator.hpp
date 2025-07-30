@@ -40,8 +40,8 @@ struct ChunkPrototype {
 struct WorldGenDebugInfo {
     int areaOffsetX;
     int areaOffsetY;
-    uint areaWidth;
-    uint areaHeight;
+    uint_t areaWidth;
+    uint_t areaHeight;
     std::unique_ptr<ubyte[]> areaLevels;
 };
 

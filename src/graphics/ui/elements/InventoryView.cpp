@@ -61,8 +61,8 @@ void InventoryBuilder::addGrid(
 
     int rows = ceildiv(count, cols);
 
-    uint width =  cols * (slotSize + interval) - interval + padding.x + padding.z;
-    uint height = rows * (slotSize + interval) - interval + padding.y + padding.w;
+    uint_t width =  cols * (slotSize + interval) - interval + padding.x + padding.z;
+    uint_t height = rows * (slotSize + interval) - interval + padding.y + padding.w;
     
     glm::vec2 vsize = view->getSize();
     if (pos.x + width > vsize.x) {
@@ -407,8 +407,8 @@ InventoryView::~InventoryView() {}
 
 
 std::shared_ptr<SlotView> InventoryView::addSlot(const SlotLayout& layout) {
-    uint width =  InventoryView::SLOT_SIZE + layout.padding;
-    uint height = InventoryView::SLOT_SIZE + layout.padding;
+    uint_t width =  InventoryView::SLOT_SIZE + layout.padding;
+    uint_t height = InventoryView::SLOT_SIZE + layout.padding;
 
     auto pos = layout.position;
     auto vsize = getSize();

@@ -36,18 +36,18 @@ std::int32_t convert_to_int(char* buffer, std::size_t len) {
 /// @brief Seekable WAV-file PCM stream
 class WavStream : public audio::PCMStream {
     std::ifstream in;
-    uint channels;
-    uint bytesPerSample;
-    uint sampleRate;
+    uint_t channels;
+    uint_t bytesPerSample;
+    uint_t sampleRate;
     size_t totalSize;
     size_t totalSamples;
     size_t initialPosition;
 public:
     WavStream(
         std::ifstream in,
-        uint channels,
-        uint bitsPerSample,
-        uint sampleRate,
+        uint_t channels,
+        uint_t bitsPerSample,
+        uint_t sampleRate,
         size_t size,
         size_t initialPosition
     )
@@ -92,15 +92,15 @@ public:
         return totalSamples / static_cast<audio::duration_t>(sampleRate);
     }
 
-    uint getChannels() const override {
+    uint_t getChannels() const override {
         return channels;
     }
 
-    uint getSampleRate() const override {
+    uint_t getSampleRate() const override {
         return sampleRate;
     }
 
-    uint getBitsPerSample() const override {
+    uint_t getBitsPerSample() const override {
         return bytesPerSample * 8;
     }
 
@@ -240,9 +240,9 @@ std::unique_ptr<audio::PCM> wav::load_pcm(
     auto stream = wav::create_stream(file);
 
     size_t totalSamples = stream->getTotalSamples();
-    uint channels = stream->getChannels();
-    uint bitsPerSample = stream->getBitsPerSample();
-    uint sampleRate = stream->getSampleRate();
+    uint_t channels = stream->getChannels();
+    uint_t bitsPerSample = stream->getBitsPerSample();
+    uint_t sampleRate = stream->getSampleRate();
 
     std::vector<char> data;
     if (!headerOnly) {

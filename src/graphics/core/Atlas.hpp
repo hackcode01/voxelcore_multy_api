@@ -57,5 +57,5 @@ public:
     /// (greather is less mip-mapping artifacts)
     /// @param prepare generate atlas texture (calls .prepare()) 
     /// @param maxResolution max atlas resolution
-    std::unique_ptr<Atlas> build(uint extrusion, bool prepare=true, uint maxResolution=0);
+    std::unique_ptr<Atlas> build(uint_t extrusion, bool prepare=true, uint_t maxResolution=0);
 };

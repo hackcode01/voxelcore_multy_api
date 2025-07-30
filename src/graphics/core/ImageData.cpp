@@ -6,7 +6,7 @@
 #include <cmath>
 #include <algorithm>
 
-ImageData::ImageData(ImageFormat format, uint width, uint height) 
+ImageData::ImageData(ImageFormat format, uint_t width, uint_t height) 
     : format(format), width(width), height(height) {
     size_t pixsize;
     switch (format) {
@@ -18,11 +18,11 @@ ImageData::ImageData(ImageFormat format, uint width, uint height)
     data = std::make_unique<ubyte[]>(width * height * pixsize);
 }
 
-ImageData::ImageData(ImageFormat format, uint width, uint height, std::unique_ptr<ubyte[]> data) 
+ImageData::ImageData(ImageFormat format, uint_t width, uint_t height, std::unique_ptr<ubyte[]> data) 
     : format(format), width(width), height(height), data(std::move(data)) {
 }
 
-ImageData::ImageData(ImageFormat format, uint width, uint height, const ubyte* data) 
+ImageData::ImageData(ImageFormat format, uint_t width, uint_t height, const ubyte* data) 
     : format(format), width(width), height(height) {
     size_t pixsize;
     switch (format) {
@@ -41,10 +41,10 @@ void ImageData::flipX() {
     switch (format) {
         case ImageFormat::rgb888:
         case ImageFormat::rgba8888: {
-            uint size = (format == ImageFormat::rgba8888) ? 4 : 3;
-            for (uint y = 0; y < height; y++) {
-                for (uint x = 0; x < width / 2; x++) {
-                    for (uint c = 0; c < size; c++) {
+            uint_t size = (format == ImageFormat::rgba8888) ? 4 : 3;
+            for (uint_t y = 0; y < height; y++) {
+                for (uint_t x = 0; x < width / 2; x++) {
+                    for (uint_t c = 0; c < size; c++) {
                         ubyte temp = data[(y * width + x) * size + c];
                         data[(y * width + x) * size + c] =
                             data[(y * width + (width - x - 1)) * size + c];
@@ -63,10 +63,10 @@ void ImageData::flipY() {
     switch (format) {
         case ImageFormat::rgb888:
         case ImageFormat::rgba8888: {
-            uint size = (format == ImageFormat::rgba8888) ? 4 : 3;
-            for (uint y = 0; y < height/2; y++) {
-                for (uint x = 0; x < width; x++) {
-                    for (uint c = 0; c < size; c++) {
+            uint_t size = (format == ImageFormat::rgba8888) ? 4 : 3;
+            for (uint_t y = 0; y < height/2; y++) {
+                for (uint_t x = 0; x < width; x++) {
+                    for (uint_t c = 0; c < size; c++) {
                         ubyte temp = data[(y * width + x) * size + c];
                         data[(y * width + x) * size + c] = 
                                data[((height-y-1) * width + x) * size + c];
@@ -137,11 +137,11 @@ static bool clip_line(int& x1, int& y1, int& x2, int& y2, int width, int height)
     return true;
 }
 
-template<uint channels>
+template<uint_t channels>
 static void draw_line(ImageData& image, int x1, int y1, int x2, int y2, const glm::ivec4& color) {
     ubyte* data = image.getData();
-    uint width = image.getWidth();
-    uint height = image.getHeight();
+    uint_t width = image.getWidth();
+    uint_t height = image.getHeight();
 
     if ((x1 < 0 || x1 >= width || x2 < 0 || x2 >= width ||
         y1 < 0 || y1 >= height || y2 < 0 || y2 >= height) &&
@@ -189,20 +189,20 @@ void ImageData::drawLine(int x1, int y1, int x2, int y2, const glm::ivec4& color
 
 void ImageData::blitRGB_on_RGBA(const ImageData& image, int x, int y) {
     ubyte* source = image.getData();
-    uint srcwidth = image.getWidth();
-    uint srcheight = image.getHeight();
+    uint_t srcwidth = image.getWidth();
+    uint_t srcheight = image.getHeight();
 
-    for (uint srcy = std::max(0, -y);
+    for (uint_t srcy = std::max(0, -y);
          srcy < std::min(srcheight, height - y);
          srcy++) {
-        for (uint srcx = std::max(0, -x);
+        for (uint_t srcx = std::max(0, -x);
              srcx < std::min(srcwidth, width - x);
              srcx++) {
-            uint dstx = srcx + x;
-            uint dsty = srcy + y;
-            uint dstidx = (dsty * width + dstx) * 4;
-            uint srcidx = (srcy * srcwidth + srcx) * 3;
-            for (uint c = 0; c < 3; c++) {
+            uint_t dstx = srcx + x;
+            uint_t dsty = srcy + y;
+            uint_t dstidx = (dsty * width + dstx) * 4;
+            uint_t srcidx = (srcy * srcwidth + srcx) * 3;
+            for (uint_t c = 0; c < 3; c++) {
                 data[dstidx + c] = source[srcidx + c];
             }
             data[dstidx + 3] = 255;
@@ -211,7 +211,7 @@ void ImageData::blitRGB_on_RGBA(const ImageData& image, int x, int y) {
 }
 
 void ImageData::blitMatchingFormat(const ImageData& image, int x, int y) {
-    uint comps;
+    uint_t comps;
     switch (format) {
         case ImageFormat::rgb888: comps = 3; break;
         case ImageFormat::rgba8888: comps = 4; break;
@@ -220,23 +220,23 @@ void ImageData::blitMatchingFormat(const ImageData& image, int x, int y) {
     }
     ubyte* source = image.getData();
 
-    const uint width = this->width;
-    const uint height = this->height;
-    const uint src_width = image.getWidth();
-    const uint src_height = image.getHeight();
+    const uint_t width = this->width;
+    const uint_t height = this->height;
+    const uint_t src_width = image.getWidth();
+    const uint_t src_height = image.getHeight();
     ubyte* data = this->data.get();
 
-    for (uint srcy = std::max(0, -y);
+    for (uint_t srcy = std::max(0, -y);
          srcy < std::min(src_height, height - y);
          srcy++) {
-        for (uint srcx = std::max(0, -x);
+        for (uint_t srcx = std::max(0, -x);
              srcx < std::min(src_width, width - x);
              srcx++) {
-            uint dstx = srcx + x;
-            uint dsty = srcy + y;
-            uint dstidx = (dsty * width + dstx) * comps;
-            uint srcidx = (srcy * src_width + srcx) * comps;
-            for (uint c = 0; c < comps; c++) {
+            uint_t dstx = srcx + x;
+            uint_t dsty = srcy + y;
+            uint_t dstidx = (dsty * width + dstx) * comps;
+            uint_t srcidx = (srcy * src_width + srcx) * comps;
+            for (uint_t c = 0; c < comps; c++) {
                 data[dstidx + c] = source[srcidx + c];
             }
         }
@@ -246,7 +246,7 @@ void ImageData::blitMatchingFormat(const ImageData& image, int x, int y) {
 /* Extrude rectangle zone border pixels out by 1 pixel.
    Used to remove atlas texture border artifacts */
 void ImageData::extrude(int x, int y, int w, int h) {
-    uint comps;
+    uint_t comps;
     switch (format) {
         case ImageFormat::rgb888: comps = 3; break;
         case ImageFormat::rgba8888: comps = 4; break;
@@ -256,84 +256,84 @@ void ImageData::extrude(int x, int y, int w, int h) {
     int rx = x + w - 1;
     int ry = y + h - 1;
     // top-left pixel
-    if (x > 0 && static_cast<uint>(x) < width && 
-        y > 0 && static_cast<uint>(y) < height) {
-        uint srcidx = (y * width + x) * comps;
-        uint dstidx = ((y - 1) * width + x - 1) * comps;
-        for (uint c = 0; c < comps; c++) {
+    if (x > 0 && static_cast<uint_t>(x) < width && 
+        y > 0 && static_cast<uint_t>(y) < height) {
+        uint_t srcidx = (y * width + x) * comps;
+        uint_t dstidx = ((y - 1) * width + x - 1) * comps;
+        for (uint_t c = 0; c < comps; c++) {
             data[dstidx + c] = data[srcidx + c];
         }
     }
     
     // top-right pixel
-    if (rx >= 0 && static_cast<uint>(rx) < width-1 && 
-          y > 0 && static_cast<uint>(y) < height) {
-        uint srcidx = (y * width + rx) * comps;
-        uint dstidx = ((y - 1) * width + rx + 1) * comps;
-        for (uint c = 0; c < comps; c++) {
+    if (rx >= 0 && static_cast<uint_t>(rx) < width-1 && 
+          y > 0 && static_cast<uint_t>(y) < height) {
+        uint_t srcidx = (y * width + rx) * comps;
+        uint_t dstidx = ((y - 1) * width + rx + 1) * comps;
+        for (uint_t c = 0; c < comps; c++) {
             data[dstidx + c] = data[srcidx + c];
         }
     }
 
     // bottom-left pixel
-    if (x > 0 && static_cast<uint>(x) < width && 
-        ry >= 0 && static_cast<uint>(ry) < height-1) {
-        uint srcidx = (ry * width + x) * comps;
-        uint dstidx = ((ry + 1) * width + x - 1) * comps;
-        for (uint c = 0; c < comps; c++) {
+    if (x > 0 && static_cast<uint_t>(x) < width && 
+        ry >= 0 && static_cast<uint_t>(ry) < height-1) {
+        uint_t srcidx = (ry * width + x) * comps;
+        uint_t dstidx = ((ry + 1) * width + x - 1) * comps;
+        for (uint_t c = 0; c < comps; c++) {
             data[dstidx + c] = data[srcidx + c];
         }
     }
     
     // bottom-right pixel
-    if (rx >= 0 && static_cast<uint>(rx) < width-1 && 
-        ry >= 0 && static_cast<uint>(ry) < height-1) {
-        uint srcidx = (ry * width + rx) * comps;
-        uint dstidx = ((ry + 1) * width + rx + 1) * comps;
-        for (uint c = 0; c < comps; c++) {
+    if (rx >= 0 && static_cast<uint_t>(rx) < width-1 && 
+        ry >= 0 && static_cast<uint_t>(ry) < height-1) {
+        uint_t srcidx = (ry * width + rx) * comps;
+        uint_t dstidx = ((ry + 1) * width + rx + 1) * comps;
+        for (uint_t c = 0; c < comps; c++) {
             data[dstidx + c] = data[srcidx + c];
         }
     }
 
     // left border
-    if (x > 0 && static_cast<uint>(x) < width) {
-        for (uint ey = std::max(y, 0); static_cast<int>(ey) < y + h; ey++) {
-            uint srcidx = (ey * width + x) * comps;
-            uint dstidx = (ey * width + x - 1) * comps;
-            for (uint c = 0; c < comps; c++) {
+    if (x > 0 && static_cast<uint_t>(x) < width) {
+        for (uint_t ey = std::max(y, 0); static_cast<int>(ey) < y + h; ey++) {
+            uint_t srcidx = (ey * width + x) * comps;
+            uint_t dstidx = (ey * width + x - 1) * comps;
+            for (uint_t c = 0; c < comps; c++) {
                 data[dstidx + c] = data[srcidx + c];
             }
         }
     }
 
     // top border
-    if (y > 0 && static_cast<uint>(y) < height) {
-        for (uint ex = std::max(x, 0); static_cast<int>(ex) < x + w; ex++) {
-            uint srcidx = (y * width + ex) * comps;
-            uint dstidx = ((y-1) * width + ex) * comps;
-            for (uint c = 0; c < comps; c++) {
+    if (y > 0 && static_cast<uint_t>(y) < height) {
+        for (uint_t ex = std::max(x, 0); static_cast<int>(ex) < x + w; ex++) {
+            uint_t srcidx = (y * width + ex) * comps;
+            uint_t dstidx = ((y-1) * width + ex) * comps;
+            for (uint_t c = 0; c < comps; c++) {
                 data[dstidx + c] = data[srcidx + c];
             }
         }
     }
     
     // right border
-    if (rx >= 0 && static_cast<uint>(rx) < width-1) {
-        for (uint ey = std::max(y, 0); static_cast<int>(ey) < y + h; ey++) {
-            uint srcidx = (ey * width + rx) * comps;
-            uint dstidx = (ey * width + rx + 1) * comps;
-            for (uint c = 0; c < comps; c++) {
+    if (rx >= 0 && static_cast<uint_t>(rx) < width-1) {
+        for (uint_t ey = std::max(y, 0); static_cast<int>(ey) < y + h; ey++) {
+            uint_t srcidx = (ey * width + rx) * comps;
+            uint_t dstidx = (ey * width + rx + 1) * comps;
+            for (uint_t c = 0; c < comps; c++) {
                 data[dstidx + c] = data[srcidx + c];
             }
         }
     }
 
     // bottom border
-    if (ry >= 0 && static_cast<uint>(ry) < height-1) {
-        for (uint ex = std::max(x, 0); static_cast<int>(ex) < x + w; ex++) {
-            uint srcidx = (ry * width + ex) * comps;
-            uint dstidx = ((ry+1) * width + ex) * comps;
-            for (uint c = 0; c < comps; c++) {
+    if (ry >= 0 && static_cast<uint_t>(ry) < height-1) {
+        for (uint_t ex = std::max(x, 0); static_cast<int>(ex) < x + w; ex++) {
+            uint_t srcidx = (ry * width + ex) * comps;
+            uint_t dstidx = ((ry+1) * width + ex) * comps;
+            for (uint_t c = 0; c < comps; c++) {
                 data[dstidx + c] = data[srcidx + c];
             }
         }
@@ -344,8 +344,8 @@ void ImageData::extrude(int x, int y, int w, int h) {
 void ImageData::fixAlphaColor() {
     int samples = 0;
     int sums[3] {};
-    for (uint ly = 0; ly < height; ly++) {
-        for (uint lx = 0; lx < width; lx++) {
+    for (uint_t ly = 0; ly < height; ly++) {
+        for (uint_t lx = 0; lx < width; lx++) {
             if (data[(ly * width + lx) * 4 + 3] == 0) {
                 continue;
             }
@@ -361,8 +361,8 @@ void ImageData::fixAlphaColor() {
     for (int i = 0; i < 3; i++) {
         sums[i] /= samples;
     }
-    for (uint ly = 0; ly < height; ly++) {
-        for (uint lx = 0; lx < width; lx++) {
+    for (uint_t ly = 0; ly < height; ly++) {
+        for (uint_t lx = 0; lx < width; lx++) {
             if (data[(ly * width + lx) * 4 + 3] != 0) {
                 continue;
             }

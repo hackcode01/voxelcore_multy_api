@@ -35,7 +35,7 @@ struct SkySprite {
 
 class Skybox {
     std::unique_ptr<Framebuffer> fbo;
-    uint size;
+    uint_t size;
     Shader& shader;
     bool ready = false;
     FastRandom random;
@@ -55,9 +55,9 @@ class Skybox {
     void drawBackground(
         const Camera& camera, const Assets& assets, int width, int height
     );
-    void refreshFace(uint face, Cubemap* cubemap);
+    void refreshFace(uint_t face, Cubemap* cubemap);
 public:
-    Skybox(uint size, Shader& shader);
+    Skybox(uint_t size, Shader& shader);
     ~Skybox();
 
     void draw(
@@ -68,7 +68,7 @@ public:
         float fog
     );
 
-    void refresh(const DrawContext& pctx, float t, float mie, uint quality);
+    void refresh(const DrawContext& pctx, float t, float mie, uint_t quality);
     void bind() const;
     void unbind() const;
     bool isReady() const {

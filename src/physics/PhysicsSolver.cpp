@@ -21,7 +21,7 @@ void PhysicsSolver::step(
     const GlobalChunks& chunks, 
     Hitbox& hitbox, 
     float delta, 
-    uint substeps, 
+    uint_t substeps, 
     entityid_t entity
 ) {
     float dt = delta / static_cast<float>(substeps);
@@ -35,7 +35,7 @@ void PhysicsSolver::step(
     
     bool prevGrounded = hitbox.grounded;
     hitbox.grounded = false;
-    for (uint i = 0; i < substeps; i++) {
+    for (uint_t i = 0; i < substeps; i++) {
         float px = pos.x;
         float py = pos.y;
         float pz = pos.z;

@@ -13,7 +13,7 @@ using integer_t = int64_t;
 /// @brief dynamic floating-point type (64 bit floating point)
 using number_t = double;
 
-using uint = unsigned int;
+using uint_t = unsigned int;
 using u64id_t = uint64_t;
 
 /// @brief use for bytes arrays

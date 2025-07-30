@@ -167,9 +167,9 @@ static GLFWcursor* standard_cursors[static_cast<int>(CursorShape::LAST) + 1] = {
 class GLFWInput : public Input {
 public:
     int scroll = 0;
-    uint currentFrame = 0;
-    uint frames[KEYS_BUFFER_SIZE] {};
-    std::vector<uint> codepoints;
+    uint_t currentFrame = 0;
+    uint_t frames[KEYS_BUFFER_SIZE] {};
+    std::vector<uint_t> codepoints;
     std::vector<Keycode> pressedKeys;
     Bindings bindings;
     bool keys[KEYS_BUFFER_SIZE] {};
@@ -320,7 +320,7 @@ public:
         return pressedKeys;
     }
 
-    const std::vector<uint>& getCodepoints() const override {
+    const std::vector<uint_t>& getCodepoints() const override {
         return codepoints;
     }
 private:

@@ -5,13 +5,13 @@
 #include <stdexcept>
 #include <memory>
 
-uint Texture::MAX_RESOLUTION = 1024; // Window.initialize overrides it
+uint_t Texture::MAX_RESOLUTION = 1024; // Window.initialize overrides it
 
-Texture::Texture(uint id, uint width, uint height) 
+Texture::Texture(uint_t id, uint_t width, uint_t height) 
     : id(id), width(width), height(height) {
 }
 
-Texture::Texture(const ubyte* data, uint width, uint height, ImageFormat imageFormat) 
+Texture::Texture(const ubyte* data, uint_t width, uint_t height, ImageFormat imageFormat) 
     : width(width), height(height) {
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
@@ -90,14 +90,14 @@ void Texture::setMipMapping(bool flag, bool pixelated) {
 }
 
 std::unique_ptr<Texture> Texture::from(const ImageData* image) {
-    uint width = image->getWidth();
-    uint height = image->getHeight();
+    uint_t width = image->getWidth();
+    uint_t height = image->getHeight();
     void* data = image->getData();
     return std::make_unique<Texture>(
         static_cast<ubyte*>(data), width, height, image->getFormat()
     );
 }
 
-uint Texture::getId() const {
+uint_t Texture::getId() const {
     return id;
 }

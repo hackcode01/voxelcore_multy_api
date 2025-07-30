@@ -71,7 +71,7 @@ private:
         const Camera& camera
     );
 
-    void refreshFbos(uint width, uint height);
+    void refreshFbos(uint_t width, uint_t height);
 
     /// @brief Main framebuffer (lasy field)
     std::unique_ptr<Framebuffer> fbo;
@@ -80,5 +80,5 @@ private:
     std::unique_ptr<Mesh<PostProcessingVertex>> quadMesh;
     std::vector<std::shared_ptr<PostEffect>> effectSlots;
     std::unique_ptr<GBuffer> gbuffer;
-    uint noiseTexture;
+    uint_t noiseTexture;
 };

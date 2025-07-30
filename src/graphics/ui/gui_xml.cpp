@@ -709,7 +709,7 @@ static slotcallback read_slot_func(
     auto consumer = scripting::create_int_array_consumer(
         reader.getEnvironment(), element.attr(attr).getText()
     );
-    return [=](uint slot, ItemStack&) {
+    return [=](uint_t slot, ItemStack&) {
         int args[] {
             static_cast<int>(view->getInventory()->getId()),
             static_cast<int>(slot)};

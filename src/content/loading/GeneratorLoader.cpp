@@ -15,7 +15,7 @@
 #include "util/stringutil.hpp"
 
 static BlocksLayer load_layer(
-    const dv::value& map, uint& lastLayersHeight, bool& hasResizeableLayer
+    const dv::value& map, uint_t& lastLayersHeight, bool& hasResizeableLayer
 ) {
     const auto& name = map["block"].asString();
     int height = map["height"].asInteger();
@@ -37,7 +37,7 @@ static BlocksLayer load_layer(
 static inline BlocksLayers load_layers(
     const dv::value& layersArr, const std::string& fieldname
 ) {
-    uint lastLayersHeight = 0;
+    uint_t lastLayersHeight = 0;
     bool hasResizeableLayer = false;
     std::vector<BlocksLayer> layers;
 
@@ -91,7 +91,7 @@ static debug::Logger logger("generator-loader");
 static inline Biome load_biome(
     const dv::value& biomeMap,
     const std::string& name,
-    uint parametersCount
+    uint_t parametersCount
 ) {
     std::vector<BiomeParameter> parameters;
 

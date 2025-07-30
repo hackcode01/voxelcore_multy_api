@@ -18,11 +18,11 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
-inline constexpr uint REGION_HEADER_SIZE = 10;
+inline constexpr uint_t REGION_HEADER_SIZE = 10;
 
-inline constexpr uint REGION_SIZE_BIT = 5;
-inline constexpr uint REGION_SIZE = (1 << (REGION_SIZE_BIT));
-inline constexpr uint REGION_CHUNKS_COUNT = ((REGION_SIZE) * (REGION_SIZE));
+inline constexpr uint_t REGION_SIZE_BIT = 5;
+inline constexpr uint_t REGION_SIZE = (1 << (REGION_SIZE_BIT));
+inline constexpr uint_t REGION_CHUNKS_COUNT = ((REGION_SIZE) * (REGION_SIZE));
 
 class illegal_region_format : public std::runtime_error {
 public:
@@ -39,9 +39,9 @@ public:
     WorldRegion();
     ~WorldRegion();
 
-    void put(uint x, uint z, std::unique_ptr<ubyte[]> data, uint32_t size, uint32_t srcSize);
-    ubyte* getChunkData(uint x, uint z);
-    glm::u32vec2 getChunkDataSize(uint x, uint z);
+    void put(uint_t x, uint_t z, std::unique_ptr<ubyte[]> data, uint32_t size, uint32_t srcSize);
+    ubyte* getChunkData(uint_t x, uint_t z);
+    glm::u32vec2 getChunkDataSize(uint_t x, uint_t z);
 
     void setUnsaved(bool unsaved);
     bool isUnsaved() const;

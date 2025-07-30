@@ -6,7 +6,7 @@
 #include <sstream>
 
 static int l_from_mat4(lua::State* L) {
-    uint argc = lua::check_argc(L, 1, 2);
+    uint_t argc = lua::check_argc(L, 1, 2);
     auto matrix = lua::tomat4(L, 1);
     if (argc == 1) {
         return lua::pushquat(L, glm::toQuat(matrix));
@@ -16,7 +16,7 @@ static int l_from_mat4(lua::State* L) {
 }
 
 static int l_slerp(lua::State* L) {
-    uint argc = lua::check_argc(L, 3, 4);
+    uint_t argc = lua::check_argc(L, 3, 4);
     auto quat1 = lua::toquat(L, 1);
     auto quat2 = lua::toquat(L, 2);
     float t = lua::tonumber(L, 3);

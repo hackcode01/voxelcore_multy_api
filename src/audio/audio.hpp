@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __AUDIO_HPP__
+#define __AUDIO_HPP__
 
 #include <glm/glm.hpp>
 #include <memory>
@@ -82,7 +83,7 @@ namespace audio {
         /// does not depend on the channels number
         uint8_t bitsPerSample;
         /// @brief Number of mono samples per second (example: 44100)
-        uint sampleRate;
+        uint_t sampleRate;
         /// @brief Audio source is seekable
         bool seekable;
 
@@ -90,7 +91,7 @@ namespace audio {
             size_t totalSamples,
             uint8_t channels,
             uint8_t bitsPerSample,
-            uint sampleRate,
+            uint_t sampleRate,
             bool seekable)
             : data(std::move(data)),
               totalSamples(totalSamples),
@@ -137,15 +138,15 @@ namespace audio {
 
         /// @brief Get number of audio channels
         /// @return 1 if mono, 2 if stereo
-        virtual uint getChannels() const = 0;
+        virtual uint_t getChannels() const = 0;
 
         /// @brief Get audio sampling frequency
         /// @return number of mono samples per second
-        virtual uint getSampleRate() const = 0;
+        virtual uint_t getSampleRate() const = 0;
 
         /// @brief Get number of bits per mono sample
         /// @return 8 or 16
-        virtual uint getBitsPerSample() const = 0;
+        virtual uint_t getBitsPerSample() const = 0;
 
         /// @brief Check if the stream does support seek feature
         virtual bool isSeekable() const = 0;
@@ -518,3 +519,5 @@ namespace audio {
     /// @brief Finalize audio system
     void close();
 };
+
+#endif

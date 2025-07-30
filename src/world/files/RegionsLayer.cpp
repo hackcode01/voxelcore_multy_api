@@ -37,7 +37,7 @@ regfile::regfile(io::Path filename) : file(std::move(filename)) {
         throw std::runtime_error("invalid region file magic number");
     }
     version = header[8];
-    if (static_cast<uint>(version) > REGION_FORMAT_VERSION) {
+    if (static_cast<uint_t>(version) > REGION_FORMAT_VERSION) {
         throw illegal_region_format(
             "region format " + std::to_string(version) + " is not supported"
         );
@@ -198,7 +198,7 @@ void RegionsLayer::writeRegion(int x, int z, WorldRegion* entry) {
 
     size_t offset = REGION_HEADER_SIZE;
     uint32_t intbuf;
-    uint offsets[REGION_CHUNKS_COUNT] {};
+    uint_t offsets[REGION_CHUNKS_COUNT] {};
 
     auto region = entry->getChunks();
     auto sizes = entry->getSizes();

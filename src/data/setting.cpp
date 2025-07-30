@@ -4,9 +4,9 @@
 
 std::string NumberSetting::toString() const {
     switch (getFormat()) {
-        case setting_format::simple:
+        case SettingFormats::Simple:
             return util::to_string(value);
-        case setting_format::percent:
+        case SettingFormats::Percent:
             return std::to_string(static_cast<integer_t>(round(value * 100))) +
                    "%";
         default:
@@ -16,9 +16,9 @@ std::string NumberSetting::toString() const {
 
 std::string IntegerSetting::toString() const {
     switch (getFormat()) {
-        case setting_format::simple:
+        case SettingFormats::Simple:
             return util::to_string(value);
-        case setting_format::percent:
+        case SettingFormats::Percent:
             return std::to_string(value) + "%";
         default:
             return "invalid format";
@@ -27,7 +27,7 @@ std::string IntegerSetting::toString() const {
 
 std::string FlagSetting::toString() const {
     switch (getFormat()) {
-        case setting_format::simple:
+        case SettingFormats::Simple:
             return value ? "true" : "false";
         default:
             return "invalid format";

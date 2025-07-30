@@ -244,7 +244,7 @@ static int l_get_user_bits(lua::State* L) {
             return lua::pushinteger(L, 0);
         }
     }
-    uint mask = ((1 << bits) - 1) << offset;
+    uint_t mask = ((1 << bits) - 1) << offset;
     return lua::pushinteger(L, (blockstate2int(vox->state) & mask) >> offset);
 }
 

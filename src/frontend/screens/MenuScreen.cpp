@@ -39,8 +39,8 @@ void MenuScreen::draw(float delta) {
     display::setBgColor(glm::vec3(0.2f));
 
     const auto& size = engine.getWindow().getSize();
-    uint width = size.x;
-    uint height = size.y;
+    uint_t width = size.x;
+    uint_t height = size.y;
 
     uicamera->setFov(height);
     uicamera->setAspectRatio(width / static_cast<float>(height));

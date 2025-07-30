@@ -23,7 +23,7 @@ static void remove_lib_funcs(
     State* L, const char* libname, const char* funcs[]
 ) {
     if (getglobal(L, libname)) {
-        for (uint i = 0; funcs[i]; i++) {
+        for (uint_t i = 0; funcs[i]; i++) {
             pushnil(L);
             setfield(L, funcs[i], -2);
         }

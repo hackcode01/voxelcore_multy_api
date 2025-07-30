@@ -381,7 +381,7 @@ void Player::deserialize(const dv::value& src) {
 void Player::convert(dv::value& data, const ContentReport* report) {
     if (data.has("players")) {
         auto& players = data["players"];
-        for (uint i = 0; i < players.size(); i++) {
+        for (uint_t i = 0; i < players.size(); i++) {
             auto& playerData = players[i];
             if (playerData.has("inventory")) {
                 Inventory::convert(playerData["inventory"], report);

@@ -306,7 +306,7 @@ inline void get_voxels_impl(
                         for (int lx = std::max(x, cx * CHUNK_W);
                                  lx < std::min(x + w, (cx + 1) * CHUNK_W);
                                  lx++) {
-                            uint idx = vox_index(lx - x, ly - y, lz - z, w, d);
+                            uint_t idx = vox_index(lx - x, ly - y, lz - z, w, d);
                             voxels[idx].id = BLOCK_VOID;
                             lights[idx] = 0;
                         }
@@ -322,8 +322,8 @@ inline void get_voxels_impl(
                         for (int lx = std::max(x, cx * CHUNK_W);
                                  lx < std::min(x + w, (cx + 1) * CHUNK_W);
                                  lx++) {
-                            uint vidx = vox_index(lx - x, ly - y, lz - z, w, d);
-                            uint cidx = vox_index(
+                            uint_t vidx = vox_index(lx - x, ly - y, lz - z, w, d);
+                            uint_t cidx = vox_index(
                                 lx - cx * CHUNK_W,
                                 ly,
                                 lz - cz * CHUNK_D,

@@ -15,7 +15,7 @@ ContentReport::ContentReport(
     const ContentIndices* indices,
     size_t blocksCount,
     size_t itemsCount,
-    uint regionsVersion
+    uint_t regionsVersion
 )
     : blocks(blocksCount, indices->blocks, BLOCK_VOID, ContentType::BLOCK),
       items(itemsCount, indices->items, ITEM_VOID, ContentType::ITEM),
@@ -76,7 +76,7 @@ std::shared_ptr<ContentReport> ContentReport::create(
     }
 
     auto root = io::read_json(filename);
-    uint regionsVersion = 2U; // old worlds compatibility (pre 0.23)
+    uint_t regionsVersion = 2U; // old worlds compatibility (pre 0.23)
     root.at("region-version").get(regionsVersion);
     auto& blocklist = root["blocks"];
     auto& itemlist = root["items"];

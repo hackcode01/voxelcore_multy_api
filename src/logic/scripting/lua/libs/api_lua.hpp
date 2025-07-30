@@ -62,10 +62,10 @@ extern int l_print(lua::State* L);
 extern int l_crc32(lua::State* L);
 
 namespace lua {
-    inline uint check_argc(lua::State* L, int a) {
+    inline uint_t check_argc(lua::State* L, int a) {
         int argc = lua::gettop(L);
         if (argc == a) {
-            return static_cast<uint>(argc);
+            return static_cast<uint_t>(argc);
         } else {
             throw std::runtime_error(
                 "invalid number of arguments (" + std::to_string(a) +
@@ -74,10 +74,10 @@ namespace lua {
         }
     }
 
-    [[nodiscard]] inline uint check_argc(lua::State* L, int a, int b) {
+    [[nodiscard]] inline uint_t check_argc(lua::State* L, int a, int b) {
         int argc = lua::gettop(L);
         if (argc == a || argc == b) {
-            return static_cast<uint>(argc);
+            return static_cast<uint_t>(argc);
         } else {
             throw std::runtime_error(
                 "invalid number of arguments (" + std::to_string(a) + " or " +

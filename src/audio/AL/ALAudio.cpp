@@ -11,7 +11,7 @@ static debug::Logger logger("al-audio");
 using namespace audio;
 
 ALSound::ALSound(
-    ALAudio* al, uint buffer, const std::shared_ptr<PCM>& pcm, bool keepPCM
+    ALAudio* al, uint_t buffer, const std::shared_ptr<PCM>& pcm, bool keepPCM
 )
     : al(al), buffer(buffer) {
     duration = pcm->getDuration();
@@ -26,7 +26,7 @@ ALSound::~ALSound() {
 }
 
 std::unique_ptr<Speaker> ALSound::newInstance(int priority, int channel) const {
-    uint source = al->getFreeSource();
+    uint_t source = al->getFreeSource();
     if (source == 0) {
         return nullptr;
     }
@@ -61,7 +61,7 @@ std::shared_ptr<PCMStream> ALStream::getSource() const {
     }
 }
 
-bool ALStream::preloadBuffer(uint buffer, bool loop) {
+bool ALStream::preloadBuffer(uint_t buffer, bool loop) {
     size_t read = source->readFully(this->buffer, BUFFER_SIZE, loop);
     if (!read) return false;
     ALenum format =
@@ -74,12 +74,12 @@ bool ALStream::preloadBuffer(uint buffer, bool loop) {
 
 std::unique_ptr<Speaker> ALStream::createSpeaker(bool loop, int channel) {
     this->loop = loop;
-    uint free_source = al->getFreeSource();
+    uint_t free_source = al->getFreeSource();
     if (free_source == 0) {
         return nullptr;
     }
-    for (uint i = 0; i < ALStream::STREAM_BUFFERS; i++) {
-        uint free_buffer = al->getFreeBuffer();
+    for (uint_t i = 0; i < ALStream::STREAM_BUFFERS; i++) {
+        uint_t free_buffer = al->getFreeBuffer();
         if (!preloadBuffer(free_buffer, loop)) {
             break;
         }
@@ -107,16 +107,16 @@ speakerid_t ALStream::getSpeaker() const {
     return speaker;
 }
 
-void ALStream::unqueueBuffers(uint alsource) {
-    uint processed = AL::getSourcei(alsource, AL_BUFFERS_PROCESSED);
+void ALStream::unqueueBuffers(uint_t alsource) {
+    uint_t processed = AL::getSourcei(alsource, AL_BUFFERS_PROCESSED);
 
     while (processed--) {
-        uint bufferqueue;
+        uint_t bufferqueue;
         AL_CHECK(alSourceUnqueueBuffers(alsource, 1, &bufferqueue));
         unusedBuffers.push(bufferqueue);
 
-        uint bps = source->getBitsPerSample()/ 8;
-        uint channels = source->getChannels();
+        uint_t bps = source->getBitsPerSample()/ 8;
+        uint_t channels = source->getChannels();
 
         ALint bufferSize;
         alGetBufferi(bufferqueue, AL_SIZE, &bufferSize);
@@ -127,10 +127,10 @@ void ALStream::unqueueBuffers(uint alsource) {
     }
 }
 
-uint ALStream::enqueueBuffers(uint alsource) {
-    uint preloaded = 0;
+uint_t ALStream::enqueueBuffers(uint_t alsource) {
+    uint_t preloaded = 0;
     if (!unusedBuffers.empty()) {
-        uint first_buffer = unusedBuffers.front();
+        uint_t first_buffer = unusedBuffers.front();
         if (preloadBuffer(first_buffer, loop)) {
             preloaded++;
             unusedBuffers.pop();
@@ -156,10 +156,10 @@ void ALStream::update(double delta) {
         return;
     }
 
-    uint alsource = alspeaker->source;
+    uint_t alsource = alspeaker->source;
 
     unqueueBuffers(alsource);
-    uint preloaded = enqueueBuffers(alsource);
+    uint_t preloaded = enqueueBuffers(alsource);
 
     // alspeaker->stopped is assigned to false at ALSpeaker::play(...)
     if (p_speaker->isStopped() && !alspeaker->stopped) { //TODO: -V560 false-positive?
@@ -172,11 +172,11 @@ void ALStream::update(double delta) {
 }
 
 duration_t ALStream::getTime() const {
-    uint total = totalPlayedSamples;
+    uint_t total = totalPlayedSamples;
     auto alspeaker =
         dynamic_cast<ALSpeaker*>(audio::get_speaker(this->speaker));
     if (alspeaker) {
-        uint alsource = alspeaker->source;
+        uint_t alsource = alspeaker->source;
         total +=
             static_cast<duration_t>(AL::getSourcef(alsource, AL_SAMPLE_OFFSET));
         if (source->isSeekable()) {
@@ -188,7 +188,7 @@ duration_t ALStream::getTime() const {
 
 void ALStream::setTime(duration_t time) {
     if (!source->isSeekable()) return;
-    uint sample = time * source->getSampleRate();
+    uint_t sample = time * source->getSampleRate();
     source->seek(sample);
     auto alspeaker =
         dynamic_cast<ALSpeaker*>(audio::get_speaker(this->speaker));
@@ -207,7 +207,7 @@ void ALStream::setTime(duration_t time) {
     }
 }
 
-ALSpeaker::ALSpeaker(ALAudio* al, uint source, int priority, int channel)
+ALSpeaker::ALSpeaker(ALAudio* al, uint_t source, int priority, int channel)
     : al(al), priority(priority), channel(channel), source(source) {
 }
 
@@ -293,9 +293,9 @@ void ALSpeaker::stop() {
     if (source) {
         AL_CHECK(alSourceStop(source));
 
-        uint processed = AL::getSourcei(source, AL_BUFFERS_PROCESSED);
+        uint_t processed = AL::getSourcei(source, AL_BUFFERS_PROCESSED);
         while (processed--) {
-            uint buffer;
+            uint_t buffer;
             AL_CHECK(alSourceUnqueueBuffers(source, 1, &buffer));
             al->freeBuffer(buffer);
         }
@@ -373,7 +373,7 @@ ALAudio::ALAudio(ALCdevice* device, ALCcontext* context)
 }
 
 ALAudio::~ALAudio() {
-    for (uint source : allsources) {
+    for (uint_t source : allsources) {
         int state = AL::getSourcei(source, AL_SOURCE_STATE);
         if (state == AL_PLAYING || state == AL_PAUSED) {
             AL_CHECK(alSourceStop(source));
@@ -381,7 +381,7 @@ ALAudio::~ALAudio() {
         AL_CHECK(alDeleteSources(1, &source));
     }
 
-    for (uint buffer : allbuffers) {
+    for (uint_t buffer : allbuffers) {
         AL_CHECK(alDeleteBuffers(1, &buffer));
     }
 
@@ -398,7 +398,7 @@ std::unique_ptr<Sound> ALAudio::createSound(
     std::shared_ptr<PCM> pcm, bool keepPCM
 ) {
     auto format = AL::to_al_format(pcm->channels, pcm->bitsPerSample);
-    uint buffer = getFreeBuffer();
+    uint_t buffer = getFreeBuffer();
     AL_CHECK(alBufferData(
         buffer, format, pcm->data.data(), pcm->data.size(), pcm->sampleRate
     ));
@@ -424,9 +424,9 @@ std::unique_ptr<ALAudio> ALAudio::create() {
     return std::make_unique<ALAudio>(device, context);
 }
 
-uint ALAudio::getFreeSource() {
+uint_t ALAudio::getFreeSource() {
     if (!freesources.empty()) {
-        uint source = freesources.back();
+        uint_t source = freesources.back();
         freesources.pop_back();
         return source;
     }
@@ -444,9 +444,9 @@ uint ALAudio::getFreeSource() {
     return id;
 }
 
-uint ALAudio::getFreeBuffer() {
+uint_t ALAudio::getFreeBuffer() {
     if (!freebuffers.empty()) {
-        uint buffer = freebuffers.back();
+        uint_t buffer = freebuffers.back();
         freebuffers.pop_back();
         return buffer;
     }
@@ -460,11 +460,11 @@ uint ALAudio::getFreeBuffer() {
     return id;
 }
 
-void ALAudio::freeSource(uint source) {
+void ALAudio::freeSource(uint_t source) {
     freesources.push_back(source);
 }
 
-void ALAudio::freeBuffer(uint buffer) {
+void ALAudio::freeBuffer(uint_t buffer) {
     freebuffers.push_back(buffer);
 }
 

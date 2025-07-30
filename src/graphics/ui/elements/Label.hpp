@@ -24,7 +24,7 @@ namespace gui {
         void update(std::wstring_view text, bool multiline, bool wrap);
 
         size_t getTextLineOffset(size_t line) const;
-        uint getLineByTextIndex(size_t index) const;
+        uint_t getLineByTextIndex(size_t index) const;
     };
 
     class Label : public UINode {
@@ -93,7 +93,7 @@ namespace gui {
         /// @brief Get Y position of the line relative to label position
         /// @param line target line index
         /// @return Y offset
-        virtual int getLineYOffset(uint line) const;
+        virtual int getLineYOffset(uint_t line) const;
 
         /// @brief Get position of line start in the text
         /// @param line target line index
@@ -103,9 +103,9 @@ namespace gui {
         /// @brief Get line index by its Y offset relative to label position
         /// @param offset target Y offset
         /// @return line index [0..+]
-        virtual uint getLineByYOffset(int offset) const;
-        virtual uint getLineByTextIndex(size_t index) const;
-        virtual uint getLinesNumber() const;
+        virtual uint_t getLineByYOffset(int offset) const;
+        virtual uint_t getLineByTextIndex(size_t index) const;
+        virtual uint_t getLinesNumber() const;
         virtual bool isFakeLine(size_t line) const;
 
         virtual void draw(const DrawContext& pctx, const Assets& assets) override;

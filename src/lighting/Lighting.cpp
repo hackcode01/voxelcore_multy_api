@@ -106,9 +106,9 @@ void Lighting::onChunkLoaded(int cx, int cz, bool expand) {
         logger.error() << "attempted to build lights to chunk missing in local matrix";
         return;
     }
-    for (uint y = 0; y < CHUNK_H; y++){
-        for (uint z = 0; z < CHUNK_D; z++){
-            for (uint x = 0; x < CHUNK_W; x++){
+    for (uint_t y = 0; y < CHUNK_H; y++){
+        for (uint_t z = 0; z < CHUNK_D; z++){
+            for (uint_t x = 0; x < CHUNK_W; x++){
                 const voxel& vox = chunk->voxels[(y * CHUNK_D + z) * CHUNK_W + x];
                 const Block* block = blockDefs[vox.id];
                 int gx = x + cx * CHUNK_W;

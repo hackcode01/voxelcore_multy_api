@@ -18,8 +18,8 @@
 #include "world/World.hpp"
 #include "world/generator/WorldGenerator.hpp"
 
-const uint MAX_WORK_PER_FRAME = 128;
-const uint MIN_SURROUNDING = 9;
+const uint_t MAX_WORK_PER_FRAME = 128;
+const uint_t MIN_SURROUNDING = 9;
 
 ChunksController::ChunksController(Level& level)
     : level(level),
@@ -32,7 +32,7 @@ ChunksController::ChunksController(Level& level)
 ChunksController::~ChunksController() = default;
 
 void ChunksController::update(
-    int64_t maxDuration, int loadDistance, uint padding, Player& player
+    int64_t maxDuration, int loadDistance, uint_t padding, Player& player
 ) const {
     const auto& position = player.getPosition();
     int centerX = floordiv<CHUNK_W>(glm::floor(position.x));
@@ -47,7 +47,7 @@ void ChunksController::update(
 
     int64_t mcstotal = 0;
 
-    for (uint i = 0; i < MAX_WORK_PER_FRAME; i++) {
+    for (uint_t i = 0; i < MAX_WORK_PER_FRAME; i++) {
         timeutil::Timer timer;
         if (loadVisible(player, padding)) {
             int64_t mcs = timer.stop();
@@ -61,7 +61,7 @@ void ChunksController::update(
 }
 
 bool ChunksController::isInLoadingZone(
-    const Player& player, uint padding, int x, int z
+    const Player& player, uint_t padding, int x, int z
 ) const {
     const auto& chunks = *player.chunks;
     int sizeX = chunks.getWidth();
@@ -76,7 +76,7 @@ bool ChunksController::isInLoadingZone(
     return distance < minDistance;
 }
 
-bool ChunksController::loadVisible(const Player& player, uint padding) const {
+bool ChunksController::loadVisible(const Player& player, uint_t padding) const {
     auto& chunks = *player.chunks;
     int sizeX = chunks.getWidth();
     int sizeY = chunks.getHeight();
@@ -86,8 +86,8 @@ bool ChunksController::loadVisible(const Player& player, uint padding) const {
     bool assigned = false;
     int minDistance = ((sizeX - padding * 2) / 2) * ((sizeY - padding * 2) / 2);
     int maxDistance = ((sizeX) / 2) * ((sizeY) / 2);
-    for (uint z = 0; z < sizeY; z++) {
-        for (uint x = 0; x < sizeX; x++) {
+    for (uint_t z = 0; z < sizeY; z++) {
+        for (uint_t x = 0; x < sizeX; x++) {
             int index = z * sizeX + x;
             int lx = x - sizeX / 2;
             int lz = z - sizeY / 2;
@@ -103,8 +103,8 @@ bool ChunksController::loadVisible(const Player& player, uint padding) const {
             }
         }
     }
-    for (uint z = padding; z < sizeY - padding; z++) {
-        for (uint x = padding; x < sizeX - padding; x++) {
+    for (uint_t z = padding; z < sizeY - padding; z++) {
+        for (uint_t x = padding; x < sizeX - padding; x++) {
             int index = z * sizeX + x;
             int lx = x - sizeX / 2;
             int lz = z - sizeY / 2;

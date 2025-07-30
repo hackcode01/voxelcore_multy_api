@@ -8,9 +8,9 @@ parsing_error::parsing_error(
     const std::string& message,
     std::string_view filename,
     std::string_view source,
-    uint pos,
-    uint line,
-    uint linestart
+    uint_t pos,
+    uint_t line,
+    uint_t linestart
 )
     : std::runtime_error(message),
       filename(filename),
@@ -28,9 +28,9 @@ parsing_error::parsing_error(
     const std::string& message,
     std::string&& filename,
     std::string&& source,
-    uint pos,
-    uint line,
-    uint linestart
+    uint_t pos,
+    uint_t line,
+    uint_t linestart
 )
     : std::runtime_error(message),
       filename(std::move(filename)),
@@ -46,12 +46,12 @@ parsing_error::parsing_error(
 
 std::string parsing_error::errorLog() const {
     std::stringstream ss;
-    uint linepos = pos - linestart;
+    uint_t linepos = pos - linestart;
     ss << "parsing error in file '" << filename;
     ss << "' at " << (line + 1) << ":" << linepos << ": " << this->what()
        << "\n";
     ss << source << "\n";
-    for (uint i = 0; i < linepos; i++) {
+    for (uint_t i = 0; i < linepos; i++) {
         ss << " ";
     }
     ss << "^";

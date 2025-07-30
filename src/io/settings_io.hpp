@@ -7,7 +7,7 @@
 
 #include "data/dv.hpp"
 
-class Setting;
+class Settings;
 struct EngineSettings;
 
 struct Section {
@@ -16,7 +16,7 @@ struct Section {
 };
 
 class SettingsHandler {
-    std::unordered_map<std::string, Setting*> map;
+    std::unordered_map<std::string, Settings*> map;
     std::vector<Section> sections;
 public:
     SettingsHandler(EngineSettings& settings);
@@ -25,7 +25,7 @@ public:
     dv::value getDefault(const std::string& name) const;
     void setValue(const std::string& name, const dv::value& value);
     std::string toString(const std::string& name) const;
-    Setting* getSetting(const std::string& name) const;
+    Settings* getSetting(const std::string& name) const;
     bool has(const std::string& name) const;
 
     std::vector<Section>& getSections();

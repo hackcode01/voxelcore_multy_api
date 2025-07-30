@@ -119,7 +119,7 @@ void BlocksController::updateBlock(int x, int y, int z) {
     }
 }
 
-void BlocksController::update(float delta, uint padding) {
+void BlocksController::update(float delta, uint_t padding) {
     if (randTickClock.update(delta)) {
         randomTick(randTickClock.getPart(), randTickClock.getParts(), padding);
     }
@@ -168,7 +168,7 @@ void BlocksController::randomTick(
     }
 }
 
-void BlocksController::randomTick(int tickid, int parts, uint padding) {
+void BlocksController::randomTick(int tickid, int parts, uint_t padding) {
     auto indices = level.content.getIndices();
 
     std::set<uint64_t> chunksIterated;
@@ -181,8 +181,8 @@ void BlocksController::randomTick(int tickid, int parts, uint padding) {
         int height = chunks.getHeight();
         int segments = 4;
 
-        for (uint z = padding; z < height - padding; z++) {
-            for (uint x = padding; x < width - padding; x++) {
+        for (uint_t z = padding; z < height - padding; z++) {
+            for (uint_t x = padding; x < width - padding; x++) {
                 int index = z * width + x;
                 if ((index + tickid) % parts != 0) {
                     continue;

@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-Cubemap::Cubemap(uint width, uint height, ImageFormat imageFormat) 
+Cubemap::Cubemap(uint_t width, uint_t height, ImageFormat imageFormat) 
   : Texture(0, width, height) 
 {
     glGenTextures(1, &id);
@@ -14,8 +14,8 @@ Cubemap::Cubemap(uint width, uint height, ImageFormat imageFormat)
     glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    uint format = gl::to_glenum(imageFormat);
-    for (uint face = 0; face < 6; face++) {
+    uint_t format = gl::to_glenum(imageFormat);
+    for (uint_t face = 0; face < 6; face++) {
         glTexImage2D(
             GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, 
             0, 

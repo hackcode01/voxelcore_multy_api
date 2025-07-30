@@ -14,7 +14,7 @@ Chunk::Chunk(int xpos, int zpos) : x(xpos), z(zpos) {
 }
 
 void Chunk::updateHeights() {
-    for (uint i = 0; i < CHUNK_VOL; i++) {
+    for (uint_t i = 0; i < CHUNK_VOL; i++) {
         if (voxels[i].id != 0) {
             bottom = i / (CHUNK_D * CHUNK_W);
             break;
@@ -29,13 +29,13 @@ void Chunk::updateHeights() {
 }
 
 void Chunk::addBlockInventory(
-    std::shared_ptr<Inventory> inventory, uint x, uint y, uint z
+    std::shared_ptr<Inventory> inventory, uint_t x, uint_t y, uint_t z
 ) {
     inventories[vox_index(x, y, z)] = std::move(inventory);
     flags.unsaved = true;
 }
 
-void Chunk::removeBlockInventory(uint x, uint y, uint z) {
+void Chunk::removeBlockInventory(uint_t x, uint_t y, uint_t z) {
     if (inventories.erase(vox_index(x, y, z))) {
         flags.unsaved = true;
     }
@@ -45,7 +45,7 @@ void Chunk::setBlockInventories(ChunkInventoriesMap map) {
     inventories = std::move(map);
 }
 
-std::shared_ptr<Inventory> Chunk::getBlockInventory(uint x, uint y, uint z)
+std::shared_ptr<Inventory> Chunk::getBlockInventory(uint_t x, uint_t y, uint_t z)
     const {
     if (x >= CHUNK_W || y >= CHUNK_H || z >= CHUNK_D) return nullptr;
     const auto& found = inventories.find(vox_index(x, y, z));
@@ -57,7 +57,7 @@ std::shared_ptr<Inventory> Chunk::getBlockInventory(uint x, uint y, uint z)
 
 std::unique_ptr<Chunk> Chunk::clone() const {
     auto other = std::make_unique<Chunk>(x, z);
-    for (uint i = 0; i < CHUNK_VOL; i++) {
+    for (uint_t i = 0; i < CHUNK_VOL; i++) {
         other->voxels[i] = voxels[i];
     }
     other->lightmap.set(&lightmap);
@@ -78,7 +78,7 @@ std::unique_ptr<Chunk> Chunk::clone() const {
 std::unique_ptr<ubyte[]> Chunk::encode() const {
     auto buffer = std::make_unique<ubyte[]>(CHUNK_DATA_LEN);
     auto dst = reinterpret_cast<uint16_t*>(buffer.get());
-    for (uint i = 0; i < CHUNK_VOL; i++) {
+    for (uint_t i = 0; i < CHUNK_VOL; i++) {
         dst[i] = dataio::h2le(voxels[i].id);
         dst[CHUNK_VOL + i] = dataio::h2le(blockstate2int(voxels[i].state));
     }
@@ -87,7 +87,7 @@ std::unique_ptr<ubyte[]> Chunk::encode() const {
 
 bool Chunk::decode(const ubyte* data) {
     auto src = reinterpret_cast<const uint16_t*>(data);
-    for (uint i = 0; i < CHUNK_VOL; i++) {
+    for (uint_t i = 0; i < CHUNK_VOL; i++) {
         voxel& vox = voxels[i];
 
         vox.id = dataio::le2h(src[i]);
@@ -98,7 +98,7 @@ bool Chunk::decode(const ubyte* data) {
 
 void Chunk::convert(ubyte* data, const ContentReport* report) {
     auto buffer = reinterpret_cast<uint16_t*>(data);
-    for (uint i = 0; i < CHUNK_VOL; i++) {
+    for (uint_t i = 0; i < CHUNK_VOL; i++) {
         blockid_t id = dataio::le2h(buffer[i]);
         blockid_t replacement = report->blocks.getId(id);
         buffer[i] = dataio::h2le(replacement);

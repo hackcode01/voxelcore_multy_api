@@ -86,11 +86,11 @@ size_t PCMStream::readFully(char* buffer, size_t bufferSize, bool loop) {
 class PCMVoidSource : public PCMStream {
     size_t totalSamples;
     size_t remain;
-    uint sampleRate;
+    uint_t sampleRate;
     bool seekable;
     bool closed = false;
 public:
-    PCMVoidSource(size_t totalSamples, uint sampleRate, bool seekable)
+    PCMVoidSource(size_t totalSamples, uint_t sampleRate, bool seekable)
         : totalSamples(totalSamples),
           remain(totalSamples),
           sampleRate(sampleRate),
@@ -126,15 +126,15 @@ public:
                static_cast<duration_t>(sampleRate);
     }
 
-    uint getChannels() const override {
+    uint_t getChannels() const override {
         return 1;
     }
 
-    uint getSampleRate() const override {
+    uint_t getSampleRate() const override {
         return sampleRate;
     }
 
-    uint getBitsPerSample() const override {
+    uint_t getBitsPerSample() const override {
         return 8;
     }
 

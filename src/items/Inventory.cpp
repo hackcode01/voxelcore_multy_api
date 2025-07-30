@@ -54,7 +54,7 @@ void Inventory::move(
     }
 }
 
-void Inventory::resize(uint newSize) {
+void Inventory::resize(uint_t newSize) {
     slots.resize(newSize);
 }
 

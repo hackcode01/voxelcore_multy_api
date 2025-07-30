@@ -28,18 +28,18 @@ union RGBA {
     uint32_t rgba;
 };
 
-static RGBA* get_at(const ImageData& data, uint index) {
+static RGBA* get_at(const ImageData& data, uint_t index) {
     if (index >= data.getWidth() * data.getHeight()) {
         return nullptr;
     }
     return reinterpret_cast<RGBA*>(data.getData() + index * sizeof(RGBA));
 }
 
-static RGBA* get_at(const ImageData& data, uint x, uint y) {
+static RGBA* get_at(const ImageData& data, uint_t x, uint_t y) {
     return get_at(data, y * data.getWidth() + x);
 }
 
-static RGBA* get_at(State* L, uint x, uint y) {
+static RGBA* get_at(State* L, uint_t x, uint_t y) {
     if (auto canvas = touserdata<LuaCanvas>(L, 1)) {
         return get_at(canvas->data(), x, y);
     }
@@ -47,8 +47,8 @@ static RGBA* get_at(State* L, uint x, uint y) {
 }
 
 static int l_at(State* L) {
-    auto x = static_cast<uint>(tointeger(L, 2));
-    auto y = static_cast<uint>(tointeger(L, 3));
+    auto x = static_cast<uint_t>(tointeger(L, 2));
+    auto y = static_cast<uint_t>(tointeger(L, 3));
 
     if (auto pixel = get_at(L, x, y)) {
         return pushinteger(L, pixel->rgba);
@@ -62,7 +62,7 @@ static RGBA get_rgba(State* L, int first) {
     rgba.a = 255;
     switch (gettop(L) - first) {
         case 0:
-            rgba.rgba = static_cast<uint>(tointeger(L, first));
+            rgba.rgba = static_cast<uint_t>(tointeger(L, first));
             break;
         case 3:
             rgba.a = static_cast<ubyte>(tointeger(L, first + 3));
@@ -77,8 +77,8 @@ static RGBA get_rgba(State* L, int first) {
 }
 
 static int l_set(State* L) {
-    auto x = static_cast<uint>(tointeger(L, 2));
-    auto y = static_cast<uint>(tointeger(L, 3));
+    auto x = static_cast<uint_t>(tointeger(L, 2));
+    auto y = static_cast<uint_t>(tointeger(L, 3));
 
     if (auto pixel = get_at(L, x, y)) {
         *pixel = get_rgba(L, 4);
@@ -204,7 +204,7 @@ static int l_meta_index(State* L) {
     }
     auto& data = texture->data();
     if (isnumber(L, 2)) {
-        if (auto pixel = get_at(data, static_cast<uint>(tointeger(L, 2)))) {
+        if (auto pixel = get_at(data, static_cast<uint_t>(tointeger(L, 2)))) {
             return pushinteger(L, pixel->rgba);
         }
     }
@@ -233,8 +233,8 @@ static int l_meta_newindex(State* L) {
     }
     auto& data = texture->data();
     if (isnumber(L, 2) && isnumber(L, 3)) {
-        if (auto pixel = get_at(data, static_cast<uint>(tointeger(L, 2)))) {
-            pixel->rgba = static_cast<uint>(tointeger(L, 3));
+        if (auto pixel = get_at(data, static_cast<uint_t>(tointeger(L, 2)))) {
+            pixel->rgba = static_cast<uint_t>(tointeger(L, 3));
         }
     }
     return 0;

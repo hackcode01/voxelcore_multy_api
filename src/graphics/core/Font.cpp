@@ -7,8 +7,8 @@
 #include "Batch3D.hpp"
 #include "window/Camera.hpp"
 
-inline constexpr uint GLYPH_SIZE = 16;
-inline constexpr uint MAX_CODEPAGES = 10000; // idk ho many codepages unicode has
+inline constexpr uint_t GLYPH_SIZE = 16;
+inline constexpr uint_t MAX_CODEPAGES = 10000; // idk ho many codepages unicode has
 inline constexpr glm::vec4 SHADOW_TINT(0.0f, 0.0f, 0.0f, 1.0f);
 
 Font::Font(std::vector<std::unique_ptr<Texture>> pages, int lineHeight, int yoffset) 
@@ -25,7 +25,7 @@ int Font::getLineHeight() const {
     return lineHeight;
 }
 
-bool Font::isPrintableChar(uint codepoint) const {
+bool Font::isPrintableChar(uint_t codepoint) const {
     switch (codepoint){
         case ' ':
         case '\t':
@@ -50,7 +50,7 @@ static inline void draw_glyph(
     Batch2D& batch, 
     const glm::vec3& pos, 
     const glm::vec2& offset, 
-    uint c, 
+    uint_t c, 
     const glm::vec3& right,
     const glm::vec3& up,
     float glyphInterval,
@@ -74,7 +74,7 @@ static inline void draw_glyph(
     Batch3D& batch, 
     const glm::vec3& pos, 
     const glm::vec2& offset, 
-    uint c, 
+    uint_t c, 
     const glm::vec3& right,
     const glm::vec3& up,
     float glyphInterval,
@@ -111,15 +111,15 @@ static inline void draw_text(
         styles = &defStyles;
     }
     
-    uint page = 0;
-    uint next = MAX_CODEPAGES;
+    uint_t page = 0;
+    uint_t next = MAX_CODEPAGES;
     int x = 0;
     int y = 0;
     bool hasLines = false;
 
     do {
         for (size_t i = 0; i < text.length(); i++) {
-            uint c = text[i];
+            uint_t c = text[i];
             size_t styleIndex = styles->map.at(
                 std::min(styles->map.size() - 1, i + styleMapOffset)
             );
@@ -131,7 +131,7 @@ static inline void draw_text(
                 x++;
                 continue;
             }
-            uint charpage = c >> 8;
+            uint_t charpage = c >> 8;
             if (charpage == page){
                 batch.texture(font.getPage(charpage));
                 draw_glyph(

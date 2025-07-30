@@ -289,7 +289,7 @@ void ContentLoader::loadContent(const dv::value& root) {
             item.icon = def.name;
             item.placingBlock = def.name;
     
-            for (uint j = 0; j < 4; j++) {
+            for (uint_t j = 0; j < 4; j++) {
                 item.emission[j] = def.emission[j];
             }
         }

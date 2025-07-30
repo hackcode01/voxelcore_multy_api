@@ -14,7 +14,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
-inline constexpr uint WORLD_FORMAT_VERSION = 1;
+inline constexpr uint_t WORLD_FORMAT_VERSION = 1;
 
 class Player;
 class Content;

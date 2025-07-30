@@ -37,7 +37,7 @@ std::string util::escape(std::string_view s, bool escapeUnicode) {
                 break;
             default:
                 if (c & 0x80) {
-                    uint cpsize;
+                    uint_t cpsize;
                     int codepoint = decode_utf8(cpsize, s.data() + pos);
                     if (escapeUnicode) {
                         ss << "\\u" << std::hex << codepoint;
@@ -48,7 +48,7 @@ std::string util::escape(std::string_view s, bool escapeUnicode) {
                     break;
                 }
                 if (c < ' ') {
-                    ss << "\\" << std::oct << uint(ubyte(c));
+                    ss << "\\" << std::oct << uint_t(ubyte(c));
                     break;
                 }
                 ss << c;
@@ -64,25 +64,25 @@ std::string util::quote(const std::string& s) {
     return escape(s, false);
 }
 
-std::wstring util::lfill(std::wstring s, uint length, wchar_t c) {
+std::wstring util::lfill(std::wstring s, uint_t length, wchar_t c) {
     if (s.length() >= length) {
         return s;
     }
     std::wstringstream ss;
-    for (uint i = 0; i < length - s.length(); i++) {
+    for (uint_t i = 0; i < length - s.length(); i++) {
         ss << c;
     }
     ss << s;
     return ss.str();
 }
 
-std::wstring util::rfill(std::wstring s, uint length, wchar_t c) {
+std::wstring util::rfill(std::wstring s, uint_t length, wchar_t c) {
     if (s.length() >= length) {
         return s;
     }
     std::wstringstream ss;
     ss << s;
-    for (uint i = 0; i < length - s.length(); i++) {
+    for (uint_t i = 0; i < length - s.length(); i++) {
         ss << c;
     }
     return ss.str();
@@ -100,7 +100,7 @@ static size_t length_utf8_codepoint(uint32_t c) {
     }
 }
 
-uint util::encode_utf8(uint32_t c, ubyte* bytes) {
+uint_t util::encode_utf8(uint32_t c, ubyte* bytes) {
     if (c < 0x80) {
         bytes[0] = ((c >> 0) & 0x7F) | 0x00;
         return 1;
@@ -140,7 +140,7 @@ const utf_t utf[] = {
     {0, 0, 0, 0, 0},
 };
 
-inline uint utf8_len(ubyte cp) {
+inline uint_t utf8_len(ubyte cp) {
     if ((cp & 0x80) == 0) {
         return 1;
     }
@@ -156,12 +156,12 @@ inline uint utf8_len(ubyte cp) {
     throw std::runtime_error("utf8 decode error");
 }
 
-uint32_t util::decode_utf8(uint& size, const char* chr) {
+uint32_t util::decode_utf8(uint_t& size, const char* chr) {
     size = utf8_len(*chr);
     int shift = utf[0].bits_stored * (size - 1);
     uint32_t code = (*chr++ & utf[size].mask) << shift;
 
-    for (uint i = 1; i < size; ++i, ++chr) {
+    for (uint_t i = 1; i < size; ++i, ++chr) {
         shift -= utf[0].bits_stored;
         code |= ((char)*chr & utf[0].mask) << shift;
     }
@@ -170,7 +170,7 @@ uint32_t util::decode_utf8(uint& size, const char* chr) {
 
 size_t util::crop_utf8(std::string_view s, size_t maxSize) {
     size_t pos = 0;
-    uint size = 0;
+    uint_t size = 0;
     while (pos < s.length()) {
         decode_utf8(size, s.data() + pos);
         if (pos + size > maxSize) {
@@ -204,9 +204,9 @@ std::string xstr2str_utf8(std::basic_string_view<C> xs) {
     std::vector<char> chars;
     ubyte buffer[4];
     for (C xc : xs) {
-        uint size = util::encode_utf8(
-            static_cast<uint>(xc), buffer);
-        for (uint i = 0; i < size; i++) {
+        uint_t size = util::encode_utf8(
+            static_cast<uint_t>(xc), buffer);
+        for (uint_t i = 0; i < size; i++) {
             chars.push_back(buffer[i]);
         }
     }
@@ -225,7 +225,7 @@ template<class C>
 std::basic_string<C> str2xstr_utf8(std::string_view s) {
     std::vector<C> chars;
     size_t pos = 0;
-    uint size = 0;
+    uint_t size = 0;
     while (pos < s.length()) {
         chars.push_back(util::decode_utf8(size, &s.at(pos)));
         pos += size;
@@ -481,7 +481,7 @@ double util::parse_double(const std::string& str, size_t offset, size_t len) {
 std::wstring util::lower_case(const std::wstring& str) {
     std::wstring result = str;
     static const std::locale loc("");
-    for (uint i = 0; i < result.length(); i++) {
+    for (uint_t i = 0; i < result.length(); i++) {
         result[i] = static_cast<wchar_t>(std::tolower(str[i], loc));
     }
     return result;
@@ -490,7 +490,7 @@ std::wstring util::lower_case(const std::wstring& str) {
 std::wstring util::upper_case(const std::wstring& str) {
     std::wstring result = str;
     static const std::locale loc("");
-    for (uint i = 0; i < result.length(); i++) {
+    for (uint_t i = 0; i < result.length(); i++) {
         result[i] = static_cast<wchar_t>(std::toupper(str[i], loc));
     }
     return result;
@@ -515,7 +515,7 @@ std::wstring util::pascal_case(const std::wstring& str) {
     static const std::locale loc("");
     std::wstring result = str;
     bool upper = true;
-    for (uint i = 0; i < result.length(); i++) {
+    for (uint_t i = 0; i < result.length(); i++) {
         auto c = result[i];
         if (c <= ' ') {
             upper = true;

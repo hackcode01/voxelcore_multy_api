@@ -7,16 +7,16 @@
 
 static inline float sample_at(
     const float* buffer,
-    uint width,
-    uint x, uint y
+    uint_t width,
+    uint_t x, uint_t y
 ) {
     return buffer[y*width+x];
 }
 
 static inline float sample_at(
     const float* buffer,
-    uint width, uint height,
-    uint x, uint y
+    uint_t width, uint_t height,
+    uint_t x, uint_t y
 ) {
     return buffer[(y >= height ? height-1 : y)*width+(x >= width ? width-1 : x)];
 }
@@ -36,13 +36,13 @@ static inline float interpolate_bicubic(float p[4][4], float x, float y) {
 
 static inline float sample_at(
     const float* buffer,
-    uint width, uint height,
+    uint_t width, uint_t height,
     float x, float y,
     InterpolationType interp
 ) {
     // std::floor is redundant here because x and y are positive values
-    uint ix = static_cast<uint>(x);
-    uint iy = static_cast<uint>(y);
+    uint_t ix = static_cast<uint_t>(x);
+    uint_t iy = static_cast<uint_t>(y);
     float val = buffer[iy*width+ix];
     if (interp == InterpolationType::NEAREST) {
         return val;
@@ -85,7 +85,7 @@ static inline float sample_at(
 }
 
 void Heightmap::resize(
-    uint dstwidth, uint dstheight, InterpolationType interp
+    uint_t dstwidth, uint_t dstheight, InterpolationType interp
 ) {
     if (width == dstwidth && height == dstheight) {
         return;
@@ -93,9 +93,9 @@ void Heightmap::resize(
     std::vector<float> dst;
     dst.resize(dstwidth*dstheight);
 
-    uint index = 0;
-    for (uint y = 0; y < dstheight; y++) {
-        for (uint x = 0; x < dstwidth; x++, index++) {
+    uint_t index = 0;
+    for (uint_t y = 0; y < dstheight; y++) {
+        for (uint_t x = 0; x < dstwidth; x++, index++) {
             float sx = static_cast<float>(x) / dstwidth * width;
             float sy = static_cast<float>(y) / dstheight * height;
             dst[index] = sample_at(buffer.data(), width, height, sx, sy, interp);
@@ -108,7 +108,7 @@ void Heightmap::resize(
 }
 
 void Heightmap::crop(
-    uint srcx, uint srcy, uint dstwidth, uint dstheight
+    uint_t srcx, uint_t srcy, uint_t dstwidth, uint_t dstheight
 ) {
     if (srcx + dstwidth > width || srcy + dstheight > height) {
         throw std::runtime_error(
@@ -121,7 +121,7 @@ void Heightmap::crop(
     std::vector<float> dst;
     dst.resize(dstwidth*dstheight);
 
-    for (uint y = 0; y < dstheight; y++) {
+    for (uint_t y = 0; y < dstheight; y++) {
         std::memcpy(
             dst.data()+y*dstwidth, 
             buffer.data()+(y+srcy)*width+srcx, 
@@ -134,7 +134,7 @@ void Heightmap::crop(
 }
 
 void Heightmap::clamp() {
-    for (uint i = 0; i < width * height; i++) {
+    for (uint_t i = 0; i < width * height; i++) {
         buffer[i] = std::min(1.0f, std::max(0.0f, buffer[i]));
     }
 }
