@@ -11,7 +11,7 @@
 #include "graphics/core/Framebuffer.hpp"
 #include "graphics/core/DrawContext.hpp"
 #include "window/Window.hpp"
-#include "../GUI.hpp"
+#include "../gui/GUI.hpp"
 
 // TODO: remove
 #include <GL/glew.h>

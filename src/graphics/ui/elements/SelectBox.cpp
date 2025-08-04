@@ -2,7 +2,7 @@
 
 #include "Label.hpp"
 #include "assets/Assets.hpp"
-#include "graphics/ui/GUI.hpp"
+#include "graphics/ui/gui/GUI.hpp"
 #include "graphics/ui/elements/Panel.hpp"
 #include "graphics/core/Batch2D.hpp"
 #include "graphics/core/DrawContext.hpp"

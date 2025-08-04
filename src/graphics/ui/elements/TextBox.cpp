@@ -4,7 +4,7 @@
 #include <sstream>
 #include <utility>
 
-#include "../GUI.hpp"
+#include "../gui/GUI.hpp"
 #include "../markdown.hpp"
 #include "Label.hpp"
 #include "assets/Assets.hpp"

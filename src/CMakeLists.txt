@@ -56,6 +56,7 @@ else()
     pkg_check_modules(luajit REQUIRED IMPORTED_TARGET luajit)
     pkg_check_modules(vorbis REQUIRED IMPORTED_TARGET vorbis)
     pkg_check_modules(vorbisfile REQUIRED IMPORTED_TARGET vorbisfile)
+
     add_library(Vorbis::vorbis ALIAS PkgConfig::vorbis)
     add_library(Vorbis::vorbisfile ALIAS PkgConfig::vorbisfile)
     add_library(luajit::luajit ALIAS PkgConfig::luajit)

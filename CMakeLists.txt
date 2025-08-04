@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 3.5)
-project(VoxelEngine)
+cmake_minimum_required(VERSION 3.15)
+set(PROJECT_NAME VoxelEngine)
+project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -25,20 +26,20 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 add_subdirectory(src)
-add_executable(VoxelEngine src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp)
 
 if(VOXELENGINE_BUILD_APPDIR)
     include(${CMAKE_CURRENT_SOURCE_DIR}/dev/cmake/BuildAppdir.cmake)
 endif()
 
-target_link_libraries(VoxelEngine PRIVATE VoxelEngineSrc
+target_link_libraries(${PROJECT_NAME} PRIVATE VoxelEngineSrc
                                           $<$<PLATFORM_ID:Windows>:winmm>)
 
-target_link_options(VoxelEngine PRIVATE $<$<CXX_COMPILER_ID:GNU>:-no-pie>)
+target_link_options(${PROJECT_NAME} PRIVATE $<$<CXX_COMPILER_ID:GNU>:-no-pie>)
 
 # Deploy res to build dir
 add_custom_command(
-    TARGET VoxelEngine
+    TARGET ${PROJECT_NAME}
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
             ${CMAKE_CURRENT_SOURCE_DIR}/res $<TARGET_FILE_DIR:VoxelEngine>/res)
