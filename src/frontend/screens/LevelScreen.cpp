@@ -15,7 +15,7 @@
 #include "graphics/core/PostProcessing.hpp"
 #include "graphics/render/Decorator.hpp"
 #include "graphics/render/WorldRenderer.hpp"
-#include "graphics/ui/GUI.hpp"
+#include "graphics/ui/gui/GUI.hpp"
 #include "graphics/ui/elements/Menu.hpp"
 #include "graphics/core/TextureAnimation.hpp"
 #include "io/io.hpp"

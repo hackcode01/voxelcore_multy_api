@@ -24,7 +24,7 @@
 #include "graphics/core/DrawContext.hpp"
 #include "graphics/core/ImageData.hpp"
 #include "graphics/core/Shader.hpp"
-#include "graphics/ui/GUI.hpp"
+#include "graphics/ui/gui/GUI.hpp"
 #include "objects/rigging.hpp"
 #include "logic/EngineController.hpp"
 #include "logic/CommandsInterpreter.hpp"

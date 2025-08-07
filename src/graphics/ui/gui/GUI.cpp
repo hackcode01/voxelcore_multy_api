@@ -5,10 +5,10 @@
 #include <utility>
 
 #include "assets/Assets.hpp"
-#include "elements/Label.hpp"
-#include "elements/Menu.hpp"
-#include "elements/Panel.hpp"
-#include "elements/UINode.hpp"
+#include "../elements/Label.hpp"
+#include "../elements/Menu.hpp"
+#include "../elements/Panel.hpp"
+#include "../elements/UINode.hpp"
 #include "engine/Engine.hpp"
 #include "frontend/UiDocument.hpp"
 #include "frontend/locale.hpp"

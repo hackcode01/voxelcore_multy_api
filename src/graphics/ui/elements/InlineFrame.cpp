@@ -3,7 +3,7 @@
 #include "logic/scripting/scripting.hpp"
 #include "assets/Assets.hpp"
 #include "engine/Engine.hpp"
-#include "../GUI.hpp"
+#include "../gui/GUI.hpp"
 
 using namespace gui;
 

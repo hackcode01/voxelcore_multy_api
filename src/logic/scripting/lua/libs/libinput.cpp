@@ -2,7 +2,7 @@
 #include "content/ContentControl.hpp"
 #include "frontend/hud.hpp"
 #include "frontend/screens/Screen.hpp"
-#include "graphics/ui/GUI.hpp"
+#include "graphics/ui/gui/GUI.hpp"
 #include "graphics/ui/elements/Container.hpp"
 #include "io/io.hpp"
 #include "libgui.hpp"
