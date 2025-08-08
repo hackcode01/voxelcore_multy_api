@@ -10,7 +10,7 @@
 #include "api_lua.hpp"
 #include "../lua_engine.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 using namespace scripting;
 
 static int l_find(lua::State* L) {

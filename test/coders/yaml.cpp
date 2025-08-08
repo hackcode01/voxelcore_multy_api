@@ -7,10 +7,10 @@
 #include "io/io.hpp"
 #include "io/devices/StdfsDevice.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 TEST(YAML, EncodeDecode) {
-    io::set_device("root", std::make_shared<io::StdfsDevice>(fs::u8path("../../")));
+    io::set_device("root", std::make_shared<io::StdfsDevice>(EngineFilesystem::u8path("../../")));
     auto filename = "root:.github/workflows/windows-clang.yml";
     try {
         auto value = yaml::parse(io::read_string(filename));

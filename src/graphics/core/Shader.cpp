@@ -16,7 +16,7 @@
 
 static debug::Logger logger("gl-shader");
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 GLSLExtension* Shader::preprocessor = new GLSLExtension();
 Shader* Shader::used = nullptr;

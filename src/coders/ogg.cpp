@@ -12,7 +12,7 @@
 
 static debug::Logger logger("ogg");
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 using namespace audio;
 
 static inline std::string vorbis_error_message(int code) {

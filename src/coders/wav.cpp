@@ -10,7 +10,7 @@
 #include "audio/audio.hpp"
 #include "debug/Logger.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static debug::Logger logger("wav-coder");
 

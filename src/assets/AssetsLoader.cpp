@@ -21,7 +21,7 @@
 #include "assetload_funcs.hpp"
 #include "engine/Engine.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static debug::Logger logger("assets-loader");
 

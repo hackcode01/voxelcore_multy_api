@@ -7,15 +7,15 @@
 
 #include "util/ArgsReader.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
-inline fs::path TESTING_DIR = fs::u8path(".vctest");
+inline EngineFilesystem::path TESTING_DIR = EngineFilesystem::u8path(".vctest");
 
 struct Config {
-    fs::path executable;
-    fs::path directory;
-    fs::path resDir {"res"};
-    fs::path workingDir {"."};
+    EngineFilesystem::path executable;
+    EngineFilesystem::path directory;
+    EngineFilesystem::path resDir {"res"};
+    EngineFilesystem::path workingDir {"."};
     std::string memchecker = "valgrind";
     bool outputAlways = false;
 };
@@ -35,13 +35,13 @@ static bool perform_keyword(
         std::cout << std::endl;
         return false;
     } else if (keyword == "--exe" || keyword == "-e") {
-        config.executable = fs::path(reader.next());
+        config.executable = EngineFilesystem::path(reader.next());
     } else if (keyword == "--tests" || keyword == "-d") {
-        config.directory = fs::path(reader.next());
+        config.directory = EngineFilesystem::path(reader.next());
     } else if (keyword == "--res" || keyword == "-r") {
-        config.resDir = fs::path(reader.next());
+        config.resDir = EngineFilesystem::path(reader.next());
     } else if (keyword == "--user" || keyword == "-u") {
-        config.workingDir = fs::path(reader.next());
+        config.workingDir = EngineFilesystem::path(reader.next());
     } else if (keyword == "--output-always") {
         config.outputAlways = true;
     } else if (keyword == "--memchecker") {
@@ -66,8 +66,8 @@ static bool parse_cmdline(int argc, char** argv, Config& config) {
     return true;
 }
 
-static bool check_dir(const fs::path& dir) {
-    if (!fs::is_directory(dir)) {
+static bool check_dir(const EngineFilesystem::path& dir) {
+    if (!EngineFilesystem::is_directory(dir)) {
         std::cerr << dir << " is not a directory" << std::endl;
         return false;
     }
@@ -82,7 +82,7 @@ static void print_separator(std::ostream& stream) {
 }
 
 static bool check_config(const Config& config) {
-    if (!fs::exists(config.executable)) {
+    if (!EngineFilesystem::exists(config.executable)) {
         std::cerr << "file " << config.executable << " not found" << std::endl;
         return true;
     }
@@ -100,42 +100,42 @@ static bool check_config(const Config& config) {
 
 static void dump_config(const Config& config) {
     std::cout << "paths:\n";
-    std::cout << "  VoxelCore executable = " << fs::canonical(config.executable).string() << "\n";
-    std::cout << "  Tests directory      = " << fs::canonical(config.directory).string() << "\n";
-    std::cout << "  Resources directory  = " << fs::canonical(config.resDir).string() << "\n";
-    std::cout << "  Working directory    = " << fs::canonical(config.workingDir).string();
+    std::cout << "  VoxelCore executable = " << EngineFilesystem::canonical(config.executable).string() << "\n";
+    std::cout << "  Tests directory      = " << EngineFilesystem::canonical(config.directory).string() << "\n";
+    std::cout << "  Resources directory  = " << EngineFilesystem::canonical(config.resDir).string() << "\n";
+    std::cout << "  Working directory    = " << EngineFilesystem::canonical(config.workingDir).string();
     std::cout << std::endl;
 }
 
-static void cleanup(const fs::path& dir) {
+static void cleanup(const EngineFilesystem::path& dir) {
     std::cout << "cleaning up " << dir << std::endl;
-    fs::remove_all(dir);
+    EngineFilesystem::remove_all(dir);
 }
 
-static void setup_working_dir(const fs::path& workingDir) {
+static void setup_working_dir(const EngineFilesystem::path& workingDir) {
     auto dir = workingDir / TESTING_DIR;
     std::cout << "setting up working directory " << dir << std::endl;
-    if (fs::is_directory(dir)) {
+    if (EngineFilesystem::is_directory(dir)) {
         cleanup(dir);
     }
-    fs::create_directories(dir);
+    EngineFilesystem::create_directories(dir);
 }
 
 static void display_test_output(
-    const fs::path& path, const fs::path& name, std::ostream& stream
+    const EngineFilesystem::path& path, const EngineFilesystem::path& name, std::ostream& stream
 ) {
     stream << "[OUTPUT] " << name << std::endl;
-    if (fs::exists(path)) {
+    if (EngineFilesystem::exists(path)) {
         std::ifstream t(path);
         stream << t.rdbuf();
     }
 }
 
 static void display_segfault_valgrind(
-    const fs::path& path, const fs::path& name, std::ostream& stream
+    const EngineFilesystem::path& path, const EngineFilesystem::path& name, std::ostream& stream
 ) {
     stream << "[MEMCHECK] " << name << std::endl;
-    if (fs::exists(path)) {
+    if (EngineFilesystem::exists(path)) {
         std::ifstream t(path);
         while (!t.eof()) {
             std::string line;
@@ -172,7 +172,7 @@ static std::string fix_path(std::string s) {
     return s;
 }
 
-static bool run_test(const Config& config, const fs::path& path, bool memcheck = false) {
+static bool run_test(const Config& config, const EngineFilesystem::path& path, bool memcheck = false) {
     using std::chrono::duration_cast;
     using std::chrono::high_resolution_clock;
     using std::chrono::milliseconds;
@@ -186,7 +186,7 @@ static bool run_test(const Config& config, const fs::path& path, bool memcheck =
         ss << config.memchecker << " --log-file="
            << fix_path(memcheckLogFile.string()) << " ";
     }
-    ss << fs::canonical(config.executable) << " --headless";
+    ss << EngineFilesystem::canonical(config.executable) << " --headless";
     ss << " --test " << fix_path(path.string());
     ss << " --res " << fix_path(config.resDir.string());
     ss << " --dir " << fix_path(config.workingDir.string());
@@ -206,13 +206,13 @@ static bool run_test(const Config& config, const fs::path& path, bool memcheck =
         if (memcheck) {
             // valgrind-specific output
             display_segfault_valgrind(memcheckLogFile, name, std::cerr);
-            fs::remove(memcheckLogFile);
-            fs::remove(outputFile);
+            EngineFilesystem::remove(memcheckLogFile);
+            EngineFilesystem::remove(outputFile);
         } else {
             display_test_output(outputFile, name, std::cerr);
             std::cerr << "[FAILED] " << name << " in " << testTime
                     << " ms (code=" << code << ")" << std::endl;
-            fs::remove(outputFile);
+            EngineFilesystem::remove(outputFile);
             run_test(config, path, true);
         }
         return false;
@@ -221,7 +221,7 @@ static bool run_test(const Config& config, const fs::path& path, bool memcheck =
             display_test_output(outputFile, name, std::cout);
         }
         std::cout << "[PASSED] " << name << " in " << testTime << " ms" << std::endl;
-        fs::remove(outputFile);
+        EngineFilesystem::remove(outputFile);
         return true;
     }
 }
@@ -241,9 +241,9 @@ int main(int argc, char** argv) {
     }
     dump_config(config);
 
-    std::vector<fs::path> tests;
+    std::vector<EngineFilesystem::path> tests;
     std::cout << "scanning for tests" << std::endl;
-    for (const auto& entry : fs::directory_iterator(config.directory)) {
+    for (const auto& entry : EngineFilesystem::directory_iterator(config.directory)) {
         auto path = entry.path();
         if (path.extension().string() != ".lua") {
             std::cout << "  " << entry.path() << " skipped" << std::endl;
@@ -260,7 +260,7 @@ int main(int argc, char** argv) {
     std::cout << "running " << tests.size() << " test(s)" << std::endl;
     for (const auto& path : tests) {
         passed += run_test(config, path);
-        fs::remove_all(config.workingDir / fs::u8path("worlds"));
+        EngineFilesystem::remove_all(config.workingDir / EngineFilesystem::u8path("worlds"));
     }
     print_separator(std::cout);
     cleanup(config.workingDir);

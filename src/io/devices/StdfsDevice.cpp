@@ -6,15 +6,15 @@
 #include "debug/Logger.hpp"
 
 using namespace io;
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static debug::Logger logger("io-stdfs");
 
-StdfsDevice::StdfsDevice(fs::path root, bool createDirectory)
+StdfsDevice::StdfsDevice(EngineFilesystem::path root, bool createDirectory)
  : root(std::move(root)) {
-    if (createDirectory && !fs::is_directory(this->root)) {
+    if (createDirectory && !EngineFilesystem::is_directory(this->root)) {
         std::error_code ec;
-        fs::create_directories(this->root, ec);
+        EngineFilesystem::create_directories(this->root, ec);
         if (ec) {
             logger.error() << "error creating root directory " << this->root
                            << ": " << ec.message();
@@ -22,8 +22,8 @@ StdfsDevice::StdfsDevice(fs::path root, bool createDirectory)
     }
 }
 
-fs::path StdfsDevice::resolve(std::string_view path) {
-    return root / fs::u8path(io::path(std::string(path)).normalized().string());
+EngineFilesystem::path StdfsDevice::resolve(std::string_view path) {
+    return root / EngineFilesystem::u8path(io::path(std::string(path)).normalized().string());
 }
 
 std::unique_ptr<std::ostream> StdfsDevice::write(std::string_view path) {
@@ -45,30 +45,30 @@ std::unique_ptr<std::istream> StdfsDevice::read(std::string_view path) {
 }
 
 size_t StdfsDevice::size(std::string_view path) {
-    return fs::file_size(resolve(path));
+    return EngineFilesystem::file_size(resolve(path));
 }
 
 file_time_type StdfsDevice::lastWriteTime(std::string_view path) {
-    return fs::last_write_time(resolve(path));
+    return EngineFilesystem::last_write_time(resolve(path));
 }
 
 bool StdfsDevice::exists(std::string_view path) {
-    return fs::exists(resolve(path));
+    return EngineFilesystem::exists(resolve(path));
 }
 
 bool StdfsDevice::isdir(std::string_view path) {
-    return fs::is_directory(resolve(path));
+    return EngineFilesystem::is_directory(resolve(path));
 }
 
 bool StdfsDevice::isfile(std::string_view path) {
-    return fs::is_regular_file(resolve(path));
+    return EngineFilesystem::is_regular_file(resolve(path));
 }
 
 bool StdfsDevice::mkdir(std::string_view path) {
     auto resolved = resolve(path);
 
     std::error_code ec;
-    bool created = fs::create_directory(resolved, ec);
+    bool created = EngineFilesystem::create_directory(resolved, ec);
     if (ec) {
         logger.error() << "error creating directory " << resolved << ": "
                        << ec.message();
@@ -80,7 +80,7 @@ bool StdfsDevice::mkdirs(std::string_view path) {
     auto resolved = resolve(path);
 
     std::error_code ec;
-    bool created = fs::create_directories(resolved, ec);
+    bool created = EngineFilesystem::create_directories(resolved, ec);
     if (ec) {
         logger.error() << "error creating directories " << resolved << ": "
                        << ec.message();
@@ -90,14 +90,14 @@ bool StdfsDevice::mkdirs(std::string_view path) {
 
 bool StdfsDevice::remove(std::string_view path) {
     auto resolved = resolve(path);
-    return fs::remove(resolved);
+    return EngineFilesystem::remove(resolved);
 }
 
 uint64_t StdfsDevice::removeAll(std::string_view path) {
     auto resolved = resolve(path);
-    if (fs::exists(resolved)) {
+    if (EngineFilesystem::exists(resolved)) {
         logger.info() << "removeAll " << resolved; 
-        return fs::remove_all(resolved);
+        return EngineFilesystem::remove_all(resolved);
     } else {
         return 0;
     }
@@ -105,12 +105,12 @@ uint64_t StdfsDevice::removeAll(std::string_view path) {
 
 class StdfsPathsGenerator : public PathsGenerator {
 public:
-    StdfsPathsGenerator(fs::path root) : root(std::move(root)) {
-        it = fs::directory_iterator(this->root);
+    StdfsPathsGenerator(EngineFilesystem::path root) : root(std::move(root)) {
+        it = EngineFilesystem::directory_iterator(this->root);
     }
 
     bool next(io::path& path) override {
-        if (it == fs::directory_iterator()) {
+        if (it == EngineFilesystem::directory_iterator()) {
             return false;
         }
         path = it->path().filename().u8string();
@@ -118,8 +118,8 @@ public:
         return true;
     }
 private:
-    fs::path root;
-    fs::directory_iterator it;
+    EngineFilesystem::path root;
+    EngineFilesystem::directory_iterator it;
 };
 
 std::unique_ptr<PathsGenerator> StdfsDevice::list(std::string_view path) {

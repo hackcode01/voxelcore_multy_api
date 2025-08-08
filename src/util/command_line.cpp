@@ -6,8 +6,9 @@
 #include "util/ArgsReader.hpp"
 #include "engine/Engine.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
+/** Perform read keywords in Engine. */
 static bool perform_keyword(
     util::ArgsReader& reader, const std::string& keyword, CoreParameters& params
 ) {

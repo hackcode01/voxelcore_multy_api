@@ -13,6 +13,7 @@ static void sigterm_handler(int signum) {
     Engine::getInstance().quit();
 }
 
+/** function main is starting to run console of engine. */
 int main(int argc, char** argv) {
     CoreParameters coreParameters;
     try {

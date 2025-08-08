@@ -32,7 +32,7 @@
 
 static debug::Logger logger("assetload-funcs");
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static bool load_animation(
     Assets* assets,
@@ -483,7 +483,7 @@ static bool load_animation(
     for (const auto& folder : paths.listdir(animsDir)) {
         if (!io::is_directory(folder)) continue;
         if (folder.name() != name) continue;
-        //FIXME: if (fs::is_empty(folder)) continue;
+        //FIXME: if (EngineFilesystem::is_empty(folder)) continue;
 
         AtlasBuilder builder;
         append_atlas(builder, paths.find(directory + "/" + name + ".png"));

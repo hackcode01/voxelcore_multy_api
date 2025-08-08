@@ -16,7 +16,7 @@
 #include "voxels/Block.hpp"
 #include "WorldFiles.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static debug::Logger logger("world-converter");
 

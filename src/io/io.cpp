@@ -16,7 +16,7 @@
 
 #include "devices/Device.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static std::map<std::string, std::shared_ptr<io::Device>> devices;
 
@@ -335,9 +335,9 @@ std::filesystem::path io::resolve(const io::path& file) {
 
 using DecodeFunc = dv::value(*)(std::string_view, std::string_view);
 
-static std::map<fs::path, DecodeFunc> data_decoders {
-    {fs::u8path(".json"), json::parse},
-    {fs::u8path(".toml"), toml::parse},
+static std::map<EngineFilesystem::path, DecodeFunc> data_decoders {
+    {EngineFilesystem::u8path(".json"), json::parse},
+    {EngineFilesystem::u8path(".toml"), toml::parse},
 };
 
 bool io::is_data_file(const io::path& file) {

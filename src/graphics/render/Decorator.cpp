@@ -22,7 +22,7 @@
 #include "audio/audio.hpp"
 #include "maths/util.hpp"
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 /// @brief Not greather than 64 for this BIG_PRIME value
 inline constexpr int UPDATE_AREA_DIAMETER = 32;

@@ -23,7 +23,7 @@
 #include "logic/ChunksController.hpp"
 
 using namespace scripting;
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static WorldInfo& require_world_info() {
     if (level == nullptr) {

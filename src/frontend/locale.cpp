@@ -11,7 +11,7 @@
 
 static debug::Logger logger("locale");
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 using namespace std::literals;
 using namespace langs;
 

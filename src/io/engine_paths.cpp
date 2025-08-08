@@ -27,7 +27,7 @@ static std::string generate_random_base64() {
     return util::base64_urlsafe_encode(bytes, n);
 }
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 static debug::Logger logger("engine-paths");
 
@@ -44,9 +44,9 @@ void EnginePaths::prepare() {
             resourcesFolder.string() + " is not a directory"
         );
     }
-    logger.info() << "resources folder: " << fs::canonical(resourcesFolder).u8string();
-    logger.info() << "user files folder: " << fs::canonical(userFilesFolder).u8string();
-    logger.info() << "project folder: " << fs::canonical(projectFolder).u8string();
+    logger.info() << "resources folder: " << EngineFilesystem::canonical(resourcesFolder).u8string();
+    logger.info() << "user files folder: " << EngineFilesystem::canonical(userFilesFolder).u8string();
+    logger.info() << "project folder: " << EngineFilesystem::canonical(projectFolder).u8string();
     
     if (!io::is_directory(CONTENT_FOLDER)) {
         io::create_directories(CONTENT_FOLDER);
@@ -123,8 +123,8 @@ std::vector<io::path> EnginePaths::scanForWorlds() const {
         [](io::path a, io::path b) {
             a = a / WorldFiles::WORLD_FILE;
             b = b / WorldFiles::WORLD_FILE;
-            return fs::last_write_time(io::resolve(a)) >
-                   fs::last_write_time(io::resolve(b));
+            return EngineFilesystem::last_write_time(io::resolve(a)) >
+                   EngineFilesystem::last_write_time(io::resolve(b));
         }
     );
     return folders;

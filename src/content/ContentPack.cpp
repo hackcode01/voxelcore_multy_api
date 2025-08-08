@@ -14,7 +14,7 @@
 
 static debug::Logger logger("content-pack");
 
-namespace fs = std::filesystem;
+namespace EngineFilesystem = std::filesystem;
 
 ContentPack ContentPack::createCore() {
     return ContentPack {
